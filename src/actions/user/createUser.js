@@ -21,7 +21,7 @@ export const createUser = user => dispatch => {
     type: POSTING_USER
   });
   axiosInstance
-    .post("/users", user)
+    .post("/api/users", user)
     .then(res => {
       dispatch(createUserSuccess(res.data));
     })

@@ -20,7 +20,7 @@ export const fetchIndicators = () => dispatch => {
     type: FETCHING_INDICATORS
   });
   axiosInstance
-    .get("/indicators", {
+    .get("/api/indicators", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

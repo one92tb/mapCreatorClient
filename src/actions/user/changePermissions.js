@@ -22,7 +22,7 @@ export const changePermissions = (status, id) => dispatch => {
   });
   axiosInstance
     .patch(
-      `/users/${id}`, {
+      `/api/users/${id}`, {
         isAdmin: status
       }, {
         headers: {

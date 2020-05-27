@@ -21,7 +21,7 @@ export const fetchMarkers = () => dispatch => {
     type: FETCHING_MARKERS
   });
   axiosInstance
-    .get("/markers", {
+    .get("/api/markers", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
