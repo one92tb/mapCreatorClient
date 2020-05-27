@@ -24,7 +24,7 @@ export const loginRequest = userData => dispatch => {
     type: LOGIN_REQUEST
   });
   axiosInstance
-    .post("/login", userData)
+    .post("/api/login", userData)
     .then(res => {
       console.log(res.data);
       localStorage.setItem("token", res.data.token);

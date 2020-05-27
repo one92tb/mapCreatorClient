@@ -20,7 +20,7 @@ export const editMarker = (marker, id) => dispatch => {
     type: EDITING_MARKER
   });
   axiosInstance
-    .put(`/markers/${id}`, marker, {
+    .put(`/api/markers/${id}`, marker, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

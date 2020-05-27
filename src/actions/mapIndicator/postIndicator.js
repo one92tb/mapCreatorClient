@@ -21,7 +21,7 @@ export const postIndicator = indicator => dispatch => {
     type: POSTING_INDICATOR
   });
   axiosInstance
-    .post("/indicators", indicator, {
+    .post("/api/indicators", indicator, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

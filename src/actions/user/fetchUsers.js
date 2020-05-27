@@ -21,7 +21,7 @@ export const fetchUsers = () => dispatch => {
     type: FETCHING_USERS
   });
   axiosInstance
-    .get("/users", {
+    .get("/api/users", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

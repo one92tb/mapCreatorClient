@@ -21,7 +21,7 @@ export const postMarker = marker => dispatch => {
     type: POSTING_MARKER
   });
   axiosInstance
-    .post("/markers", marker, {
+    .post("/api/markers", marker, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

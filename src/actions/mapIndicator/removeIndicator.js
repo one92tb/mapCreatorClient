@@ -21,7 +21,7 @@ export const removeIndicator = id => dispatch => {
     type: REMOVING_INDICATOR
   });
   axiosInstance
-    .delete(`/indicators/${id}`, {
+    .delete(`/api/indicators/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
