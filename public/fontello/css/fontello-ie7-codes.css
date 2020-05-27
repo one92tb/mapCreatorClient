@@ -1,0 +1,4 @@
+
+.icon-home { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe800;&nbsp;'); }
+.icon-basket-1 { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xe801;&nbsp;'); }
+.icon-soccer-ball { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1e3;&nbsp;'); }

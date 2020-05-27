@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2018 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="home" unicode="&#xe800;" d="M888 336q16-16 11-27t-27-11l-84 0 0-310q0-14-1-21t-8-13-23-6l-204 0 0 310-204 0 0-310-194 0q-28 0-35 10t-7 30l0 310-84 0q-22 0-27 11t11 27l400 402q16 16 38 16t38-16z" horiz-adv-x="900" />
+
+<glyph glyph-name="basket-1" unicode="&#xe801;" d="M950 715q23 0 39-18t14-42l-53-365q-2-18-17-31t-34-12l-590 0 9-53 528 0q22 0 37-16t16-36-16-37-37-15l-572 0q-20 0-35 13t-16 30l-98 582-72 0q-22 0-37 15t-16 37 16 36 37 16l116 0q19 0 34-12t17-32l11-60 719 0z m-60-105l-200 0 0-103 185 0z m-252 0l-157 0 0-103 157 0 0 103z m0-156l-157 0 0-104 157 0 0 104z m-208 156l-182 0 18-105q3 2 8 2l156 0 0 103z m-156-156l17-104 139 0 0 104-156 0z m416-104l164 0 14 104-178 0 0-104z m-416-390q0 78 77 78 79 0 79-78 0-79-79-79-77 0-77 79z m469 0q0 78 77 78 79 0 79-78 0-79-79-79-77 0-77 79z" horiz-adv-x="1003" />
+
+<glyph glyph-name="soccer-ball" unicode="&#xf1e3;" d="M340 395l160 116 160-116-61-188h-198z m160 455q102 0 194-40t160-106 106-160 40-194-40-194-106-160-160-106-194-40-194 40-160 106-106 160-40 194 40 194 106 160 160 106 194 40z m345-753q84 113 84 253v2l-57-50-134 125 35 180 75-6q-84 115-217 157l29-69-160-89-160 89 29 69q-133-42-217-157l76 6 34-180-134-125-57 50v-2q0-140 84-253l16 73 182-22 78-166-65-39q65-22 134-22t134 22l-65 39 78 166 182 22z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>
