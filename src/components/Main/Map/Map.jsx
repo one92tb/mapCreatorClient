@@ -6,7 +6,6 @@ import {fetchIndicators} from "../../../actions/mapIndicator/fetchIndicators";
 import {removeIndicator} from "../../../actions/mapIndicator/removeIndicator";
 import PropTypes from "prop-types";
 import {baseUrl} from "../../../axiosInstance";
-import apiKey from "./apiKey"
 import {Wrapper, SearchBoxInput, InfoBoxContainer, InfoBtn, InfoContent} from "./style";
 
 Wrapper.displayName = "div";
@@ -57,7 +56,7 @@ const geocode = (indicator, postIndicator) => {
   });
 };
 
-export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${apiKey}8&v=3.exp&libraries=geometry,drawing,places`, containerElement: (<div style={{
+export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}8&v=3.exp&libraries=geometry,drawing,places`, containerElement: (<div style={{
     height: `100%`
   }}/>), loadingElement: (<div style={{
     height: `100%`
@@ -212,6 +211,7 @@ export class Map extends Component {
   };
 
   render() {
+    console.log(process.env.REACT_APP_API_KEY);
     const {
       indicators, selectedMarker, selectedIndicator,
       //  getSelectedIndicator
