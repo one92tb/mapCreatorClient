@@ -21,7 +21,7 @@ export const deleteAccount = id => dispatch => {
     type: DELETING_ACCOUNT
   });
   axiosInstance
-    .delete(`/users/${id}`, {
+    .delete(`/api/users/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

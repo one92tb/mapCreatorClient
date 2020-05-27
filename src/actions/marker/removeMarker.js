@@ -21,7 +21,7 @@ export const removeMarker = id => dispatch => {
     type: REMOVING_MARKER
   });
   axiosInstance
-    .delete(`/markers/${id}`, {
+    .delete(`/api/markers/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
