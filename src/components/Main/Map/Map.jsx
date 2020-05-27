@@ -211,6 +211,7 @@ export class Map extends Component {
   };
 
   render() {
+    console.log(process.env.REACT_APP_API_KEY);
     const {
       indicators, selectedMarker, selectedIndicator,
       //  getSelectedIndicator
