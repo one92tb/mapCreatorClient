@@ -5,6 +5,8 @@ import {fetchMarkers} from "../../actions/marker/fetchMarkers";
 import {redirect} from "../../actions/redirect/redirect";
 import {getSelectedIndicator} from "../../actions/mapIndicator/getSelectedIndicator";
 import PropTypes from "prop-types";
+import {defaultMarkers} from "../Main/Panel/defaultMarkers";
+
 import {
   Wrapper,
   Label,
@@ -74,7 +76,12 @@ export class List extends Component {
         <Label htmlFor="markerName">
           <Select onChange={this.handleChange} id="markerName" name="markerName" data-testid="select">
             <Option>All</Option>
-            {markers.map((marker, id, arr) => (<Option key={marker.id}>{marker.name}</Option>))};
+            {
+              [
+                ...defaultMarkers,
+                ...markers
+              ].map((marker, id, arr) => (<Option key={marker.id}>{marker.name}</Option>))
+            };
           </Select>
         </Label>
         <Input onChange={this.handleChange} type="text" name="city" placeholder="search city"/>

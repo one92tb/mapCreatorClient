@@ -16,7 +16,6 @@ const postedMarkerError = error => ({
 });
 
 export const postMarker = marker => dispatch => {
-  console.log("AAAAAAA");
   dispatch({
     type: POSTING_MARKER
   });

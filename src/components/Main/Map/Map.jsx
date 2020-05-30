@@ -45,8 +45,10 @@ const geocode = (indicator, postIndicator) => {
         icon: indicator.icon,
         street: results[0].formatted_address.split(",")[0],
         city: results[0].formatted_address.split(",")[1],
-        country: results[0].formatted_address.split(",")[2]
+        country: results[0].formatted_address.split(",")[2],
+        isDefault: indicator.isDefault
       };
+      console.log(mapIndicator);
       postIndicator(mapIndicator);
     } else if (status === "OVER_QUERY_LIMIT") {
       console.log("Geocode was not successful for the following reason: " + status);
@@ -70,7 +72,7 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
     lat: 50.89973,
     lng: 15.72899
   },
-  zoom: 12
+  zoom: 15
 }), {onToggleOpen, geocode}), withScriptjs, withGoogleMap, lifecycle({
   componentDidMount() {
     const refs = {};
@@ -102,6 +104,7 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
         refs.map.fitBounds(bounds);
       },
       onZoomChanged: () => {
+        console.log(refs.map)
         this.setState({zoom: refs.map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom});
       }
     });
@@ -116,20 +119,23 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
 } defaultCursor={props.cursor} onChangeCenter={props.newLocation}>
     {
       props.indicators.filter(indicator => !props.disableMarkers.find(disableItem => disableItem.name === indicator.name)).map((indicator, index) => {
+        //console.log(indicator);
         return (<Marker data-testid="marker" onClick={() => props.onToggleOpen(indicator.id)} key={index} position={{
             lat: indicator.lat,
             lng: indicator.lng
           }} icon={{
-            url: `${baseUrl}/images/${indicator.icon}`,
+            url: indicator.isDefault
+              ? `defaultMarkers/${indicator.icon}`
+              : `${baseUrl}/images/${indicator.icon}`,
             scaledSize: {
-              width: props.zoom < 14
-                ? 16
-                : 50,
-              height: props.zoom < 14
-                ? 16
-                : 50
+              width: props.zoom < 17
+                ? 24
+                : 32,
+              height: props.zoom < 17
+                ? 24
+                : 32
             }
-          }} visible={!(props.zoom < 11)}>
+          }} visible={!(props.zoom < 15)}>
           {
             props.isOpen && props.id === indicator.id && (<InfoBox defaultPosition={{
                 lat: indicator.lat,
@@ -141,14 +147,14 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
                   overflow: "hidden",
                   height: "250px",
                   width: "250px",
-                  display: props.zoom < 11
+                  display: props.zoom < 15
                     ? "none"
                     : "block"
                 },
                 closeBoxMargin: "5px 5px 2px 2px",
                 alignBottom: true,
                 isHidden: false,
-                pixelOffset: props.zoom < 14
+                pixelOffset: props.zoom < 17
                   ? new google.maps.Size(-125, -20)
                   : new google.maps.Size(-125, -45),
                 enableEventPropagation: true,
@@ -191,30 +197,29 @@ export class Map extends Component {
 
   addIndicator = (event, geocode) => {
     const {selectedMarker, postIndicator, isNavSelect} = this.props;
-
+    console.log(selectedMarker);
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
+      console.log(selectedMarker);
       const indicator = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
+        isDefault: selectedMarker.isDefault,
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       };
-
+      console.log(indicator);
       geocode(indicator, postIndicator);
     }
   };
 
   remove = id => {
     const {removeIndicator} = this.props;
-
     removeIndicator(id);
   };
 
   render() {
-    const {
-      indicators, selectedMarker, selectedIndicator,
-      //  getSelectedIndicator
-    } = this.props;
+    console.log(this.props.indicators);
+    const {indicators, selectedMarker, selectedIndicator} = this.props;
 
     return (<Wrapper>
       <MapWithAMakredInfoWindow indicators={indicators} selectedMarker={selectedMarker} addIndicator={this.addIndicator} remove={this.remove} disableMarkers={this.props.disableMarkers} selectedIndicator={selectedIndicator}/>

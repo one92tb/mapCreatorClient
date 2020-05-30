@@ -69,14 +69,24 @@ export class Panel extends React.Component {
   }
 
   onSelect = (marker, id) => {
-    const {getSelectedMarker, disableMarkers} = this.props;
+    const {getSelectedMarker, disableMarkers, location} = this.props;
     const {selectedId, filteredMarkers, isSelected} = this.state;
 
+    console.log(marker);
+    if (location.pathname === "/createMarker" && marker.isDefault) {
+      console.log("GOWNO");
+      return false;
+    }
     if (marker.id !== selectedId && isSelected) {
       this.setState({selectedId: id});
       getSelectedMarker({
         ...marker,
-        url: `${baseUrl}/images/${marker.icon}`
+        url: marker.isDefault
+          ? `defaultMarkers/${marker.icon}`
+          : `${baseUrl}/images/${marker.icon}`,
+        isDefault: marker.isDefault
+          ? true
+          : false
       });
     } else if (marker.id === selectedId && isSelected) {
       this.setState({selectedId: ""});
@@ -120,6 +130,7 @@ export class Panel extends React.Component {
 
   render() {
     const {location, markers} = this.props;
+    console.log(markers);
     const {isSelected, selectedId, filteredMarkers} = this.state;
     return (<Wrapper currentLocation={location}>
       <Label htmlFor="panel" currentLocation={location}>
@@ -145,12 +156,16 @@ export class Panel extends React.Component {
         <CardBody className="scroll">
           <List>
             {
-              markers.map((marker, id) => {
-                console.log(marker);
+              [
+                ...defaultMarkers,
+                ...markers
+              ].map((marker, id) => {
                 return (<Marker data-testid="marker" key={marker.id} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
 } onClick={() => this.onSelect(marker, marker.id)}>
                   <MarkerIcon>
-                    <MarkerImg src={`${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
+                    <MarkerImg src={marker.isDefault
+                        ? `defaultMarkers/${marker.icon}`
+                        : `${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
                   </MarkerIcon>
                   <MarkerName>{marker.name}</MarkerName>
                 </Marker>)

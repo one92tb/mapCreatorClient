@@ -27,6 +27,7 @@ export const postIndicator = indicator => dispatch => {
       }
     })
     .then(res => {
+      //console.log(res.data);
       dispatch(postedIndicatorSuccess(res.data));
     })
     .catch(error => {
