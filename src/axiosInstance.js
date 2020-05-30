@@ -1,8 +1,6 @@
 import axios from "axios";
 
-export let baseUrl = "http://localhost:8080";
-//"https://map-creator-server.herokuapp.com"
-//"http://localhost:8080"
+export let baseUrl = "https://map-creator-server.herokuapp.com";
 
 export const axiosInstance = axios.create({
   baseURL: baseUrl,
