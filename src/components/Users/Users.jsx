@@ -111,7 +111,7 @@ export class Users extends React.Component {
                     }
                   </Td>
                   <Td>
-                    {user.id !== 1 && (<RemoveIcon data-testid="removeBtn" onClick={id => this.removeUser(user.id)} src={"delete.png"}/>)}
+                    {user.id !== 1 && (<RemoveIcon data-testid="removeBtn" onClick={id => this.removeUser(user.id)} src={"img/delete.png"}/>)}
                   </Td>
                 </Tr>);
               })

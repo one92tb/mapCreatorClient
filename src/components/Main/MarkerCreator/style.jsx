@@ -1,6 +1,6 @@
-import styled ,{ css } from "styled-components";
+import styled, {css} from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   padding: 40px 20px 40px 10px;
   height: 100%;
   @media only screen and (max-width: 1199px) {
@@ -8,36 +8,36 @@ const Wrapper = styled.div`
   }
 `;
 
-const Inner = styled.div`
+const Inner = styled.div `
   border: 1px solid red;
   height: 100%;
   padding: 30px;
   border: 1px solid #00b8e6;
 `;
 
-const ImageInsideMarker = styled.img`
+const ImageInsideMarker = styled.img `
   width: 25px;
   height: 25px;
 `;
 
-const ImageWithoutMarker = styled.img`
+const ImageWithoutMarker = styled.img `
   width: 50px;
   height: 50px;
   display: block;
   text-align: center;
 `;
 
-const Form = styled.form`
+const Form = styled.form `
   display: block;
   margin-top: 20px;
 `;
 
-const FormGroup = styled.div`
+const FormGroup = styled.div `
   margin-bottom: 1rem;
   position: relative;
 `;
 
-const Label = css`
+const Label = css `
   margin-bottom: 0;
 
   @media only screen and (max-width: 575.98px) {
@@ -45,34 +45,34 @@ const Label = css`
   }
 `;
 
-const LabelColor = styled.label`
+const LabelColor = styled.label `
   ${Label};
   margin-left: 2px;
 `;
 
-const LabelFile = styled.label`
+const LabelFile = styled.label `
   ${Label};
 `;
 
-const LabelName = styled.label`
+const LabelName = styled.label `
   ${Label};
   margin-left: 2px;
 `;
 
-const FileInput = styled.input`
+const FileInput = styled.input `
   visibility: hidden;
   position: absolute;
   opacity: 0;
   z-index: 99;
 `;
 
-const InputStyle = css`
+const InputStyle = css `
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
 `;
 
-const InputName = css`
+const InputName = css `
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -85,19 +85,19 @@ const InputName = css`
   }
 `;
 
-const Button = css`
+const Button = css `
   width: 165px;
   cursor: pointer;
   color: #fff;
   border: 1px solid transparent;
   display: inline-block;
-
+  text-transform: uppercase;
   @media only screen and (max-width: 575.98px) {
     width: 150px;
   }
 `;
 
-const CrudButton = css`
+const CrudButton = css `
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -110,13 +110,13 @@ const CrudButton = css`
   }
 `;
 //z-index: -00;
-const Input = styled.input`
+const Input = styled.input `
   ${InputStyle} ${InputName};
   background-color: #fff;
   height: 40px;
 `;
 
-const InputSpan = styled.span`
+const InputSpan = styled.span `
   ${InputStyle} ${Button}
   margin-right: 10px;
   margin-bottom: 0;
@@ -136,7 +136,7 @@ const InputSpan = styled.span`
   }
 `;
 
-const SubmitBtn = styled.button`
+const SubmitBtn = styled.button `
   ${InputStyle};
   ${Button};
   ${CrudButton};
@@ -148,7 +148,7 @@ const SubmitBtn = styled.button`
   }
 `;
 
-const RemoveBtn = styled.button`
+const RemoveBtn = styled.button `
   ${InputStyle};
   ${Button};
   ${CrudButton};
@@ -159,7 +159,7 @@ const RemoveBtn = styled.button`
   }
 `;
 
-const DownloadBtn = styled.button`
+const DownloadBtn = styled.button `
   ${Button};
   ${CrudButton};
   ${InputStyle};
@@ -167,7 +167,7 @@ const DownloadBtn = styled.button`
   border-color: #6c757d;
 `;
 
-const MarkerIcon = styled.div`
+const MarkerIcon = styled.div `
   display: flex;
   position: absolute;
   justify-content: center;
@@ -190,35 +190,43 @@ const MarkerIcon = styled.div`
     border-top: 25px solid ${props => props.background && props.background};
   }`;
 
-const UploadButton = styled.button`
+const UploadButton = styled.button `
   ${Button};
   ${CrudButton};
-  background: ${props => (props.status ? "#00b8e6" : "#B2CFE7")};
+  background: ${props => (
+  props.status
+  ? "#00b8e6"
+  : "#B2CFE7")};
   border-color: #00b8e6;
   border-top-left-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
+  transition: background-color 1s ease;
 `;
 
-const CustomButton = styled.button`
+const CustomButton = styled.button `
   ${Button};
   ${CrudButton};
   font-size: 1rem;
   line-height: 1.5;
-  background: ${props => (!props.status ? "#00b8e6" : "#B2CFE7")};
+  background: ${props => (
+  !props.status
+  ? "#00b8e6"
+  : "#B2CFE7")};
   border-color: #00b8e6;
   border-right: 1px solid #00b8e6;
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
+  transition: background-color 1s ease;
 `;
 
-const ImageWrapper = css`
+const ImageWrapper = css `
   width: 100px;
   height: 100px;
   margin-left: auto;
   margin-right: auto;
 `;
 
-const ImageBox = styled.div`
+const ImageBox = styled.div `
   ${ImageWrapper};
   border: 1px solid #495057;
   position: relative;
@@ -227,12 +235,12 @@ const ImageBox = styled.div`
   justify-content: center;
 `;
 
-const AdditionalWrapper = styled.div`
+const AdditionalWrapper = styled.div `
   ${ImageWrapper};
   border: 1px solid #000;
 `;
 
-const MarkerIconBox = styled.div`
+const MarkerIconBox = styled.div `
   ${ImageWrapper};
   position: relative;
   display: flex;
@@ -240,13 +248,13 @@ const MarkerIconBox = styled.div`
   justify-content: center;
 `;
 
-const ButtonGroup = styled.div`
+const ButtonGroup = styled.div `
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
 `;
 
-const ErrorMessage = styled.span`
+const ErrorMessage = styled.span `
   color: red;
   font-size: 10px;
   display: block;

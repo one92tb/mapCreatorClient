@@ -68,7 +68,7 @@ export class MarkerCreator extends Component {
     this.state = {
       markerName: "",
       markerImageFile: "",
-      displaySelectedImage: "IMG-default.png",
+      displaySelectedImage: "img/IMG-default.png",
       color: "#000",
       uploadStatus: true,
       markerNameError: "",
@@ -157,7 +157,7 @@ export class MarkerCreator extends Component {
         this.setState({
           markerName: "",
           markerImageFile: "",
-          displaySelectedImage: "IMG-default.png"
+          displaySelectedImage: "img/IMG-default.png"
         });
       }
     }
@@ -198,7 +198,7 @@ export class MarkerCreator extends Component {
     this.setState({
       markerName: "",
       markerImageFile: "",
-      displaySelectedImage: "IMG-default.png"
+      displaySelectedImage: "img/IMG-default.png"
     });
 
     removeMarker(selectedMarker.id);
@@ -236,13 +236,13 @@ export class MarkerCreator extends Component {
               status={uploadStatus}
               onClick={() => this.switchUpload(true)}
             >
-              Upload Marker
+              upload
             </UploadButton>
             <CustomButton
               status={uploadStatus}
               onClick={() => this.switchUpload(false)}
             >
-              Custom Marker
+              custom
             </CustomButton>
           </ButtonGroup>
           {uploadStatus ? (
@@ -288,8 +288,8 @@ export class MarkerCreator extends Component {
             )}
             <FormGroup>
               <LabelFile htmlFor="file">
-                <InputSpan>Choose file to send</InputSpan>{" "}
-                {displaySelectedImage === "IMG-default.png"
+                <InputSpan>choose file</InputSpan>{" "}
+                {displaySelectedImage === "img/IMG-default.png"
                   ? "Not file detected"
                   : markerImageFile === ""
                     ? `${markerName}.png`
@@ -312,12 +312,12 @@ export class MarkerCreator extends Component {
               <FormGroup>
                 <SubmitBtn>
                   {selectedMarker.id && !selectedMarker.isDeleted
-                    ? "Edit Marker"
-                    : "Upload new marker"}
+                    ? "edit"
+                    : "upload"}
                 </SubmitBtn>
                 {selectedMarker.id && !selectedMarker.isDeleted ? (
                   <RemoveBtn onClick={this.removeRecord} type="button">
-                    Remove Marker
+                    Remove
                   </RemoveBtn>
                 ) : (
                   ""

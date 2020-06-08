@@ -9,8 +9,6 @@ import {baseUrl} from "../../../axiosInstance";
 import {defaultMarkers} from "./defaultMarkers";
 import {
   Wrapper,
-  FilterLink,
-  SelectLink,
   Card,
   CardHeader,
   CardBody,
@@ -22,12 +20,14 @@ import {
   Marker,
   MarkerIcon,
   MarkerName,
-  MarkerImg
+  MarkerImg,
+  SelectButton,
+  FilterButton,
+  DisplayMarkersBtn,
+  Markers
 } from "./style";
 
 Wrapper.displayName = "div";
-FilterLink.displayName = "a";
-SelectLink.displayName = "a";
 Card.displayName = "div";
 CardHeader.displayName = "div";
 CardBody.displayName = "div";
@@ -40,6 +40,10 @@ Marker.displayName = "li";
 MarkerIcon.displayName = "div";
 MarkerName.displayName = "span";
 MarkerImg.displayName = "img";
+SelectButton.displayName = "button";
+FilterButton.displayName = "button";
+DisplayMarkersBtn.displayName = "button";
+Markers.displayName = "div";
 
 export class Panel extends React.Component {
   constructor(props) {
@@ -48,7 +52,8 @@ export class Panel extends React.Component {
       isSelected: true,
       checked: false,
       selectedId: "",
-      filteredMarkers: []
+      filteredMarkers: [],
+      markersToDisplayId: 0
     };
   }
 
@@ -72,11 +77,10 @@ export class Panel extends React.Component {
     const {getSelectedMarker, disableMarkers, location} = this.props;
     const {selectedId, filteredMarkers, isSelected} = this.state;
 
-    console.log(marker);
     if (location.pathname === "/createMarker" && marker.isDefault) {
-      console.log("GOWNO");
       return false;
     }
+
     if (marker.id !== selectedId && isSelected) {
       this.setState({selectedId: id});
       getSelectedMarker({
@@ -90,7 +94,7 @@ export class Panel extends React.Component {
       });
     } else if (marker.id === selectedId && isSelected) {
       this.setState({selectedId: ""});
-      getSelectedMarker({id: undefined, name: "", url: "IMG-default.png"});
+      getSelectedMarker({id: undefined, name: "", url: "img/IMG-default.png"});
     } else {
       //remove Marker from filteredMarkers if exist
       if (filteredMarkers.find(el => el.id === marker.id)) {
@@ -114,13 +118,12 @@ export class Panel extends React.Component {
   }
 
   handleCheckBox = event => {
-    console.log("dupa", event.target.checked);
     this.setState({checked: event.target.checked});
   };
 
   switchPanelStatus = bool => {
     const {location, isPanelSelect} = this.props;
-    if (location === "createMarker" && bool === false) {
+    if (location.pathname === "/createMarker") {
       return false;
     }
 
@@ -128,50 +131,55 @@ export class Panel extends React.Component {
     isPanelSelect(bool);
   };
 
+  handleDisplayMarkers = id => {
+    this.setState({markersToDisplayId: id})
+  }
+
   render() {
     const {location, markers} = this.props;
-    console.log(markers);
     const {isSelected, selectedId, filteredMarkers} = this.state;
     return (<Wrapper currentLocation={location}>
       <Label htmlFor="panel" currentLocation={location}>
-        <img src={"drawMarker.png"} alt="drawMarker" width={30} height={30}/>
+        <img src={"img/drawMarker.png"} alt="drawMarker" width={30} height={30}/>
       </Label>
       <Input type="checkbox" id="panel" onChange={this.handleCheckBox}/>
       <Card isChecked={this.state.checked} currentLocation={location}>
         <CardHeader>
           <Nav>
             <NavItem>
-              <SelectLink exact={true} isSelected={isSelected} location={this.props.location.pathname} onClick={() => this.switchPanelStatus(true)}>
-                Select marker
-              </SelectLink>
+              <SelectButton isSelected={isSelected} location={this.props.location.pathname} onClick={() => this.switchPanelStatus(true)}>
+                select
+              </SelectButton>
             </NavItem>
-            /
             <NavItem>
-              <FilterLink isSelected={isSelected} location={this.props.location.pathname} onClick={() => this.switchPanelStatus(false)}>
-                Filter marker
-              </FilterLink>
+              <FilterButton isSelected={isSelected} location={this.props.location.pathname} onClick={() => this.switchPanelStatus(false)}>
+                filter
+              </FilterButton>
             </NavItem>
           </Nav>
         </CardHeader>
         <CardBody className="scroll">
-          <List>
-            {
-              [
-                ...defaultMarkers,
-                ...markers
-              ].map((marker, id) => {
-                return (<Marker data-testid="marker" key={marker.id} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
+          {
+            [defaultMarkers, markers].map((markers, id) => (<List key={id}>
+              <DisplayMarkersBtn onClick={() => this.handleDisplayMarkers(id)}>{(id ===0) ? "default markers" : "custom markers"}</DisplayMarkersBtn>
+              <Markers displayId={this.state.markersToDisplayId} markersId ={id}>
+                {
+                  markers.map((marker, id) => {
+                    return (<Marker data-testid="marker" key={marker.id} location={this.props.location.pathname} isDefault={marker.isDefault} isSelected={selectedId === marker.id && this.state.isSelected} isFiltered={filteredMarkers.find(el => el.id === marker.id) && !isSelected
 } onClick={() => this.onSelect(marker, marker.id)}>
-                  <MarkerIcon>
-                    <MarkerImg src={marker.isDefault
-                        ? `defaultMarkers/${marker.icon}`
-                        : `${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
-                  </MarkerIcon>
-                  <MarkerName>{marker.name}</MarkerName>
-                </Marker>)
-              })
-            }
-          </List>
+                      <MarkerIcon>
+                        <MarkerImg src={marker.isDefault
+                            ? `defaultMarkers/${marker.icon}`
+                            : `${baseUrl}/images/${marker.icon}`} alt={marker.icon}/>
+                      </MarkerIcon>
+                      <MarkerName>{marker.name}</MarkerName>
+                    </Marker>)
+                  })
+                }
+              </Markers>
+            </List>))
+          }
+
         </CardBody>
       </Card>
     </Wrapper>);

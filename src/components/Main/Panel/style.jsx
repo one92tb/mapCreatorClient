@@ -35,6 +35,7 @@ const ResponsivePanel = css `
     height: 250px;
     width: 300px;
     background: #f2f2f2;
+
   }
 
   @media only screen and (max-width: 575.98px) {
@@ -42,23 +43,6 @@ const ResponsivePanel = css `
     width: 200px;
   }
 `;
-
-const FilterLink = styled.a `
-  ${NavLink};
-  font-weight: ${props => !props.isSelected && props.location === "/"
-  ? "bold"
-  : "normal"};
-  &:hover {
-   cursor: ${props => props.location === "/createMarker"
-    ? "not-allowed"
-    : "pointer"}
-  }
-`;
-
-const SelectLink = styled.a `
-  ${NavLink};
-  font-weight: ${props => !props.isSelected && props.location === "/" ? "normal" : "bold"}
-  `;
 
 const Card = styled.div `
   height: 100%;
@@ -76,8 +60,9 @@ const Card = styled.div `
 
 const CardHeader = styled.div `
   border-bottom: 1px solid #00b8e6;
-  padding: 0.75rem 1.25rem;
-  background: #4ddbff;
+  padding: 0.5rem;
+  height: 50px;
+
   display: block;
   @media only screen and (max-width: 575.98px) {
     padding: 0.25rem;
@@ -92,12 +77,50 @@ const Nav = styled.ul `
   padding-left: 0;
   margin-bottom: 0;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
-const NavItem = styled.li ``;
+const NavItem = styled.li `
+  width: 50%;
+  height: 100%;
+`;
+
+const Btn = css `
+width: 100%;
+height: 100%;
+border: 1px solid #4ddbff;
+color: #000;
+background-color: #B2CFE7;
+border: 1px solid #00b8e6;
+transition: background-color 1s ease;
+text-transform: uppercase;
+color: #fff;
+`;
+
+const SelectButton = styled.button `
+${Btn}
+border-top-left-radius: 0.25rem;
+border-bottom-left-radius: 0.25rem;
+  background: ${props => props.isSelected && "#00b8e6"}
+`;
+
+const FilterButton = styled.button `
+${Btn}
+border-top-right-radius: 0.25rem;
+border-bottom-right-radius: 0.25rem;
+background: ${props => !props.isSelected && "#00b8e6"};
+
+&:hover {
+ cursor: ${props => props.location === "/createMarker"
+  ? "not-allowed"
+  : "pointer"}
+}
+
+`;
 
 const CardBody = styled.div `
   padding: 1.25rem;
-  height: calc(100% - 48px);
+  height: 100%;
   overflow-y: auto;
   @media only screen and (max-width: 575.98px) {
     padding: 0.25rem;
@@ -143,7 +166,7 @@ const Input = styled.input `
 const List = styled.div `
   list-style: none;
   padding: 0;
-  height: 100%;
+
 `;
 
 const Marker = styled.li `
@@ -156,26 +179,27 @@ const Marker = styled.li `
   padding: 0 !important;
   display: flex;
   opacity: 1;
-
   &:hover {
-    background: #4ddbff;
-    cursor: pointer;
-  }
+      background: ${props => props.isDefault && props.location === "/createMarker"
+  ? "transparent"
+  : "#4ddbff"};
+      cursor: ${props => props.isDefault && props.location === "/createMarker"
+    ? "not-allowed"
+    : "cursor"};
+    }
 
 
-  ${ ({isSelected, isFiltered}) => {
-   if (isSelected) {
-     return ` background: #00b8e6 `;
-   } else if (isFiltered) {
-     return `background: #999; opacity: 0.7;`;
-   } else {
-     return `background: transparent`
-   }
- }};
+  background: ${props => props.isSelected
+      ? "#00b8e6"
+      : props.isFiltered
+        ? "#999"
+        : "transparent"};
+  opacity: ${props => props.isFiltered && "transparent"};
+  transition: all 1s ease;
 
 `;
 
-  const MarkerIcon = styled.div `
+const MarkerIcon = styled.div `
   margin: 0 10px;
   float: left;
   display: flex;
@@ -183,7 +207,7 @@ const Marker = styled.li `
   align-items: center;
 `;
 
-  const MarkerName = styled.span `
+const MarkerName = styled.span `
   width: 75%;
   float: left;
   display: flex;
@@ -194,7 +218,7 @@ const Marker = styled.li `
   }
 `;
 
-  const MarkerImg = styled.img `
+const MarkerImg = styled.img `
   height: 32px;
   width: 32px;
 
@@ -204,20 +228,50 @@ const Marker = styled.li `
   }
 `;
 
-  export {
-    Wrapper,
-    FilterLink,
-    SelectLink,
-    Card,
-    CardHeader,
-    CardBody,
-    NavItem,
-    Nav,
-    Label,
-    Input,
-    List,
-    Marker,
-    MarkerIcon,
-    MarkerName,
-    MarkerImg
-  };
+const DisplayMarkersBtn = styled.button `
+height: 40px;
+width: 100%;
+background: #00b8e6;
+color: #fff;
+border-radius: 3px;
+border: 1px solid #4ddbff;
+text-transform: uppercase;
+`;
+
+const Markers = styled.div `
+margin-top: 5px;
+
+
+
+  height: ${props => props.displayId === props.markersId
+  ? "100%"
+  : "0"};
+  opacity:  ${props => props.displayId === props.markersId
+    ? "100"
+    : "0"};
+  overflow:  ${props => props.displayId !== props.markersId && "hidden"};
+
+  transition: all 1s ease;
+
+
+`;
+
+export {
+  Wrapper,
+  Card,
+  CardHeader,
+  CardBody,
+  NavItem,
+  SelectButton,
+  FilterButton,
+  Nav,
+  Label,
+  Input,
+  List,
+  Marker,
+  MarkerIcon,
+  MarkerName,
+  MarkerImg,
+  DisplayMarkersBtn,
+  Markers
+};

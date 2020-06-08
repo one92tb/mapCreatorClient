@@ -48,23 +48,23 @@ const routes = [
     name: "Map",
     path: "/",
     exact: true,
-    icon: "map.png"
+    icon: "img/map.png"
   }, {
     name: "Create Marker",
     path: "/createMarker",
-    icon: "gps.png"
+    icon: "img/gps.png"
   }, {
     name: "Statistic",
     path: "/statistic",
-    icon: "graph.png"
+    icon: "img/graph.png"
   }, {
     name: "List",
     path: "/list",
-    icon: "list.png"
+    icon: "img/list.png"
   }, {
     name: "Users",
     path: "/users",
-    icon: "users.png"
+    icon: "img/users.png"
   }
 ];
 
@@ -94,17 +94,15 @@ export class NavBar extends Component {
   handleLogOut = () => {
     const {logout, redirect} = this.props;
     logout({userId: "", userName: "", error: "", isAuthorized: false});
-    console.log("a");
     localStorage.removeItem("token");
     redirect("/login");
-    console.log("b");
   };
 
   render() {
+    const {userName} = this.props;
     return (<Panel>
       <ResponsiveMenu>
         <Header>
-          <Logo src={"earth.png"}/>
           <Title className="logoName">mapCreator</Title>
         </Header>
         <Label htmlFor="toggle">&#9776;</Label>
@@ -112,8 +110,8 @@ export class NavBar extends Component {
       </ResponsiveMenu>
       <ResponsiveNav isChecked={this.state.checked}>
         <User>
-          <LoginImg src={"user.png"}/>
-          <LoginName>UserNick</LoginName>
+          <LoginImg src="img/logo4.png"/>
+          <LoginName>{userName}</LoginName>
         </User>
         <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
         <Nav>
@@ -130,6 +128,8 @@ export class NavBar extends Component {
   }
 }
 
+const mapStateToProps = state => ({userName: state.account.userName})
+
 const mapDispatchToProps = {
   isPanelSelect,
   getSelectedMarker,
@@ -137,7 +137,7 @@ const mapDispatchToProps = {
   redirect
 };
 
-export default connect(null, mapDispatchToProps, null, {pure: false})(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps, null, {pure: false})(NavBar);
 
 NavBar.propTypes = {
   isPanelSelect: PropTypes.func.isRequired,

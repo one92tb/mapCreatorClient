@@ -48,7 +48,6 @@ const geocode = (indicator, postIndicator) => {
         country: results[0].formatted_address.split(",")[2],
         isDefault: indicator.isDefault
       };
-      console.log(mapIndicator);
       postIndicator(mapIndicator);
     } else if (status === "OVER_QUERY_LIMIT") {
       console.log("Geocode was not successful for the following reason: " + status);
@@ -91,7 +90,6 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
       onPlacesChanged: () => {
         const places = refs.searchBox.getPlaces();
         const bounds = new google.maps.LatLngBounds();
-        console.log(bounds);
         places.forEach(
           place => place.geometry.viewport
           ? bounds.union(place.geometry.viewport)
@@ -197,9 +195,7 @@ export class Map extends Component {
 
   addIndicator = (event, geocode) => {
     const {selectedMarker, postIndicator, isNavSelect} = this.props;
-    console.log(selectedMarker);
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
-      console.log(selectedMarker);
       const indicator = {
         name: selectedMarker.name,
         icon: selectedMarker.icon,
@@ -207,7 +203,6 @@ export class Map extends Component {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       };
-      console.log(indicator);
       geocode(indicator, postIndicator);
     }
   };
@@ -218,7 +213,6 @@ export class Map extends Component {
   };
 
   render() {
-    console.log(this.props.indicators);
     const {indicators, selectedMarker, selectedIndicator} = this.props;
 
     return (<Wrapper>
