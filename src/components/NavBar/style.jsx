@@ -91,7 +91,8 @@ const LoginImg = styled.img `
 const LoginName = styled.span `
   display: block;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 35px;
+  font-weight: bold;
 
   @media only screen and (max-width: 575.98px) {
     font-size: 12px;
@@ -254,9 +255,9 @@ const ResponsiveNav = styled.div `
     width: 100%;
     background: #4ddbff;
     z-index: ${props => (
-  props.isChecked
-  ? "2"
-  : "-1")};
+    props.isChecked
+    ? "2"
+    : "-1")};
     margin: 0;
     padding-top: 10px;
   }

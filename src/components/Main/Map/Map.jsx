@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {postIndicator} from "../../../actions/mapIndicator/postIndicator";
 import {fetchIndicators} from "../../../actions/mapIndicator/fetchIndicators";
 import {removeIndicator} from "../../../actions/mapIndicator/removeIndicator";
+import {editIndicator} from "../../../actions/mapIndicator/editIndicator";
 import PropTypes from "prop-types";
 import {baseUrl} from "../../../axiosInstance";
 import {Wrapper, SearchBoxInput, InfoBoxContainer, InfoBtn, InfoContent} from "./style";
@@ -20,14 +21,57 @@ const _ = require("lodash");
 const {withScriptjs, withGoogleMap, GoogleMap, Marker} = require("react-google-maps");
 const {SearchBox} = require("react-google-maps/lib/components/places/SearchBox");
 
-const onToggleOpen = ({isOpen, id}) => id => id && !isOpen
-  ? {
-    isOpen: !isOpen,
-    id
+const onToggleOpen = ({isOpen, id, name, street, city, country, currentValue}) => id => {
+  console.log(id, isOpen, name);
+  if (id && !isOpen) {
+    return {
+      isOpen: !isOpen,
+      id
+    }
+  } else {
+    return {
+      id,
+      street: "",
+      city: "",
+      country: "",
+      currentValue: ""
+    }
   }
-  : {
-    id
-  };
+}
+
+const onEditInfoBox = ({isEdit, currentId, currentValue, propertyName}) => (currentId, currentValue, propertyName) => {
+  console.log(isEdit, currentId, propertyName)
+  if (currentId && !isEdit) {
+    return {
+      isEdit: !isEdit,
+      currentValue: currentValue,
+      currentId: currentId,
+      propertyName: propertyName
+    }
+  } else {
+    return {currentId: currentId, currentValue: currentValue, propertyName: propertyName}
+
+  }
+}
+
+const onIndicatorChange = ({propertyName, street, city, country}) => (e) => {
+  console.log(e.target.value);
+  return {
+    [e.target.name]: e.target.value
+  }
+}
+
+const closeInput = ({isOpen, id, street, city, country, currentValue, isEdit}) => () => {
+  return {
+    isEdit: false,
+    id,
+    street: "",
+    city: "",
+    country: "",
+    currentValue: "",
+    propertyName: ""
+  }
+}
 
 const geocode = (indicator, postIndicator) => {
   let geocoder = new window.google.maps.Geocoder();
@@ -66,13 +110,21 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
   }}/>)}), withStateHandlers(() => ({
   isOpen: false,
   id: null,
+  isEdit: false,
+  currentId: null,
+  editValuie: "",
+  editingValue: "",
+  street: "",
+  city: "",
+  country: "",
+  propertyName: "",
   bounds: null,
   center: {
     lat: 50.89973,
     lng: 15.72899
   },
   zoom: 15
-}), {onToggleOpen, geocode}), withScriptjs, withGoogleMap, lifecycle({
+}), {onToggleOpen, geocode, onEditInfoBox, onIndicatorChange, closeInput}), withScriptjs, withGoogleMap, lifecycle({
   componentDidMount() {
     const refs = {};
 
@@ -102,13 +154,14 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
         refs.map.fitBounds(bounds);
       },
       onZoomChanged: () => {
-        console.log(refs.map)
         this.setState({zoom: refs.map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom});
       }
     });
   }
 }))(props => {
-  return (<GoogleMap ref={props.onMapMounted} onBoundsChanged={props.onBoundsChanged} onMouseOver={props.onMouseOver} defaultZoom={props.zoom} onZoomChanged={props.onZoomChanged} onClick={e => props.addIndicator(e, geocode, postIndicator)} defaultCenter={props.selectedIndicator
+  return (<GoogleMap ref={props.onMapMounted} onBoundsChanged={props.onBoundsChanged} onMouseOver={props.onMouseOver} defaultZoom={props.zoom} options={{
+      disableDoubleClickZoom: true
+    }} onZoomChanged={props.onZoomChanged} onClick={e => props.addIndicator(e, geocode, postIndicator)} defaultCenter={props.selectedIndicator
       ? {
         lat: props.selectedIndicator.lat,
         lng: props.selectedIndicator.lng
@@ -117,7 +170,6 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
 } defaultCursor={props.cursor} onChangeCenter={props.newLocation}>
     {
       props.indicators.filter(indicator => !props.disableMarkers.find(disableItem => disableItem.name === indicator.name)).map((indicator, index) => {
-        //console.log(indicator);
         return (<Marker data-testid="marker" onClick={() => props.onToggleOpen(indicator.id)} key={index} position={{
             lat: indicator.lat,
             lng: indicator.lng
@@ -159,10 +211,21 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
                 infoBoxClearance: new google.maps.Size(1, 1)
               }}>
               <InfoBoxContainer>
-                <InfoContent>{indicator.name}</InfoContent>
-                <InfoContent>{indicator.street}</InfoContent>
-                <InfoContent>{indicator.city}</InfoContent>
-                <InfoContent>{indicator.country}</InfoContent>
+                {
+                  ["name", "street", "city", "country"].map(content => {
+                    return props.isEdit && props.currentId === indicator.id && props.currentValue === indicator[content] && props.propertyName === content
+                      ? <input type="text" name={content} onChange={e => props.onIndicatorChange(e)} value={props[content]} placeholder={indicator[content]} onKeyPress={e => {
+                            let key = e.keyCode || e.which;
+                            if (key === 13) {
+                              props.edit(indicator.id, content, props[content]);
+                              props.closeInput();
+                            } else if (key === 27) {
+                              props.closeInput();
+                            }
+                          }}/>
+                      : <InfoContent onDoubleClick={() => props.onEditInfoBox(indicator.id, indicator[content], content)}>{indicator[content]}</InfoContent>
+                  })
+                }
                 <InfoBtn onClick={() => props.remove(indicator.id)} data-testid="removeBtn">
                   Remove Marker
                 </InfoBtn>
@@ -207,6 +270,12 @@ export class Map extends Component {
     }
   };
 
+  edit = (id, propertyName, value) => {
+    const {editIndicator} = this.props;
+    console.log("TEST");
+    editIndicator(id, propertyName, value);
+  }
+
   remove = id => {
     const {removeIndicator} = this.props;
     removeIndicator(id);
@@ -216,7 +285,7 @@ export class Map extends Component {
     const {indicators, selectedMarker, selectedIndicator} = this.props;
 
     return (<Wrapper>
-      <MapWithAMakredInfoWindow indicators={indicators} selectedMarker={selectedMarker} addIndicator={this.addIndicator} remove={this.remove} disableMarkers={this.props.disableMarkers} selectedIndicator={selectedIndicator}/>
+      <MapWithAMakredInfoWindow indicators={indicators} selectedMarker={selectedMarker} addIndicator={this.addIndicator} remove={this.remove} edit={this.edit} disableMarkers={this.props.disableMarkers} selectedIndicator={selectedIndicator}/>
     </Wrapper>);
   }
 }
@@ -226,7 +295,8 @@ const mapStateToProps = state => ({indicators: state.mapIndicator.indicators, is
 const mapDispatchToProps = {
   fetchIndicators,
   postIndicator,
-  removeIndicator
+  removeIndicator,
+  editIndicator
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

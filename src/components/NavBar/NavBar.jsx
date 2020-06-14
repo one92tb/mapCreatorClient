@@ -111,7 +111,7 @@ export class NavBar extends Component {
       <ResponsiveNav isChecked={this.state.checked}>
         <User>
           <LoginImg src="img/logo4.png"/>
-          <LoginName>{userName}</LoginName>
+          <LoginName>user: {userName}</LoginName>
         </User>
         <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
         <Nav>

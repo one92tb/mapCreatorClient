@@ -115,7 +115,7 @@ export class List extends Component {
                 <Td>{indicator.city}</Td>
                 <Td>{indicator.country}</Td>
                 <Td>
-                  <Image data-testid="findIndicator" src={"map-location.png"} onClick={() => this.findIndicatorOnTheMap(indicator)}/>
+                  <Image data-testid="findIndicator" src={"img/map.png"} onClick={() => this.findIndicatorOnTheMap(indicator)}/>
                 </Td>
               </Tr>))
             }
