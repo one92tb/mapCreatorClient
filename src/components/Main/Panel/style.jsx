@@ -18,11 +18,6 @@ const Wrapper = styled.div `
   }
 `;
 
-const NavLink = css `
-  margin: 0 10px;
-  cursor: pointer;
-`;
-
 const ResponsivePanel = css `
   @media only screen and (max-width: 991.98px) {
     display: ${props => props.isChecked

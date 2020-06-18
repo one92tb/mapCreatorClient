@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   height: 100%;
   width: 100%;
   padding: 40px 20px 40px 10px;
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const SearchBoxInput = styled.input`
+const SearchBoxInput = styled.input `
   box-sizing: border-box;
   border: 1px solid transparent;
   width: 200px;
@@ -35,7 +35,7 @@ const SearchBoxInput = styled.input`
   }
 `;
 
-const InfoBoxContainer = styled.div`
+const InfoBoxContainer = styled.div `
   display: flex;
   flex-direction: column;
   position: relative;
@@ -76,7 +76,7 @@ const InfoBoxContainer = styled.div`
   }
 `;
 
-const InfoBtn = styled.button`
+const InfoBtn = styled.button `
   margin-top: 10px;
   width: 160px;
   display: block;
@@ -97,7 +97,7 @@ const InfoBtn = styled.button`
   }
 `;
 
-const InfoContent = styled.span`
+const InfoContent = styled.span `
   font-size: 15px;
   color: #003d4d;
   height: 35px;
@@ -109,4 +109,22 @@ const InfoContent = styled.span`
   font-weight: bold;
 `;
 
-export { Wrapper, SearchBoxInput, InfoBoxContainer, InfoBtn, InfoContent };
+const InfoContentInput = styled.input `
+font-size: 15px;
+color: #003d4d;
+height: 35px;
+background: #fff;
+text-align: center;
+border: none;
+border-bottom: 2px solid #00b8e6;
+text-transform: uppercase;
+`;
+
+export {
+  Wrapper,
+  SearchBoxInput,
+  InfoBoxContainer,
+  InfoBtn,
+  InfoContent,
+  InfoContentInput
+};
