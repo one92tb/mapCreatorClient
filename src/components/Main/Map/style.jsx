@@ -45,7 +45,7 @@ const InfoBoxContainer = styled.div `
   width: 250px;
   border: 5px solid #00b8e6;
   border-radius: 5px;
-
+  
   &:before {
     top: 100%;
     left: 50%;

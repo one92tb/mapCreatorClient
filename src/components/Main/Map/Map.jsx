@@ -38,7 +38,6 @@ const onToggleOpen = ({
   country,
   currentValue
 }) => id => {
-  console.log(id, isOpen, name);
   if (id && !isOpen) {
     return {
       isOpen: !isOpen,
@@ -49,10 +48,8 @@ const onToggleOpen = ({
   }
 }
 
-const onEditInfoBox = ({isEdit, currentId, currentValue, propertyName}) => (currentId, currentValue, propertyName) => {
-  //console.log(isEdit, currentId, propertyName, input)
-
-
+const onEditInfoBox = ({isEdit, currentId, currentValue, propertyName}) => (event, currentId, currentValue, propertyName) => {
+  event.stopPropagation();
   if (currentId && !isEdit) {
     return {
       isEdit: !isEdit,
@@ -67,7 +64,6 @@ const onEditInfoBox = ({isEdit, currentId, currentValue, propertyName}) => (curr
 }
 
 const onIndicatorChange = ({propertyName, street, city, country}) => (e) => {
-  console.log(e.target.value);
   return {
     [e.target.name]: e.target.value
   }
@@ -121,12 +117,12 @@ const geocode = (indicator, postIndicator) => {
   });
 };
 
-export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`, containerElement: (<div style={{
+export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`, containerElement: (<div name="dupa" style={{
     height: `100%`
   }}/>), loadingElement: (<div style={{
-    height: `100%`
+    height: `100%`,
   }}/>), mapElement: (<div style={{
-    height: `100%`
+    height: `100%`,
   }}/>)}), withStateHandlers(() => ({
   isOpen: false,
   id: null,
@@ -138,6 +134,7 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
   city: "",
   country: "",
   propertyName: "",
+  currentInfoBoxClicked: false,
   input: null,
   bounds: null,
   center: {
@@ -183,10 +180,9 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
     });
   }
 }))(props => {
-  console.log(props);
   return (<GoogleMap ref={props.onMapMounted} onBoundsChanged={props.onBoundsChanged} onMouseOver={props.onMouseOver} defaultZoom={props.zoom} options={{
       disableDoubleClickZoom: true
-    }} onZoomChanged={props.onZoomChanged} onClick={e => props.addIndicator(e, geocode, postIndicator)} defaultCenter={props.selectedIndicator
+    }} onZoomChanged={props.onZoomChanged} onClick={e => props.addIndicator(e, geocode)} defaultCenter={props.selectedIndicator
       ? {
         lat: props.selectedIndicator.lat,
         lng: props.selectedIndicator.lng
@@ -247,11 +243,10 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
                             } else if (key === 13 && props[content] === "") {
                               props.closeInput();
                             } else if (e.keyCode === 27) {
-                              console.log("aaa")
                               props.closeInput();
                             }
                           }}/>
-                        : <InfoContent onDoubleClick={() => props.onEditInfoBox(indicator.id, indicator[content], content)}>{indicator[content]}</InfoContent>
+                      : <InfoContent onDoubleClick={(event) => props.onEditInfoBox(event, indicator.id, indicator[content], content)}>{indicator[content]}</InfoContent>
                   })
                 }
                 <InfoBtn onClick={() => props.remove(indicator.id)} data-testid="removeBtn">
@@ -285,6 +280,10 @@ export class Map extends Component {
   }
 
   addIndicator = (event, geocode) => {
+    if (event.tb.explicitOriginalTarget && event.tb.explicitOriginalTarget.style.zIndex !== "3") {
+      return false;
+    }
+
     const {selectedMarker, postIndicator, isNavSelect} = this.props;
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
       const indicator = {
@@ -300,8 +299,6 @@ export class Map extends Component {
 
   edit = (id, propertyName, value) => {
     const {editIndicator} = this.props;
-    console.log(id, propertyName, value);
-    console.log("TEST");
     editIndicator(id, propertyName, value);
   }
 
