@@ -27,10 +27,11 @@ export const postIndicator = indicator => dispatch => {
       }
     })
     .then(res => {
-      //console.log(res.data);
+      console.log(res);
       dispatch(postedIndicatorSuccess(res.data));
     })
     .catch(error => {
+      console.log(error);
       dispatch(postedIndicatorError(error));
     });
 };

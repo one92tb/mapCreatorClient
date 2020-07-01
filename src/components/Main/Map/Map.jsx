@@ -191,7 +191,7 @@ export const MapWithAMakredInfoWindow = compose(withProps({googleMapURL: `https:
 } defaultCursor={props.cursor} onChangeCenter={props.newLocation}>
     {
       props.indicators.filter(indicator => !props.disableMarkers.find(disableItem => disableItem.name === indicator.name)).map((indicator, index) => {
-        return (<Marker data-testid="marker" onClick={() => props.onToggleOpen(indicator.id)} key={index} position={{
+        return (<Marker data-testid="marker" onClick={() => props.onToggleOpen(indicator.id)} key={indicator.id} position={{
             lat: indicator.lat,
             lng: indicator.lng
           }} icon={{

@@ -1,12 +1,14 @@
-import React from "react";
+import React, {lazy} from "react";
 import {RowStyle, ColStyle} from "./style";
 import  Panel from "./Panel/Panel";
-import Map from "./Map/Map";
+//import Map from "./Map/Map";
 import MarkerCreator from "./MarkerCreator/MarkerCreator";
 import {Switch, Route} from "react-router-dom";
 
 RowStyle.displayName = "div";
 ColStyle.displayName = "div";
+
+const Map = lazy(() => import("./Map/Map"));
 
 export const routes = [
   {

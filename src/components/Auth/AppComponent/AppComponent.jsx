@@ -1,13 +1,15 @@
-import React from "react";
+import React, {lazy} from "react";
 import NoAuthorization from "../../NoAuthorization/NoAuthorization";
 import Users from "../../Users/Users";
 import Main from "../../Main/Main";
-import Statistic from "../../Statistic/Statistic";
+//import Statistic from "../../Statistic/Statistic";
 import NavBar from "../../NavBar/NavBar";
 import List from "../../List/List";
 import {Switch, Route} from "react-router-dom";
 import {ContainerStyle, RowStyle, ColStyle} from "../style";
 import decode from "jwt-decode";
+
+const Statistic = lazy(() => import ("../../Statistic/Statistic"));
 
 export const authAdmin = () => {
   const token = localStorage.getItem("token");

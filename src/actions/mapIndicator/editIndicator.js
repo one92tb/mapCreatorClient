@@ -16,7 +16,6 @@ const editedIndicatorError = error => ({
 });
 
 export const editIndicator = (id, propertyName, value) => dispatch => {
-  console.log(id,propertyName, value);
   dispatch({
     type: EDITING_INDICATOR
   });
@@ -29,11 +28,9 @@ export const editIndicator = (id, propertyName, value) => dispatch => {
       }
     })
     .then(res => {
-      console.log(res.data);
       dispatch(editedIndicatorSuccess(res.data));
     })
     .catch(error => {
-      console.log(error);
       dispatch(editedIndicatorError(error));
     });
 };
