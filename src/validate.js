@@ -3,6 +3,7 @@ const validate = (errors, ValidationDetails, data) => {
 
   ValidationDetails(data).forEach((validate) => {
     if (validate.condition) {
+      console.log(validate)
       isError = true;
       errors[validate.nameOfErrorProperty] = validate.messageError;
     } else if (

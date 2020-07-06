@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { css } from "styled-components";
+import {css} from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   background: #f2f2f2;
   height: 100%;
   width: 100%;
   padding-top: 100px;
+
 
   @media only screen and (max-width: 1199.98px) {
     padding-top: 50px;
@@ -19,26 +20,25 @@ const Wrapper = styled.div`
   }
 `;
 
-const Inner = styled.div`
+const Inner = styled.div `
   width: 400px;
   border: 1px solid #6c757d;
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 0.25rem;
+  margin: 30px auto 30px auto;
 
   @media only screen and (max-width: 575.98px) {
     width: 300px;
   }
 `;
 
-const Form = styled.form`
+const Form = styled.form `
   padding: 20px;
   @media only screen and (max-width: 575.98px) {
     padding: 10px;
   }
 `;
 
-const FormGroup = styled.div`
+const FormGroup = styled.div `
   position: relative;
 
   &:not(:last-child) {
@@ -46,9 +46,9 @@ const FormGroup = styled.div`
   }
 `;
 
-const ErrorMessage = styled.span`
+const ErrorMessage = styled.span `
   color: #cc0000;
-  font-size: 10px;
+  font-size: 12px;
   display: block;
   margin-left: 2px;
 
@@ -57,9 +57,9 @@ const ErrorMessage = styled.span`
   }
 `;
 
-const SuccessMessage = styled.span`
+const SuccessMessage = styled.span `
   color: #009933;
-  font-size: 10px;
+  font-size: 12px;
   display: block;
   margin-left: 2px;
 
@@ -68,7 +68,7 @@ const SuccessMessage = styled.span`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label `
   display: block;
   margin-left: 2px;
 
@@ -79,7 +79,7 @@ const Label = styled.label`
   }
 `;
 
-const Button = css`
+const Button = css `
   cursor: pointer;
   height: 40px;
   width: 165px;
@@ -98,17 +98,23 @@ const Button = css`
   }
 `;
 
-const RegisterBtn = styled.button`
+const RegisterBtn = styled.button `
   ${Button};
-  background: ${props => (!props.status ? "#00b8e6" : "#4ddbff")};
+  background: ${props => (
+  !props.status
+  ? "#00b8e6"
+  : "#4ddbff")};
 `;
 
-const LoginBtn = styled.button`
+const LoginBtn = styled.button `
   ${Button};
-  background: ${props => (props.status ? "#00b8e6" : "#4ddbff")};
+  background: ${props => (
+  props.status
+  ? "#00b8e6"
+  : "#4ddbff")};
 `;
 
-const SubmitBtn = styled.button`
+const SubmitBtn = styled.button `
   ${Button};
   background-color: #00b8e6;
   margin-top: 4px;
@@ -119,7 +125,7 @@ const SubmitBtn = styled.button`
   }
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div `
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #6c757d;
@@ -134,7 +140,7 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const Input = styled.input`
+const Input = styled.input `
   width: 100%;
   font-size: 1rem;
   line-height: 1.5;
@@ -146,6 +152,37 @@ const Input = styled.input`
   @media only screen and (max-width: 575.98px) {
     font-size: 14px;
     height: 30px;
+  }
+`;
+
+const Logo = styled.img `
+  display: flex;
+  width: 130px;
+  height: 130px;
+  margin: 30px auto 30px auto;
+
+  @media only screen and (max-width: 575.98px) {
+    width: 80px;
+    height: 80px;
+  }
+`;
+
+const Title = styled.h1 `
+  font-size: 26px;
+  font-family: 'Lobster', cursive;
+  align-items: center;
+  text-align: center;
+
+  @media (max-width: 1199px) {
+    margin: 0;
+  }
+
+  @media only screen and (max-width: 575.98px) {
+    font-size: 20px;
+  }
+
+  @media only screen and (max-width: 350px) {
+    font-size: 14px;
   }
 `;
 
@@ -161,5 +198,7 @@ export {
   Input,
   ErrorMessage,
   SuccessMessage,
-  SubmitBtn
+  SubmitBtn,
+  Logo,
+  Title
 };

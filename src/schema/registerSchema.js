@@ -11,8 +11,9 @@ export const registerValidationDetails = data => {
       condition: !new RegExp("^(?=.*[A-Z])").test(password) && !loginStatus,
       nameOfErrorProperty: "passwordError",
       messageError:
-        "The password must contain at least 1 uppercase alphabetical character"
+        "The password must be minimum 8 characters or longer and 1 uppercase character"
     },
+    /*
     {
       condition: !new RegExp("(?=.*[0-9])").test(password) && !loginStatus,
       nameOfErrorProperty: "passwordError",
@@ -24,10 +25,11 @@ export const registerValidationDetails = data => {
       messageError:
         "The password must contain at least 1 lowercase alphabetical character"
     },
+    */
     {
       condition: !new RegExp("(?=.{8,})").test(password) && !loginStatus,
       nameOfErrorProperty: "passwordError",
-      messageError: "The password must be minimum 8 characters or longer"
+      messageError: "The password must be minimum 8 characters or longer and 1 uppercase character"
     },
     {
       condition: !new RegExp("(?=.{4,})").test(login) && !loginStatus,

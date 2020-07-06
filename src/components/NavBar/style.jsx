@@ -39,21 +39,6 @@ const Header = styled.div `
   }
 `;
 
-const Logo = styled.img `
-  margin-right: 5px;
-  width: 50px;
-  height: 50px;
-
-  @media only screen and (max-width: 575.98px) {
-    width: 40px;
-    height: 40px;
-  }
-
-  @media only screen and (max-width: 350px) {
-    width: 30px;
-    height: 30px;
-  }
-`;
 
 const Title = styled.h1 `
   font-size: 26px;
@@ -76,7 +61,7 @@ const Title = styled.h1 `
 
 const User = styled.div ``;
 
-const LoginImg = styled.img `
+const Logo = styled.img `
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -271,7 +256,6 @@ export {
   Logo,
   Title,
   User,
-  LoginImg,
   LoginName,
   Nav,
   NavItem,

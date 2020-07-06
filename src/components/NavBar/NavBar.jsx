@@ -11,7 +11,6 @@ import {
   Logo,
   Title,
   User,
-  LoginImg,
   LoginName,
   Input,
   Nav,
@@ -29,7 +28,6 @@ Header.displayName = "div";
 Logo.displayName = "img";
 Title.displayName = "h1";
 User.displayName = "div";
-LoginImg.displayName = "img";
 LoginName.displayName = "span";
 Input.displayName = "input";
 Nav.displayName = "ul";
@@ -103,14 +101,14 @@ export class NavBar extends Component {
     return (<Panel>
       <ResponsiveMenu>
         <Header>
-          <Title className="logoName">mapCreator</Title>
+          <Title>mapCreator</Title>
         </Header>
         <Label htmlFor="toggle">&#9776;</Label>
         <Input type="checkbox" id="toggle" onChange={this.handleCheckBox}/>
       </ResponsiveMenu>
       <ResponsiveNav isChecked={this.state.checked}>
         <User>
-          <LoginImg src="img/logo4.png"/>
+          <Logo src="img/logo4.png"/>
           <LoginName>user: {userName}</LoginName>
         </User>
         <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
