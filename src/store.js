@@ -1,7 +1,7 @@
-import reducers from "./reducers/index";
-import thunk from "redux-thunk";
-import { createStore, applyMiddleware, compose } from "redux";
-import { redirectMiddleware } from "./redirectMiddleware";
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from './reducers/index';
+import { redirectMiddleware } from './redirectMiddleware';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

@@ -1,37 +1,33 @@
-import {
-  axiosInstance
-} from "../../axiosInstance";
+import { axiosInstance } from '../../axiosInstance';
 
-export const POSTING_INDICATOR = "POSTING_INDICATOR";
-export const POSTED_INDICATOR_SUCCESS = "POSTED_INDICATOR_SUCCESS";
-export const POSTED_INDICATOR_ERROR = "POSTED_INDICATOR_ERROR";
+export const POSTING_INDICATOR = 'POSTING_INDICATOR';
+export const POSTED_INDICATOR_SUCCESS = 'POSTED_INDICATOR_SUCCESS';
+export const POSTED_INDICATOR_ERROR = 'POSTED_INDICATOR_ERROR';
 
-const postedIndicatorSuccess = indicator => ({
+const postedIndicatorSuccess = (indicator) => ({
   type: POSTED_INDICATOR_SUCCESS,
   indicator
 });
 
-const postedIndicatorError = error => ({
+const postedIndicatorError = (error) => ({
   type: POSTED_INDICATOR_ERROR,
   error
 });
 
-export const postIndicator = indicator => dispatch => {
+export const postIndicator = (indicator) => (dispatch) => {
   dispatch({
     type: POSTING_INDICATOR
   });
   axiosInstance
-    .post("/api/indicators", indicator, {
+    .post('/api/indicators', indicator, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => {
-      console.log(res);
+    .then((res) => {
       dispatch(postedIndicatorSuccess(res.data));
     })
-    .catch(error => {
-      console.log(error);
+    .catch((error) => {
       dispatch(postedIndicatorError(error));
     });
 };

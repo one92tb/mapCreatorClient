@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Container, Row, Col } from "reactstrap";
+import styled from 'styled-components';
+import { Container, Row, Col } from 'reactstrap';
 
 const ContainerStyle = styled(Container)`
   height: 100%;
@@ -26,7 +26,6 @@ const ColStyle = styled(Col)`
       height:  60px;
       flex-wrap: nowrap;
     }
-
 `;
 
 export { ContainerStyle, RowStyle, ColStyle };

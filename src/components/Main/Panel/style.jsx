@@ -1,28 +1,27 @@
-import {css} from "styled-components";
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 
-const Wrapper = styled.div `
+const Wrapper = styled.div`
   padding: 40px 10px 40px 20px;
   height: 100%;
   @media only screen and (max-width: 1199px) {
     padding: 5px;
   }
   @media only screen and (max-width: 991.98px) {
-    height: ${props => props.currentLocation.pathname === "/"
-  ? "0"
-  : "100%"};
-    padding: ${props => props.currentLocation.pathname === "/"
-    ? "0"
-    : "10px 5px 5px 5px"};
+    height: ${(props) => (props.currentLocation.pathname === '/'
+    ? '0'
+    : '100%')};
+    padding: ${(props) => (props.currentLocation.pathname === '/'
+    ? '0'
+    : '10px 5px 5px 5px')};
 
   }
 `;
 
-const ResponsivePanel = css `
+const ResponsivePanel = css`
   @media only screen and (max-width: 991.98px) {
-    display: ${props => props.isChecked
-  ? "flex"
-  : "none"};
+    display: ${(props) => (props.isChecked
+    ? 'flex'
+    : 'none')};
     position: absolute;
     z-index: 1;
     top: 65px;
@@ -30,7 +29,6 @@ const ResponsivePanel = css `
     height: 250px;
     width: 300px;
     background: #f2f2f2;
-
   }
 
   @media only screen and (max-width: 575.98px) {
@@ -39,7 +37,7 @@ const ResponsivePanel = css `
   }
 `;
 
-const Card = styled.div `
+const Card = styled.div`
   height: 100%;
   border: 1px solid #00b8e6;
   width: 100%;
@@ -50,10 +48,10 @@ const Card = styled.div `
   flex-direction: column;
   border-radius: 3px;
   overflow: hidden;
-  ${props => props.currentLocation.pathname === "/" && ResponsivePanel};
+  ${(props) => props.currentLocation.pathname === '/' && ResponsivePanel};
 `;
 
-const CardHeader = styled.div `
+const CardHeader = styled.div`
   border-bottom: 1px solid #00b8e6;
   padding: 0.5rem;
   height: 50px;
@@ -65,7 +63,7 @@ const CardHeader = styled.div `
   }
 `;
 
-const Nav = styled.ul `
+const Nav = styled.ul`
   display: flex;
   flex-wrap: wrap;
   list-style: none;
@@ -75,12 +73,13 @@ const Nav = styled.ul `
   width: 100%;
   height: 100%;
 `;
-const NavItem = styled.li `
+
+const NavItem = styled.li`
   width: 50%;
   height: 100%;
 `;
 
-const Btn = css `
+const Btn = css`
 width: 100%;
 height: 100%;
 border: 1px solid #4ddbff;
@@ -92,28 +91,27 @@ text-transform: uppercase;
 color: #fff;
 `;
 
-const SelectButton = styled.button `
+const SelectButton = styled.button`
 ${Btn}
 border-top-left-radius: 0.25rem;
 border-bottom-left-radius: 0.25rem;
-  background: ${props => props.isSelected && "#00b8e6"}
+  background: ${(props) => props.isSelected && '#00b8e6'}
 `;
 
-const FilterButton = styled.button `
+const FilterButton = styled.button`
 ${Btn}
 border-top-right-radius: 0.25rem;
 border-bottom-right-radius: 0.25rem;
-background: ${props => !props.isSelected && "#00b8e6"};
+background: ${(props) => !props.isSelected && '#00b8e6'};
 
 &:hover {
- cursor: ${props => props.location === "/createMarker"
-  ? "not-allowed"
-  : "pointer"}
+ cursor: ${(props) => (props.location === '/createMarker'
+    ? 'not-allowed'
+    : 'pointer')}
 }
-
 `;
 
-const CardBody = styled.div `
+const CardBody = styled.div`
   padding: 1.25rem;
   height: 100%;
   overflow-y: auto;
@@ -122,12 +120,12 @@ const CardBody = styled.div `
   }
 `;
 
-const Label = styled.label `
+const Label = styled.label`
   display: none;
   @media (max-width: 991.98px) {
-    display: ${props => props.currentLocation.pathname === "/"
-  ? "flex"
-  : "none"};
+    display: ${(props) => (props.currentLocation.pathname === '/'
+    ? 'flex'
+    : 'none')};
     position: absolute;
     top: 15px;
     left: 430px;
@@ -154,17 +152,17 @@ const Label = styled.label `
   }
 `;
 
-const Input = styled.input `
+const Input = styled.input`
   display: none;
 `;
 
-const List = styled.div `
+const List = styled.div`
   list-style: none;
   padding: 0;
 
 `;
 
-const Marker = styled.li `
+const Marker = styled.li`
   margin-bottom: 5px;
   border: 1px solid #4ddbff;
   width: 100%;
@@ -175,26 +173,26 @@ const Marker = styled.li `
   display: flex;
   opacity: 1;
   &:hover {
-      background: ${props => props.isDefault && props.location === "/createMarker"
-  ? "transparent"
-  : "#4ddbff"};
-      cursor: ${props => props.isDefault && props.location === "/createMarker"
-    ? "not-allowed"
-    : "cursor"};
+      background: ${(props) => (props.isDefault && props.location === '/createMarker'
+    ? 'transparent'
+    : '#4ddbff')};
+      cursor: ${(props) => (props.isDefault && props.location === '/createMarker'
+    ? 'not-allowed'
+    : 'cursor')};
     }
 
 
-  background: ${props => props.isSelected
-      ? "#00b8e6"
-      : props.isFiltered
-        ? "#999"
-        : "transparent"};
-  opacity: ${props => props.isFiltered && "transparent"};
+  background: ${(props) => (props.isSelected
+    ? '#00b8e6'
+    : props.isFiltered
+      ? '#999'
+      : 'transparent')};
+  opacity: ${(props) => props.isFiltered && 'transparent'};
   transition: all 1s ease;
 
 `;
 
-const MarkerIcon = styled.div `
+const MarkerIcon = styled.div`
   margin: 0 10px;
   float: left;
   display: flex;
@@ -202,7 +200,7 @@ const MarkerIcon = styled.div `
   align-items: center;
 `;
 
-const MarkerName = styled.span `
+const MarkerName = styled.span`
   width: 75%;
   float: left;
   display: flex;
@@ -213,7 +211,7 @@ const MarkerName = styled.span `
   }
 `;
 
-const MarkerImg = styled.img `
+const MarkerImg = styled.img`
   height: 32px;
   width: 32px;
 
@@ -223,7 +221,7 @@ const MarkerImg = styled.img `
   }
 `;
 
-const DisplayMarkersBtn = styled.button `
+const DisplayMarkersBtn = styled.button`
 height: 40px;
 width: 100%;
 background: #00b8e6;
@@ -233,22 +231,20 @@ border: 1px solid #4ddbff;
 text-transform: uppercase;
 `;
 
-const Markers = styled.div `
+const Markers = styled.div`
 margin-top: 5px;
 
 
 
-  height: ${props => props.displayId === props.markersId
-  ? "100%"
-  : "0"};
-  opacity:  ${props => props.displayId === props.markersId
-    ? "100"
-    : "0"};
-  overflow:  ${props => props.displayId !== props.markersId && "hidden"};
+  height: ${(props) => (props.displayId === props.markersId
+    ? '100%'
+    : '0')};
+  opacity:  ${(props) => (props.displayId === props.markersId
+    ? '100'
+    : '0')};
+  overflow:  ${(props) => props.displayId !== props.markersId && 'hidden'};
 
   transition: all 1s ease;
-
-
 `;
 
 export {

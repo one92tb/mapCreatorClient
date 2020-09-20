@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { getSelectedMarker } from "../../../actions/marker/getSelectedMarker";
-import { postMarker } from "../../../actions/marker/postMarker";
-import { removeMarker } from "../../../actions/marker/removeMarker";
-import { editMarker } from "../../../actions/marker/editMarker";
-import { fetchMarkers } from "../../../actions/marker/fetchMarkers";
-import { connect } from "react-redux";
-import validate from "../../../validate";
-import { errors, markerValidationDetails } from "../../../schema/markerSchema";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getSelectedMarker } from '../../../actions/marker/getSelectedMarker';
+import { postMarker } from '../../../actions/marker/postMarker';
+import { removeMarker } from '../../../actions/marker/removeMarker';
+import { editMarker } from '../../../actions/marker/editMarker';
+import { fetchMarkers } from '../../../actions/marker/fetchMarkers';
+import validate from '../../../validate';
+import { errors, markerValidationDetails } from '../../../schema/markerSchema';
 import {
   Wrapper,
   Inner,
@@ -32,33 +32,33 @@ import {
   MarkerIconBox,
   ButtonGroup,
   ErrorMessage
-} from "./style";
+} from './style';
 
-const domtoimage = require("dom-to-image");
+const domtoimage = require('dom-to-image');
 
-Wrapper.displayName = "div";
-Inner.displayName = "div";
-ImageInsideMarker.displayName = "img";
-ImageWithoutMarker.displayName = "img";
-Form.displayName = "form";
-FormGroup.displayName = "div";
-LabelColor.displayName = "label";
-LabelFile.displayName = "label";
-LabelName.displayName = "label";
-FileInput.displayName = "input";
-Input.displayName = "input";
-InputSpan.displayName = "span";
-SubmitBtn.displayName = "button";
-RemoveBtn.displayName = "button";
-DownloadBtn.displayName = "button";
-MarkerIcon.displayName = "div";
-UploadButton.displayName = "button";
-CustomButton.displayName = "button";
-ImageBox.displayName = "div";
-AdditionalWrapper.displayName = "div";
-MarkerIconBox.displayName = "div";
-ButtonGroup.displayName = "div";
-ErrorMessage.displayName = "span";
+Wrapper.displayName = 'div';
+Inner.displayName = 'div';
+ImageInsideMarker.displayName = 'img';
+ImageWithoutMarker.displayName = 'img';
+Form.displayName = 'form';
+FormGroup.displayName = 'div';
+LabelColor.displayName = 'label';
+LabelFile.displayName = 'label';
+LabelName.displayName = 'label';
+FileInput.displayName = 'input';
+Input.displayName = 'input';
+InputSpan.displayName = 'span';
+SubmitBtn.displayName = 'button';
+RemoveBtn.displayName = 'button';
+DownloadBtn.displayName = 'button';
+MarkerIcon.displayName = 'div';
+UploadButton.displayName = 'button';
+CustomButton.displayName = 'button';
+ImageBox.displayName = 'div';
+AdditionalWrapper.displayName = 'div';
+MarkerIconBox.displayName = 'div';
+ButtonGroup.displayName = 'div';
+ErrorMessage.displayName = 'span';
 
 export class MarkerCreator extends Component {
   constructor(props) {
@@ -66,13 +66,13 @@ export class MarkerCreator extends Component {
     this.imageBox = React.createRef();
     this.inputFile = React.createRef();
     this.state = {
-      markerName: "",
-      markerImageFile: "",
-      displaySelectedImage: "img/IMG-default.png",
-      color: "#000",
+      markerName: '',
+      markerImageFile: '',
+      displaySelectedImage: 'img/IMG-default.png',
+      color: '#000',
       uploadStatus: true,
-      markerNameError: "",
-      markerImageFileError: ""
+      markerNameError: '',
+      markerImageFileError: ''
     };
   }
 
@@ -89,41 +89,48 @@ export class MarkerCreator extends Component {
         {
           markerName: selectedMarker.name,
           displaySelectedImage: selectedMarker.url,
-          markerImageFile: ""
+          markerImageFile: ''
         },
         () => {
           this.setState({
-            markerNameError: "",
-            markerImageFileError: ""
+            markerNameError: '',
+            markerImageFileError: ''
           });
         }
       );
     }
   }
 
-  onChange = event => {
-    if (event.target.name === "markerImage" && event.target.files[0]) {
+  onChange = (event) => {
+    const { markerImageFile, markerName } = this.state;
+
+    if (event.target.name === 'markerImage' && event.target.files[0]) {
       this.setState(
         {
           markerImageFile: event.target.files[0],
           displaySelectedImage: URL.createObjectURL(event.target.files[0])
         },
         () => {
-          /\.(png)$/i.test(this.state.markerImageFile.name) &&
-            this.setState({ markerImageFileError: "" });
+          /\.(png)$/i.test(markerImageFile.name)
+            && this.setState({ markerImageFileError: '' });
         }
       );
     } else {
       this.setState({ [event.target.name]: event.target.value }, () => {
-        this.state.markerName.length > 2 &&
-          this.setState({ markerNameError: "" });
+        markerName.length > 2
+          && this.setState({ markerNameError: '' });
       });
     }
   };
 
-  sendRecord = event => {
+  sendRecord = (event) => {
     event.preventDefault();
-    const { postMarker, editMarker, selectedMarker, markers } = this.props;
+    const {
+      postMarker,
+      editMarker,
+      selectedMarker,
+      markers
+    } = this.props;
     const { markerImageFile, markerName, uploadStatus } = this.state;
     const data = {
       markerName,
@@ -134,14 +141,14 @@ export class MarkerCreator extends Component {
     };
 
     const validationResult = validate(errors, markerValidationDetails, data);
-    let fd = new FormData();
+    const fd = new FormData();
 
-    fd.append("file", markerImageFile);
-    fd.append("markerName", markerName);
+    fd.append('file', markerImageFile);
+    fd.append('markerName', markerName);
 
     if (!validationResult.isError) {
       if (selectedMarker.id && !selectedMarker.isDeleted) {
-        if (markerImageFile === "") {
+        if (markerImageFile === '') {
           editMarker(
             {
               name: markerName,
@@ -155,9 +162,9 @@ export class MarkerCreator extends Component {
       } else {
         postMarker(fd);
         this.setState({
-          markerName: "",
-          markerImageFile: "",
-          displaySelectedImage: "img/IMG-default.png"
+          markerName: '',
+          markerImageFile: '',
+          displaySelectedImage: 'img/IMG-default.png'
         });
       }
     }
@@ -179,8 +186,8 @@ export class MarkerCreator extends Component {
     const validationResult = validate(errors, markerValidationDetails, data);
     if (!validationResult.isError) {
       const node = this.imageBox;
-      domtoimage.toPng(node.current).then(dataUrl => {
-        const link = document.createElement("a");
+      domtoimage.toPng(node.current).then((dataUrl) => {
+        const link = document.createElement('a');
         link.download = `${markerName}.png`;
         link.href = dataUrl;
         link.click();
@@ -196,9 +203,9 @@ export class MarkerCreator extends Component {
     const { removeMarker, getSelectedMarker, selectedMarker } = this.props;
 
     this.setState({
-      markerName: "",
-      markerImageFile: "",
-      displaySelectedImage: "img/IMG-default.png"
+      markerName: '',
+      markerImageFile: '',
+      displaySelectedImage: 'img/IMG-default.png'
     });
 
     removeMarker(selectedMarker.id);
@@ -209,11 +216,11 @@ export class MarkerCreator extends Component {
     });
   };
 
-  switchUpload = status => {
+  switchUpload = (status) => {
     this.setState({
       uploadStatus: status,
-      markerNameError: "",
-      markerImageFileError: ""
+      markerNameError: '',
+      markerImageFileError: ''
     });
   };
 
@@ -247,7 +254,7 @@ export class MarkerCreator extends Component {
           </ButtonGroup>
           {uploadStatus ? (
             <ImageBox>
-              <ImageWithoutMarker alt="" src={displaySelectedImage} />
+              <ImageWithoutMarker alt='' src={displaySelectedImage} />
             </ImageBox>
           ) : (
             <AdditionalWrapper>
@@ -261,12 +268,12 @@ export class MarkerCreator extends Component {
 
           <Form onSubmit={this.sendRecord}>
             <FormGroup>
-              <LabelName htmlFor="markerName">Name</LabelName>
+              <LabelName htmlFor='markerName'>Name</LabelName>
               <Input
-                type="text"
-                name="markerName"
+                type='text'
+                name='markerName'
                 value={markerName}
-                id="markerName"
+                id='markerName'
                 onChange={this.onChange}
               />
               {markerNameError && (
@@ -275,34 +282,34 @@ export class MarkerCreator extends Component {
             </FormGroup>
             {!uploadStatus && (
               <FormGroup>
-                <LabelColor htmlFor="markerColor">Color</LabelColor>
+                <LabelColor htmlFor='markerColor'>Color</LabelColor>
                 <Input
                   onChange={this.onChange}
-                  type="color"
-                  name="color"
-                  id="markerColor"
+                  type='color'
+                  name='color'
+                  id='markerColor'
                   value={color}
-                  placeholder="color placeholder"
+                  placeholder='color placeholder'
                 />
               </FormGroup>
             )}
             <FormGroup>
-              <LabelFile htmlFor="file">
-                <InputSpan>choose file</InputSpan>{" "}
-                {displaySelectedImage === "img/IMG-default.png"
-                  ? "Not file detected"
-                  : markerImageFile === ""
+              <LabelFile htmlFor='file'>
+                <InputSpan>choose file</InputSpan>
+                {displaySelectedImage === 'img/IMG-default.png'
+                  ? 'Not file detected'
+                  : markerImageFile === ''
                     ? `${markerName}.png`
                     : markerImageFile.name}
               </LabelFile>
               <FileInput
-                data-testid="inputFile"
-                type="file"
-                id="file"
-                name="markerImage"
+                data-testid='inputFile'
+                type='file'
+                id='file'
+                name='markerImage'
                 onChange={this.onChange}
-                value={""}
-                ref={ref => (this.inputFile = ref)}
+                value=''
+                ref={(ref) => (this.inputFile = ref)}
               />
               {markerImageFileError && (
                 <ErrorMessage>{markerImageFileError}</ErrorMessage>
@@ -312,20 +319,20 @@ export class MarkerCreator extends Component {
               <FormGroup>
                 <SubmitBtn>
                   {selectedMarker.id && !selectedMarker.isDeleted
-                    ? "edit"
-                    : "upload"}
+                    ? 'edit'
+                    : 'upload'}
                 </SubmitBtn>
                 {selectedMarker.id && !selectedMarker.isDeleted ? (
-                  <RemoveBtn onClick={this.removeRecord} type="button">
+                  <RemoveBtn onClick={this.removeRecord} type='button'>
                     Remove
                   </RemoveBtn>
                 ) : (
-                  ""
+                  ''
                 )}
               </FormGroup>
             ) : (
               <FormGroup>
-                <DownloadBtn onClick={this.downloadMarker} type="button">
+                <DownloadBtn onClick={this.downloadMarker} type='button'>
                   Download
                 </DownloadBtn>
               </FormGroup>
@@ -345,7 +352,7 @@ const mapDispatchToProps = {
   fetchMarkers
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedMarker: state.marker.selectedMarker,
   markers: state.marker.markers
 });

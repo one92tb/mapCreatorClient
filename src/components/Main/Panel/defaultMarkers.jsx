@@ -1,48 +1,48 @@
 export const defaultMarkers = [
   {
     id: 9991,
-    name: "bar",
-    icon: "bar.png",
+    name: 'bar',
+    icon: 'bar.png',
     isDefault: true
   }, {
     id: 9992,
-    name: "basketball pitch",
-    icon: "basketball%20pitch.png",
+    name: 'basketball pitch',
+    icon: 'basketball%20pitch.png',
     isDefault: true
   }, {
     id: 9993,
-    name: "car mechanic",
-    icon: "car%20mechanic.png",
+    name: 'car mechanic',
+    icon: 'car%20mechanic.png',
     isDefault: true
   }, {
     id: 9994,
-    name: "fast food",
-    icon: "fast%20food.png",
+    name: 'fast food',
+    icon: 'fast%20food.png',
     isDefault: true
   }, {
     id: 9995,
-    name: "hotel",
-    icon: "hotel.png",
+    name: 'hotel',
+    icon: 'hotel.png',
     isDefault: true
   }, {
     id: 9996,
-    name: "library",
-    icon: "library.png",
+    name: 'library',
+    icon: 'library.png',
     isDefault: true
   }, {
     id: 9997,
-    name: "school",
-    icon: "school.png",
+    name: 'school',
+    icon: 'school.png',
     isDefault: true
   }, {
     id: 9998,
-    name: "supermarket",
-    icon: "supermarket.png",
+    name: 'supermarket',
+    icon: 'supermarket.png',
     isDefault: true
   }, {
     id: 9999,
-    name: "university",
-    icon: "university.png",
+    name: 'university',
+    icon: 'university.png',
     isDefault: true
   }
-]
+];

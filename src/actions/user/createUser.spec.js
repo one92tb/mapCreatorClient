@@ -1,10 +1,10 @@
-import * as actions from "./createUser";
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
-import LocalStorageMock from "../../../mocks/localStorageMock";
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import * as actions from './createUser';
+import LocalStorageMock from '../../../mocks/localStorageMock';
 
-const MockAdapter = require("axios-mock-adapter");
-const axios = require("axios");
+const MockAdapter = require('axios-mock-adapter');
+const axios = require('axios');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -14,20 +14,20 @@ const store = mockStore();
 global.localStorage = new LocalStorageMock();
 
 const user = {
-  login: "john123",
-  password: "qwerty12"
+  login: 'john123',
+  password: 'qwerty12'
 };
 
 const responseData = {
   id: 3,
   isAdmin: false,
-  login: "john123",
-  password: "asdsagdhdsa21132131sadadas"
+  login: 'john123',
+  password: 'asdsagdhdsa21132131sadadas'
 };
 
 const expectedResult = responseData;
 
-describe("create user actions", () => {
+describe('create user actions', () => {
   beforeEach(() => {
     store.clearActions();
   });
@@ -35,8 +35,8 @@ describe("create user actions", () => {
     mock.reset();
   });
 
-  it("POSTED_USER_SUCCESS", () => {
-    mock.onPost("http://localhost:8080/users").reply(200, expectedResult);
+  it('POSTED_USER_SUCCESS', () => {
+    mock.onPost('http://localhost:8080/users').reply(200, expectedResult);
     store.dispatch(actions.createUser(user)).then(() => {
       expect(store.getActions()).toEqual([
         {
@@ -49,8 +49,8 @@ describe("create user actions", () => {
       ]);
     });
   });
-  it("POSTED_USER_ERROR", () => {
-    mock.onPost("http://localhost:8080/users").reply(404);
+  it('POSTED_USER_ERROR', () => {
+    mock.onPost('http://localhost:8080/users').reply(404);
     store.dispatch(actions.createUser(user)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.POSTING_USER);
       expect(store.getActions()[1].type).toEqual(actions.POSTED_USER_ERROR);

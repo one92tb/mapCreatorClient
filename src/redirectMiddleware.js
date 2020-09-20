@@ -1,27 +1,25 @@
-import history from "./history";
+import history from './history';
 
-export const REDIRECT = "REDIRECT";
+export const REDIRECT = 'REDIRECT';
 
-export const createMiddleware = handlers => {
-  return store => next => action => {
-    const actionHandler = handlers.find(
-      handler => handler.type === action.type
-    );
-  
-    let result = next(action);
+export const createMiddleware = (handlers) => (store) => (next) => (action) => {
+  const actionHandler = handlers.find(
+    (handler) => handler.type === action.type
+  );
 
-    if (actionHandler && actionHandler.afterHandler) {
-      actionHandler.afterHandler(action.pathName);
-    }
+  const result = next(action);
 
-    return result;
-  };
+  if (actionHandler && actionHandler.afterHandler) {
+    actionHandler.afterHandler(action.pathName);
+  }
+
+  return result;
 };
 
 export const redirectMiddleware = createMiddleware([
   {
     type: REDIRECT,
-    afterHandler: pathName => {
+    afterHandler: (pathName) => {
       history.push(pathName);
     }
   }

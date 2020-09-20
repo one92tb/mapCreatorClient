@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   background: #f2f2f2;

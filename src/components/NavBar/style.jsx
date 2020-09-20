@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import {NavLink as Link} from "react-router-dom";
+import styled from 'styled-components';
+import { NavLink as Link } from 'react-router-dom';
 
-const activeClassName = "nav-item-active";
+const activeClassName = 'nav-item-active';
 
-const Panel = styled.div `
+const Panel = styled.div`
   height: 100%;
   background: #4ddbff;
 
@@ -14,7 +14,7 @@ const Panel = styled.div `
   }
 `;
 
-const Header = styled.div `
+const Header = styled.div`
   display: flex;
   padding-top: 30px;
   margin-bottom: 50px;
@@ -39,8 +39,7 @@ const Header = styled.div `
   }
 `;
 
-
-const Title = styled.h1 `
+const Title = styled.h1`
   font-size: 26px;
   font-family: 'Lobster', cursive;
   display: flex;
@@ -59,9 +58,9 @@ const Title = styled.h1 `
   }
 `;
 
-const User = styled.div ``;
+const User = styled.div``;
 
-const Logo = styled.img `
+const Logo = styled.img`
   display: flex;
   margin-left: auto;
   margin-right: auto;
@@ -73,7 +72,7 @@ const Logo = styled.img `
     height: 80px;
   }
 `;
-const LoginName = styled.span `
+const LoginName = styled.span`
   display: block;
   text-align: center;
   margin-top: 35px;
@@ -84,7 +83,7 @@ const LoginName = styled.span `
   }
 `;
 
-const Label = styled.label `
+const Label = styled.label`
   display: none;
 
   @media only screen and (max-width: 1199px) {
@@ -107,7 +106,7 @@ const Label = styled.label `
   }
 `;
 
-const Nav = styled.ul `
+const Nav = styled.ul`
   margin-top: 60px;
   padding-left: 0;
 
@@ -117,11 +116,11 @@ const Nav = styled.ul `
   }
 `;
 
-const Input = styled.input `
+const Input = styled.input`
   display: none;
 `;
 
-const NavItem = styled.li `
+const NavItem = styled.li`
   list-style-type: none;
   margin: 5px 0;
   height: 50px;
@@ -143,7 +142,7 @@ const NavItem = styled.li `
   }
 `;
 
-const NavLink = styled(Link).attrs({activeClassName})`
+const NavLink = styled(Link).attrs({ activeClassName })`
   color: #000;
   font-size: 20px;
   width: 100%;
@@ -172,7 +171,7 @@ const NavLink = styled(Link).attrs({activeClassName})`
   }
 `;
 
-const Icon = styled.img `
+const Icon = styled.img`
   margin-right: 5px;
   width: 32px;
   height: 32px;
@@ -183,7 +182,7 @@ const Icon = styled.img `
   }
 `;
 
-const LogoutBtn = styled.button `
+const LogoutBtn = styled.button`
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -212,7 +211,7 @@ const LogoutBtn = styled.button `
   }
 `;
 
-const ResponsiveMenu = styled.div `
+const ResponsiveMenu = styled.div`
   @media (max-width: 1199px) {
     width: 100%;
     display: flex;
@@ -221,17 +220,17 @@ const ResponsiveMenu = styled.div `
 `;
 
 //    display: ${props => (props.isChecked ? "block" : "none")};
-const ResponsiveNav = styled.div `
+const ResponsiveNav = styled.div`
   @media (max-width: 1199px) {
     display: block;
-    max-height: ${props => (
-  props.isChecked
-  ? "1000px"
-  : "0")};
+    max-height: ${(props) => (
+    props.isChecked
+      ? '1000px'
+      : '0')};
     overflow: hidden;
-    -webkit-transform: ${props => props.isChecked
-  ? "perspective(400) rotate3d(0, 0, 0, 0)"
-  : "perspective(400) rotate3d(1, 0, 0, -90deg)"};
+    -webkit-transform: ${(props) => (props.isChecked
+    ? 'perspective(400) rotate3d(0, 0, 0, 0)'
+    : 'perspective(400) rotate3d(1, 0, 0, -90deg)')};
     -webkit-transform-origin: 50% 0;
     -webkit-transition: 350ms;
     -moz-transition: 350ms;
@@ -239,15 +238,15 @@ const ResponsiveNav = styled.div `
     transition: 350ms;
     width: 100%;
     background: #4ddbff;
-    z-index: ${props => (
+    z-index: ${(props) => (
     props.isChecked
-    ? "2"
-    : "-1")};
+      ? '2'
+      : '-1')};
     margin: 0;
     padding-top: 10px;
   }
 `;
-//display: ${props => (props.isChecked ? "block" : "none")};
+
 export {
   Label,
   LogoutBtn,

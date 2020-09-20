@@ -3,14 +3,14 @@ const validate = (errors, ValidationDetails, data) => {
 
   ValidationDetails(data).forEach((validate) => {
     if (validate.condition) {
-      console.log(validate)
+      console.log(validate);
       isError = true;
       errors[validate.nameOfErrorProperty] = validate.messageError;
     } else if (
-      !validate.condition &&
-      validate.messageError === errors[validate.nameOfErrorProperty]
+      !validate.condition
+      && validate.messageError === errors[validate.nameOfErrorProperty]
     ) {
-      errors[validate.nameOfErrorProperty] = "";
+      errors[validate.nameOfErrorProperty] = '';
     }
   });
 

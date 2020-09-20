@@ -1,35 +1,33 @@
-import {
-  axiosInstance
-} from "../../axiosInstance";
+import { axiosInstance } from '../../axiosInstance';
 
-export const REMOVING_MARKER = "REMOVING_MARKER";
-export const REMOVED_MARKER_SUCCESS = "REMOVED_MARKER_SUCCESS";
-export const REMOVED_MARKER_ERROR = "REMOVED_MARKER_ERROR";
+export const REMOVING_MARKER = 'REMOVING_MARKER';
+export const REMOVED_MARKER_SUCCESS = 'REMOVED_MARKER_SUCCESS';
+export const REMOVED_MARKER_ERROR = 'REMOVED_MARKER_ERROR';
 
-const removeMarkerSuccess = id => ({
+const removeMarkerSuccess = (id) => ({
   type: REMOVED_MARKER_SUCCESS,
   id
 });
 
-const removeMarkerError = error => ({
+const removeMarkerError = (error) => ({
   type: REMOVED_MARKER_ERROR,
   error
 });
 
-export const removeMarker = id => dispatch => {
+export const removeMarker = (id) => (dispatch) => {
   dispatch({
     type: REMOVING_MARKER
   });
   axiosInstance
     .delete(`/api/markers/${id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => {
+    .then((res) => {
       dispatch(removeMarkerSuccess(res.data.id));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(removeMarkerError(error));
     });
 };

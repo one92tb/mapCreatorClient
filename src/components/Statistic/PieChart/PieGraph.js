@@ -1,7 +1,12 @@
-import React, { Component } from "react";
-import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
+import React, { Component } from 'react';
+import {
+  PieChart,
+  Pie,
+  Sector,
+  ResponsiveContainer
+} from 'recharts';
 
-const renderActiveShape = props => {
+const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
   const {
     cx,
@@ -24,11 +29,11 @@ const renderActiveShape = props => {
   const my = cy + (outerRadius + 30) * sin;
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
-  const textAnchor = cos >= 0 ? "start" : "end";
+  const textAnchor = cos >= 0 ? 'start' : 'end';
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text x={cx} y={cy} dy={8} textAnchor='middle' fill={fill}>
         {payload.name}
       </text>
       <Sector
@@ -52,21 +57,23 @@ const renderActiveShape = props => {
       <path
         d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
         stroke={fill}
-        fill="none"
+        fill='none'
       />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke='none' />
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333"
-      >{`Amount ${value}`}</text>
+        fill='#333'
+      >
+        {`Amount ${value}`}
+      </text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill="#999"
+        fill='#999'
       >
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text>
@@ -93,27 +100,25 @@ export class PieGraph extends Component {
     const { displayMarkers } = this.props;
 
     return (
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              activeIndex={activeIndex}
-              activeShape={renderActiveShape}
-              dataKey="value"
-              data={displayMarkers().map(el => {
-                return {
-                  name: el[0],
-                  value: el[1]
-                };
-              })}
-              cx={300}
-              cy={170}
-              innerRadius={60}
-              outerRadius={80}
-              fill="#8884d8"
-              onMouseEnter={this.onPieEnter}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+      <ResponsiveContainer width='100%' height='100%'>
+        <PieChart>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            dataKey='value'
+            data={displayMarkers().map((el) => ({
+              name: el[0],
+              value: el[1]
+            }))}
+            cx={300}
+            cy={170}
+            innerRadius={60}
+            outerRadius={80}
+            fill='#8884d8'
+            onMouseEnter={this.onPieEnter}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     );
   }
 }

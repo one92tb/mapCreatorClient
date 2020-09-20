@@ -1,71 +1,71 @@
-import { initialState, account as reducer } from "./account";
+import { initialState, account as reducer } from './account';
 
-describe("account reducer", () => {
-  //initialstate
-  it("should be the initial state", () => {
+describe('account reducer', () => {
+  // initialstate
+  it('should be the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
-  //login
-  it("login request", () => {
-    expect(reducer(initialState, { type: "LOGIN_REQUEST" })).toEqual({
+  // login
+  it('login request', () => {
+    expect(reducer(initialState, { type: 'LOGIN_REQUEST' })).toEqual({
       ...initialState,
       isLoggingIn: true,
       isAuthorized: false
     });
   });
-  it("login success", () => {
+  it('login success', () => {
     expect(
       reducer(initialState, {
-        type: "LOGIN_SUCCESS",
+        type: 'LOGIN_SUCCESS',
         userData: {
-          error: "",
+          error: '',
           isAuthorized: true,
-          token: "asd123",
+          token: 'asd123',
           userId: 1,
-          userName: "test1"
+          userName: 'test1'
         }
       })
     ).toEqual({
       ...initialState,
-      userName: "test1",
+      userName: 'test1',
       isAuthorized: true,
       userId: 1
     });
   });
-  it("login error", () => {
+  it('login error', () => {
     expect(
       reducer(initialState, {
-        type: "LOGIN_ERROR",
-        error: "sth goes wrong"
+        type: 'LOGIN_ERROR',
+        error: 'sth goes wrong'
       })
     ).toEqual({
       ...initialState,
-      error: "sth goes wrong"
+      error: 'sth goes wrong'
     });
   });
-  //logout
-  it("logout", () => {
+  // logout
+  it('logout', () => {
     expect(
       reducer(initialState, {
-        type: "LOGOUT",
+        type: 'LOGOUT',
         userData: {
-          userId: "",
-          userName: "",
-          error: "",
+          userId: '',
+          userName: '',
+          error: '',
           isAuthorized: false
         }
       })
     ).toEqual({
       ...initialState,
-      userId: "",
-      userName: "",
-      error: "",
+      userId: '',
+      userName: '',
+      error: '',
       isAuthorized: false
     });
   });
-  //reset login error
-  it("reset login error", () => {
-    expect(reducer(initialState, { type: "RESET_LOGIN_ERROR" })).toEqual({
+  // reset login error
+  it('reset login error', () => {
+    expect(reducer(initialState, { type: 'RESET_LOGIN_ERROR' })).toEqual({
       ...initialState,
       error: null
     });

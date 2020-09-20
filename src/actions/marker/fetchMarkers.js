@@ -1,35 +1,33 @@
-import {
-  axiosInstance
-} from "../../axiosInstance";
+import { axiosInstance } from '../../axiosInstance';
 
-export const FETCHING_MARKERS = "FETCHING_MARKERS";
-export const FETCHED_MARKERS_SUCCESS = "FETCHED_MARKERS_SUCCESS";
-export const FETCHED_MARKERS_ERROR = "FETCHED_MARKERS_ERROR";
+export const FETCHING_MARKERS = 'FETCHING_MARKERS';
+export const FETCHED_MARKERS_SUCCESS = 'FETCHED_MARKERS_SUCCESS';
+export const FETCHED_MARKERS_ERROR = 'FETCHED_MARKERS_ERROR';
 
-const fetchedMarkersSuccess = markers => ({
+const fetchedMarkersSuccess = (markers) => ({
   type: FETCHED_MARKERS_SUCCESS,
   markers
 });
 
-const fetchedMarkersError = error => ({
+const fetchedMarkersError = (error) => ({
   type: FETCHED_MARKERS_ERROR,
   error
 });
 
-export const fetchMarkers = () => dispatch => {
+export const fetchMarkers = () => (dispatch) => {
   dispatch({
     type: FETCHING_MARKERS
   });
   axiosInstance
-    .get("/api/markers", {
+    .get('/api/markers', {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => {
+    .then((res) => {
       dispatch(fetchedMarkersSuccess(res.data));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(fetchedMarkersError(error));
     });
 };

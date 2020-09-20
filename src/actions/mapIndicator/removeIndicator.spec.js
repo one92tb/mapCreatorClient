@@ -1,10 +1,10 @@
-import * as actions from "./removeIndicator";
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
-import LocalStorageMock from "../../../mocks/localStorageMock";
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import * as actions from './removeIndicator';
+import LocalStorageMock from '../../../mocks/localStorageMock';
 
-const axios = require("axios");
-const MockAdapter = require("axios-mock-adapter");
+const axios = require('axios');
+const MockAdapter = require('axios-mock-adapter');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -16,7 +16,7 @@ const expectedResult = { id };
 
 global.localStorage = new LocalStorageMock();
 
-describe("remove indicator actions", () => {
+describe('remove indicator actions', () => {
   beforeEach(() => {
     store.clearActions();
   });
@@ -24,10 +24,8 @@ describe("remove indicator actions", () => {
     mock.reset();
   });
 
-  it("REMOVED_INDICATOR_SUCCESS", () => {
-    mock
-      .onDelete(`http://localhost:8080/indicators/${id}`)
-      .reply(200, expectedResult);
+  it('REMOVED_INDICATOR_SUCCESS', () => {
+    mock.onDelete(`http://localhost:8080/indicators/${id}`).reply(200, expectedResult);
     store.dispatch(actions.removeIndicator(id)).then(() => {
       expect(store.getActions()).toEqual([
         { type: actions.REMOVING_INDICATOR },
@@ -36,7 +34,7 @@ describe("remove indicator actions", () => {
     });
   });
 
-  it("REMOVED_INDICATOR_ERROR", () => {
+  it('REMOVED_INDICATOR_ERROR', () => {
     mock.onDelete(`http://localhost:8080/indicators/${id}`).reply(404);
     store.dispatch(actions.removeIndicator(id)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.REMOVING_INDICATOR);

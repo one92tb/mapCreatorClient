@@ -1,35 +1,33 @@
-import {
-  axiosInstance
-} from "../../axiosInstance";
+import { axiosInstance } from '../../axiosInstance';
 
-export const FETCHING_USERS = "FETCHING_USERS";
-export const FETCHED_USERS_SUCCESS = "FETCHED_USERS_SUCCESS";
-export const FETCHED_USERS_ERROR = "FETCHED_USERS_ERROR";
+export const FETCHING_USERS = 'FETCHING_USERS';
+export const FETCHED_USERS_SUCCESS = 'FETCHED_USERS_SUCCESS';
+export const FETCHED_USERS_ERROR = 'FETCHED_USERS_ERROR';
 
-const fetchedUsersSuccess = users => ({
+const fetchedUsersSuccess = (users) => ({
   type: FETCHED_USERS_SUCCESS,
   users
 });
 
-const fetchedUsersError = error => ({
+const fetchedUsersError = (error) => ({
   type: FETCHED_USERS_ERROR,
   error
 });
 
-export const fetchUsers = () => dispatch => {
+export const fetchUsers = () => (dispatch) => {
   dispatch({
     type: FETCHING_USERS
   });
   axiosInstance
-    .get("/api/users", {
+    .get('/api/users', {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => {
+    .then((res) => {
       dispatch(fetchedUsersSuccess(res.data));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(fetchedUsersError(error));
     });
 };

@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import { Row, Col } from "reactstrap";
+import styled from 'styled-components';
+import { Row, Col } from 'reactstrap';
+
 const RowStyle = styled(Row)`
   height: 100%;
   margin: 0 !important;
@@ -12,8 +13,7 @@ const ColStyle = styled(Col)`
   @media only screen and (max-width: 991.98px) {
     height: auto;
         &:not(:first-child) {
-          height: ${props =>
-            props.pathname === "/" ? "100%" : "auto"};
+          height: ${(props) => (props.pathname === '/' ? '100%' : 'auto')};
           display: block;
         }
   }

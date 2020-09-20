@@ -1,6 +1,6 @@
 const initialState = {
-  userId: "",
-  userName: "",
+  userId: '',
+  userName: '',
   error: null,
   isLoggingIn: false,
   isAuthorized: false
@@ -8,13 +8,13 @@ const initialState = {
 
 const account = (state = initialState, action) => {
   switch (action.type) {
-    case "LOGIN_REQUEST":
+    case 'LOGIN_REQUEST':
       return {
         ...state,
         isLoggingIn: true,
         isAuthorized: false
       };
-    case "LOGIN_SUCCESS":
+    case 'LOGIN_SUCCESS':
       return {
         ...state,
         isLoggingIn: false,
@@ -23,12 +23,12 @@ const account = (state = initialState, action) => {
         userId: action.userData.userId,
         error: null
       };
-    case "LOGIN_ERROR":
+    case 'LOGIN_ERROR':
       return {
         ...state,
         error: action.error
       };
-    case "LOGOUT":
+    case 'LOGOUT':
       return {
         ...state,
         isAuthorized: action.userData.isAuthorized,
@@ -36,12 +36,12 @@ const account = (state = initialState, action) => {
         userId: action.userData.userId,
         error: action.userData.error
       };
-    case "RESET_LOGIN_ERROR":
+    case 'RESET_LOGIN_ERROR':
       return {
         ...state,
         error: null
       };
-    case "CHANGE_LOCATION":
+    case 'CHANGE_LOCATION':
       return {
         ...state
       };

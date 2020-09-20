@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-const Wrapper = styled.div `
+const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   padding: 40px 20px 40px 10px;
@@ -45,7 +45,7 @@ const InfoBoxContainer = styled.div `
   width: 250px;
   border: 5px solid #00b8e6;
   border-radius: 5px;
-  
+
   &:before {
     top: 100%;
     left: 50%;
@@ -76,7 +76,7 @@ const InfoBoxContainer = styled.div `
   }
 `;
 
-const InfoBtn = styled.button `
+const InfoBtn = styled.button`
   margin-top: 10px;
   width: 160px;
   display: block;
@@ -97,7 +97,7 @@ const InfoBtn = styled.button `
   }
 `;
 
-const InfoContent = styled.span `
+const InfoContent = styled.span`
   font-size: 15px;
   color: #003d4d;
   height: 35px;
@@ -109,7 +109,7 @@ const InfoContent = styled.span `
   font-weight: bold;
 `;
 
-const InfoContentInput = styled.input `
+const InfoContentInput = styled.input`
 font-size: 15px;
 color: #003d4d;
 height: 35px;

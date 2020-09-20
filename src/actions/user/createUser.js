@@ -1,31 +1,29 @@
-import {
-  axiosInstance
-} from "../../axiosInstance";
+import { axiosInstance } from '../../axiosInstance';
 
-export const POSTING_USER = "POSTING_USER";
-export const POSTED_USER_SUCCESS = "POSTED_USER_SUCCESS";
-export const POSTED_USER_ERROR = "POSTED_USER_ERROR";
+export const POSTING_USER = 'POSTING_USER';
+export const POSTED_USER_SUCCESS = 'POSTED_USER_SUCCESS';
+export const POSTED_USER_ERROR = 'POSTED_USER_ERROR';
 
-const createUserSuccess = user => ({
+const createUserSuccess = (user) => ({
   type: POSTED_USER_SUCCESS,
   user
 });
 
-const createdUserError = error => ({
+const createdUserError = (error) => ({
   type: POSTED_USER_ERROR,
   error
 });
 
-export const createUser = user => dispatch => {
+export const createUser = (user) => (dispatch) => {
   dispatch({
     type: POSTING_USER
   });
   axiosInstance
-    .post("/api/users", user)
-    .then(res => {
+    .post('/api/users', user)
+    .then((res) => {
       dispatch(createUserSuccess(res.data));
     })
-    .catch(error => {
+    .catch((error) => {
       dispatch(createdUserError(error));
     });
 };

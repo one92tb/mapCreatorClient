@@ -1,22 +1,22 @@
-import * as actions from "./disableMarkers";
+import * as actions from './disableMarkers';
 
 const markers = [
   {
     id: 1,
-    markerName: "1",
-    icon: "1.png",
+    markerName: '1',
+    icon: '1.png',
     userId: 1
   },
   {
     id: 2,
-    markerName: "2",
-    icon: "2.png",
+    markerName: '2',
+    icon: '2.png',
     userId: 1
   }
 ];
 
-describe("disable markers action", () => {
-  it("MARKERS_TO_DISABLE", () => {
+describe('disable markers action', () => {
+  it('MARKERS_TO_DISABLE', () => {
     expect(actions.disableMarkers(markers)).toEqual({
       type: actions.MARKERS_TO_DISABLE,
       markers

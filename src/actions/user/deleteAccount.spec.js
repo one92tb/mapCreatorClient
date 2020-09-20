@@ -1,10 +1,10 @@
-import * as actions from "./deleteAccount";
-import configureMockStore from "redux-mock-store";
-import thunk from "redux-thunk";
-import LocalStorageMock from "../../../mocks/localStorageMock";
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import * as actions from './deleteAccount';
+import LocalStorageMock from '../../../mocks/localStorageMock';
 
-const MockAdapter = require("axios-mock-adapter");
-const axios = require("axios");
+const MockAdapter = require('axios-mock-adapter');
+const axios = require('axios');
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -16,7 +16,7 @@ const expectedResult = { id };
 
 global.localStorage = new LocalStorageMock();
 
-describe("delete account actions", () => {
+describe('delete account actions', () => {
   beforeEach(() => {
     store.clearActions();
   });
@@ -24,7 +24,7 @@ describe("delete account actions", () => {
     mock.reset();
   });
 
-  it("DELETED_ACCOUNT_SUCCESS", () => {
+  it('DELETED_ACCOUNT_SUCCESS', () => {
     mock
       .onDelete(`http://localhost:8080/users/${id}`)
       .reply(200, expectedResult);
@@ -35,7 +35,7 @@ describe("delete account actions", () => {
       ]);
     });
   });
-  it("DELETED_ACCOUNT_ERROR", () => {
+  it('DELETED_ACCOUNT_ERROR', () => {
     mock.onDelete(`http://localhost:8080/users/${id}`).reply(404);
     store.dispatch(actions.deleteAccount(id)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.DELETING_ACCOUNT);

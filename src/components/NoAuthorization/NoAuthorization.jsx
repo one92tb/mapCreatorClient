@@ -1,8 +1,8 @@
-import React from "react";
-import { Wrapper, TextBox } from "./style";
+import React from 'react';
+import { Wrapper, TextBox } from './style';
 
-Wrapper.displayName = "div";
-TextBox.displayName = "div";
+Wrapper.displayName = 'div';
+TextBox.displayName = 'div';
 
 export const NoAuthorization = () => (
   <Wrapper>
