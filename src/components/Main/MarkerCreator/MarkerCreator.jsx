@@ -324,7 +324,7 @@ export class MarkerCreator extends Component {
                 </SubmitBtn>
                 {selectedMarker.id && !selectedMarker.isDeleted ? (
                   <RemoveBtn onClick={this.removeRecord} type='button'>
-                    Remove
+                    remove
                   </RemoveBtn>
                 ) : (
                   ''
@@ -333,7 +333,7 @@ export class MarkerCreator extends Component {
             ) : (
               <FormGroup>
                 <DownloadBtn onClick={this.downloadMarker} type='button'>
-                  Download
+                  download
                 </DownloadBtn>
               </FormGroup>
             )}

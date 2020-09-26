@@ -67,8 +67,8 @@ test('it should change Upload Marker for Download Marker in MarkerCreator compon
 
   render(<MarkerCreator {...props} />);
 
-  const uploadBtn = screen.queryByText('Upload Marker');
-  const customBtn = screen.queryByText('Custom Marker');
+  const uploadBtn = screen.queryAllByText('upload')[0];
+  const customBtn = screen.queryByText('custom');
   fireEvent.click(customBtn);
   expect(screen.getByLabelText('Color')).toBeInTheDocument();
   expect(uploadBtn).toHaveStyleRule('background', '#B2CFE7');
@@ -107,8 +107,8 @@ test('it should successfully upload marker', () => {
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const submitBtn = screen.getByText('Upload new marker');
-  // screen.debug(submitBtn);
+  const submitBtn = screen.queryAllByText('upload')[1];
+
   global.URL.createObjectURL = jest.fn(() => 'details');
 
   fireEvent.change(inputName, {
@@ -164,7 +164,7 @@ test('it should successfully edit marker without image', () => {
   render(<MarkerCreator {...props} />);
 
   const inputName = screen.getByLabelText('Name');
-  const editBtn = screen.getByText('Edit Marker');
+  const editBtn = screen.getByText('edit');
 
   fireEvent.change(inputName, {
     target: {
@@ -218,7 +218,7 @@ test('it should successfully edit marker with image', () => {
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const editBtn = screen.getByText('Edit Marker');
+  const editBtn = screen.getByText('edit');
 
   fireEvent.change(inputName, {
     target: {
@@ -272,8 +272,7 @@ test('it should successfully remove marker', () => {
 
   render(<MarkerCreator {...props} />);
 
-  const removeBtn = screen.getByText('Remove Marker');
-
+  const removeBtn = screen.getByText('remove');
   fireEvent.click(removeBtn);
   expect(props.removeMarker).toHaveBeenCalledTimes(1);
   expect(props.removeMarker).toHaveBeenCalledWith(1);
@@ -320,7 +319,7 @@ test('it should throw error (marker name has less than 3 characters) when marker
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const submitBtn = screen.getByText('Upload new marker');
+  const submitBtn = screen.queryAllByText('upload')[1];
 
   fireEvent.change(inputName, {
     target: {
@@ -369,7 +368,7 @@ test('it should throw error when marker is uploading without image', () => {
   render(<MarkerCreator {...props} />);
 
   const inputName = screen.getByLabelText('Name');
-  const submitBtn = screen.getByText('Upload new marker');
+  const submitBtn = screen.queryAllByText('upload')[1];
 
   fireEvent.change(inputName, {
     target: {
@@ -413,7 +412,7 @@ test('it should throw error when marker is uploading with wrong image format (no
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const submitBtn = screen.getByText('Upload new marker');
+  const submitBtn = screen.queryAllByText('upload')[1];
 
   fireEvent.change(inputName, {
     target: {
@@ -463,7 +462,7 @@ test('it should successfully download marker', () => {
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const customBtn = screen.queryByText('Custom Marker');
+  const customBtn = screen.queryByText('custom');
 
   fireEvent.click(customBtn);
 
@@ -479,7 +478,7 @@ test('it should successfully download marker', () => {
     }
   });
 
-  const downloadBtn = screen.queryByText('Download');
+  const downloadBtn = screen.queryByText('download');
 
   domtoimage.toPng = jest.fn(() => {
     const promise = new Promise((resolve) => {

@@ -312,7 +312,6 @@ test('it should show only pool indicators from Jelenia Góra', () => {
 });
 
 test('it should start redirect to the map with indicator data', () => {
-  const redirect = jest.fn();
   const props = {
     fetchIndicators: jest.fn(),
     fetchMarkers: jest.fn(),
@@ -327,7 +326,7 @@ test('it should start redirect to the map with indicator data', () => {
         lng: 15.725213449707049,
         street: 'Daszyńskiego 12',
         city: '58-513 Dziwiszów',
-        country: ' Polska',
+        country: 'Polska',
         userId: 1
       }, {
         id: 2,
@@ -393,6 +392,6 @@ test('it should start redirect to the map with indicator data', () => {
     country: 'Polska',
     userId: 1
   });
-  expect(redirect).toHaveBeenCalledTimes(1);
-  expect(redirect).toHaveBeenCalledWith('/');
+  expect(props.redirect).toHaveBeenCalledTimes(1);
+  expect(props.redirect).toHaveBeenCalledWith('/');
 });
