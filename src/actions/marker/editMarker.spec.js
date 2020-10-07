@@ -9,7 +9,14 @@ const MockAdapter = require('axios-mock-adapter');
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const mock = new MockAdapter(axios);
-const store = mockStore();
+const store = mockStore({
+  markers: [{
+    name: 'xdd',
+    icon: '1601407466077.png',
+    userId: 1,
+    id: 1,
+  }]
+});
 
 const marker = {
   id: 1,
@@ -39,22 +46,20 @@ describe('edit marker actions', () => {
   });
 
   it('EDITED_MARKER_SUCCESS', () => {
-    mock.onPut(`http://localhost:8080/markers/${id}`).reply(200, expectedResult);
+    mock.onPut(`/api/markers/${id}`).reply(200, expectedResult);
     store.dispatch(actions.editMarker(marker, id)).then(() => {
-      expect(store.getActions()).toEqual([
-        {
-          type: actions.EDITING_MARKER
-        },
-        {
-          type: actions.EDITED_MARKER_SUCCESS,
-          marker: editedMarker
-        }
-      ]);
+      expect(store.getActions()).toEqual([{
+        type: actions.EDITING_MARKER
+      },
+      {
+        type: actions.EDITED_MARKER_SUCCESS,
+        marker: editedMarker
+      }]);
     });
   });
 
   it('EDITED_MARKER_ERROR', () => {
-    mock.onPut('http://localhost:8080/markers').reply(404);
+    mock.onPut(`/api/markers/${id}`).reply(404);
     store.dispatch(actions.editMarker(marker)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.EDITING_MARKER);
       expect(store.getActions()[1].type).toEqual(actions.EDITED_MARKER_ERROR);

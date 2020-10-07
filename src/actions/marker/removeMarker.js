@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const REMOVING_MARKER = 'REMOVING_MARKER';
 export const REMOVED_MARKER_SUCCESS = 'REMOVED_MARKER_SUCCESS';
@@ -18,8 +19,13 @@ export const removeMarker = (id) => (dispatch) => {
   dispatch({
     type: REMOVING_MARKER
   });
-  axiosInstance
-    .delete(`/api/markers/${id}`, {
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
+    .delete(`api/markers/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

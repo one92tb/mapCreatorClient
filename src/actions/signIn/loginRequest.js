@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 import { redirect } from '../redirect/redirect';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -19,7 +20,13 @@ export const loginRequest = (userData) => (dispatch) => {
   dispatch({
     type: LOGIN_REQUEST
   });
-  axiosInstance
+
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .post('/api/users/login', userData).then((res) => {
       localStorage.setItem('token', res.data.token);
       dispatch(loginSuccess(res.data));

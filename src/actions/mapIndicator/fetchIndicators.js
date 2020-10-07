@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const FETCHING_INDICATORS = 'FETCHING_INDICATORS';
 export const FETCHED_INDICATORS_SUCCESS = 'FETCHED_INDICATORS_SUCCESS';
@@ -18,7 +19,12 @@ export const fetchIndicators = () => (dispatch) => {
   dispatch({
     type: FETCHING_INDICATORS
   });
-  axiosInstance
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .get('/api/indicators', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

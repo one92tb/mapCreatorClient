@@ -125,7 +125,7 @@ test('it should throw error that login is too short', () => {
   fireEvent.click(createAccBtn);
   expect(screen.getByText('The login must be minimum 4 characters or longer')).toBeTruthy();
 });
-
+/*
 test('it should throw error that password has not uppercase alphabetical character', () => {
   const props = {
     createUser: jest.fn(),
@@ -242,7 +242,7 @@ test('it should throw error that password has not at least 1 lowercase alphabeti
   fireEvent.click(createAccBtn);
   expect(screen.getByText('The password must contain at least 1 lowercase alphabetical character')).toBeTruthy();
 });
-
+*/
 test('it should throw error that password is too short', () => {
   const props = {
     createUser: jest.fn(),
@@ -279,7 +279,7 @@ test('it should throw error that password is too short', () => {
   });
 
   fireEvent.click(createAccBtn);
-  expect(screen.getByText('The password must be minimum 8 characters or longer')).toBeTruthy();
+  expect(screen.getByText('The password must be minimum 8 characters or longer and 1 uppercase character')).toBeTruthy();
 });
 
 test('it should successfully request for login', () => {

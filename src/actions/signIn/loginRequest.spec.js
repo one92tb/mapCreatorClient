@@ -35,7 +35,7 @@ describe('login request actions', () => {
   });
 
   it('LOGIN_SUCCESS', () => {
-    mock.onPost('http://localhost:8080/login').reply(200, expectedResult);
+    mock.onPost('/api/users/login').reply(200, expectedResult);
     store.dispatch(actions.loginRequest(userData)).then(() => {
       expect(store.getActions()).toEqual([
         {

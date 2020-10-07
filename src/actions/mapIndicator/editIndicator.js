@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const EDITING_INDICATOR = 'EDITING_INDICATOR';
 export const EDITED_INDICATOR_SUCCESS = 'EDITED_INDICATOR_SUCCESS';
@@ -18,7 +19,12 @@ export const editIndicator = (id, propertyName, value) => (dispatch) => {
   dispatch({
     type: EDITING_INDICATOR
   });
-  axiosInstance
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .patch(`/api/indicators/${id}`, {
       [propertyName]: value
     }, {

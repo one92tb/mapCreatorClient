@@ -6,7 +6,7 @@ import { postIndicator } from '../../../actions/mapIndicator/postIndicator';
 import { fetchIndicators } from '../../../actions/mapIndicator/fetchIndicators';
 import { removeIndicator } from '../../../actions/mapIndicator/removeIndicator';
 import { editIndicator } from '../../../actions/mapIndicator/editIndicator';
-import { baseUrl } from '../../../axiosInstance';
+import { baseUrl } from '../../../baseUrl';
 import {
   Wrapper,
   SearchBoxInput,

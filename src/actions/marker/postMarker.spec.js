@@ -30,7 +30,7 @@ describe('post marker actions', () => {
   });
 
   it('POSTED_MARKER_SUCCESS', () => {
-    mock.onPost('http://localhost:8080/markers').reply(200, expectedResult);
+    mock.onPost('/api/markers').reply(200, expectedResult);
     store.dispatch(actions.postMarker(marker)).then(() => {
       expect(store.getActions()).toEqual([
         {
@@ -45,7 +45,7 @@ describe('post marker actions', () => {
   });
 
   it('POSTED_MARKER_ERROR', () => {
-    mock.onPost('http://localhost:8080/markers').reply(404);
+    mock.onPost('/api/markers').reply(404);
     store.dispatch(actions.postMarker(marker)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.POSTING_MARKER);
       expect(store.getActions()[1].type).toEqual(actions.POSTED_MARKER_ERROR);

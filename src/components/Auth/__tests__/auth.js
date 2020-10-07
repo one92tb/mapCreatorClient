@@ -19,6 +19,14 @@ const store = mockStore({
   marker: {
     selectedMarker: '',
     markers: []
+  },
+  user: {
+    users: [],
+    error: '',
+  },
+  account: {
+    error: '',
+    success: ''
   }
 });
 

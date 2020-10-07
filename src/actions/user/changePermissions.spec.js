@@ -25,7 +25,7 @@ describe('change permissions actions', () => {
     mock.reset();
   });
   it('CHANGED_PERMISSIONS_SUCCESS', () => {
-    mock.onPatch(`http://localhost:8080/users/${id}`).reply(200, expectedResult);
+    mock.onPatch(`/api/users/${id}`).reply(200, expectedResult);
     store.dispatch(actions.changePermissions(status, id)).then(() => {
       expect(store.getActions()).toEqual([
         {
@@ -40,7 +40,7 @@ describe('change permissions actions', () => {
   });
 
   it('CHANGED_PERMISSIONS_ERROR', () => {
-    mock.onPatch(`http://localhost:8080/users/${id}`).reply(404, expectedResult);
+    mock.onPatch(`/api/users/${id}`).reply(404, expectedResult);
     store.dispatch(actions.changePermissions(status.id)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.CHANGING_PERMISSIONS);
       expect(store.getActions()[1].type).toEqual(

@@ -38,7 +38,7 @@ describe('fetcht markers actions', () => {
   });
 
   it('FETCHED_MARKERS_SUCCESS', () => {
-    mock.onGet('http://localhost:8080/markers').reply(200, expectedResult);
+    mock.onGet('/api/markers').reply(200, expectedResult);
     store.dispatch(actions.fetchMarkers()).then(() => {
       expect(store.getActions()).toEqual([
         {
@@ -53,7 +53,7 @@ describe('fetcht markers actions', () => {
   });
 
   it('FETCHED_MARKERS_ERROR', () => {
-    mock.onGet('http://localhost:8080/markers').reply(404);
+    mock.onGet(`markers/${1}`).reply(404);
     store.dispatch(actions.fetchMarkers()).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.FETCHING_MARKERS);
       expect(store.getActions()[1].type).toEqual(actions.FETCHED_MARKERS_ERROR);

@@ -187,7 +187,7 @@ const Marker = styled.li`
     : props.isFiltered
       ? '#999'
       : 'transparent')};
-  opacity: ${(props) => props.isFiltered && 'transparent'};
+  opacity: ${(props) => props.isFiltered && '0.7'};
   transition: all 1s ease;
 
 `;

@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const CHANGING_PERMISSIONS = 'CHANGING_PERMISSIONS';
 export const CHANGED_PERMISSIONS_SUCCESS = 'CHANGED_PERMISSIONS_SUCCESS';
@@ -18,7 +19,13 @@ export const changePermissions = (status, id) => (dispatch) => {
   dispatch({
     type: CHANGING_PERMISSIONS
   });
-  axiosInstance
+
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .patch(
       `/api/users/${id}`, {
         isAdmin: status

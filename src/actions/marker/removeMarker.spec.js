@@ -25,7 +25,7 @@ describe('remove marker actions', () => {
   });
 
   it('REMOVED_MARKER_SUCCESS', () => {
-    mock.onDelete(`http://localhost:8080/markers/${id}`).reply(200, expectedResult);
+    mock.onDelete(`/api/markers/${id}`).reply(200, expectedResult);
     store.dispatch(actions.removeMarker(id)).then(() => {
       expect(store.getActions()).toEqual([
         {
@@ -40,7 +40,7 @@ describe('remove marker actions', () => {
   });
 
   it('REMOVED_MARKER_ERROR', () => {
-    mock.onDelete('http://localhost:8080/markers/1').reply(404);
+    mock.onDelete(`/api/markers/${id}`).reply(404);
     store.dispatch(actions.removeMarker(1)).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.REMOVING_MARKER);
       expect(store.getActions()[1].type).toEqual(actions.REMOVED_MARKER_ERROR);

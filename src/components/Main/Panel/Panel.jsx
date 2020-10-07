@@ -5,7 +5,7 @@ import { isPanelSelect } from '../../../actions/isPanelSelect';
 import { fetchMarkers } from '../../../actions/marker/fetchMarkers';
 import { disableMarkers } from '../../../actions/marker/disableMarkers';
 import { getSelectedMarker } from '../../../actions/marker/getSelectedMarker';
-import { baseUrl } from '../../../axiosInstance';
+import { baseUrl } from '../../../baseUrl';
 import { defaultMarkers } from './defaultMarkers';
 import {
   Wrapper,
@@ -149,6 +149,7 @@ export class Panel extends React.Component {
             <Nav>
               <NavItem>
                 <SelectButton
+                  data-testid='select-btn'
                   isSelected={isSelected}
                   location={location.pathname}
                   onClick={() => this.switchPanelStatus(true)}
@@ -158,6 +159,7 @@ export class Panel extends React.Component {
               </NavItem>
               <NavItem>
                 <FilterButton
+                  data-testid='filter-btn'
                   isSelected={isSelected}
                   location={location.pathname}
                   onClick={() => this.switchPanelStatus(false)}

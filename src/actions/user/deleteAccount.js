@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const DELETING_ACCOUNT = 'DELETING_ACCOUNT';
 export const DELETED_ACCOUNT_SUCCESS = 'DELETED_ACCOUNT_SUCCESS';
@@ -18,7 +19,13 @@ export const deleteAccount = (id) => (dispatch) => {
   dispatch({
     type: DELETING_ACCOUNT
   });
-  axiosInstance
+
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .delete(`/api/users/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

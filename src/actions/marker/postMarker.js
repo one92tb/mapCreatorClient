@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const POSTING_MARKER = 'POSTING_MARKER';
 export const POSTED_MARKER_SUCCESS = 'POSTED_MARKER_SUCCESS';
@@ -18,7 +19,13 @@ export const postMarker = (marker) => (dispatch) => {
   dispatch({
     type: POSTING_MARKER
   });
-  axiosInstance
+
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .post('/api/markers', marker, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

@@ -1,4 +1,5 @@
-import { axiosInstance } from '../../axiosInstance';
+import axios from 'axios';
+import { baseUrl } from '../../baseUrl';
 
 export const POSTING_INDICATOR = 'POSTING_INDICATOR';
 export const POSTED_INDICATOR_SUCCESS = 'POSTED_INDICATOR_SUCCESS';
@@ -18,7 +19,12 @@ export const postIndicator = (indicator) => (dispatch) => {
   dispatch({
     type: POSTING_INDICATOR
   });
-  axiosInstance
+  return axios.create({
+    baseURL: baseUrl,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    }
+  })
     .post('/api/indicators', indicator, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`

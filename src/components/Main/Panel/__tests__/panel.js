@@ -36,7 +36,9 @@ test('it should render Panel Component', () => {
 
   render(<Panel {...props} />);
   const markersInPanel = screen.queryAllByTestId('marker');
-  expect(markersInPanel).toHaveLength(3);
+  const customMarkers = screen.queryByText('custom markers');
+  fireEvent.click(customMarkers);
+  expect(markersInPanel).toHaveLength(12);
 });
 
 test('it should successfully change Panel From Select to Filter', () => {
@@ -71,11 +73,11 @@ test('it should successfully change Panel From Select to Filter', () => {
 
   render(<Panel {...props} />);
 
-  const SelectLink = screen.getByText('Select marker');
-  const FilterLink = screen.getByText('Filter marker');
+  const SelectLink = screen.getByTestId('select-btn');
+  const FilterLink = screen.getByTestId('filter-btn');
   fireEvent.click(FilterLink);
-  expect(SelectLink).toHaveStyleRule('font-weight', 'normal');
-  expect(FilterLink).toHaveStyleRule('font-weight', 'bold');
+  expect(SelectLink).not.toHaveStyleRule('background', '#00b8e6');
+  expect(FilterLink).toHaveStyleRule('background', '#00b8e6');
 });
 
 test('it should always set in the Panel Select when create marker option is selected', () => {
@@ -110,12 +112,12 @@ test('it should always set in the Panel Select when create marker option is sele
 
   render(<Panel {...props} />);
 
-  const SelectLink = screen.getByText('Select marker');
-  const FilterLink = screen.getByText('Filter marker');
+  const SelectLink = screen.getByText('select');
+  const FilterLink = screen.getByText('filter');
 
   fireEvent.click(FilterLink);
-  expect(SelectLink).toHaveStyleRule('font-weight', 'bold');
-  expect(FilterLink).toHaveStyleRule('font-weight', 'normal');
+  expect(SelectLink).toHaveStyleRule('background', '#00b8e6');
+  expect(FilterLink).not.toHaveStyleRule('background', '#00b8e6');
 });
 
 test('it should select marker when Panel has select navigation', () => {
@@ -125,7 +127,7 @@ test('it should select marker when Panel has select navigation', () => {
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/map'
     },
     markers: [
       {
@@ -161,7 +163,7 @@ test('it should unselect first marker and select second when Panel has select na
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/map'
     },
     markers: [
       {
@@ -200,7 +202,7 @@ test('it should select marker then unselect it when Panel has select navigation'
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/map'
     },
     markers: [
       {
@@ -239,7 +241,7 @@ test('it should select first marker when Panel has filter navigation', () => {
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/map'
     },
     markers: [
       {
@@ -264,7 +266,7 @@ test('it should select first marker when Panel has filter navigation', () => {
 
   render(<Panel {...props} />);
 
-  const FilterLink = screen.getByText('Filter marker');
+  const FilterLink = screen.getByTestId('filter-btn');
   fireEvent.click(FilterLink);
 
   const allMarkers = screen.queryAllByTestId('marker');
@@ -280,7 +282,7 @@ test('it should select all markers when Panel has filter navigation', () => {
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/map'
     },
     markers: [
       {
@@ -307,8 +309,11 @@ test('it should select all markers when Panel has filter navigation', () => {
 
   const allMarkers = screen.queryAllByTestId('marker');
 
-  const FilterLink = screen.getByText('Filter marker');
+  const FilterLink = screen.getByTestId('filter-btn');
   fireEvent.click(FilterLink);
+
+  const customMarkers = screen.queryByText('custom markers');
+  fireEvent.click(customMarkers);
 
   fireEvent.click(allMarkers[0]);
   fireEvent.click(allMarkers[1]);
@@ -329,7 +334,7 @@ test('it should select marker then unselect it when Panel has filter navigation'
     getSelectedMarker: jest.fn(),
     disableMarkers: jest.fn(),
     location: {
-      pathname: '/createMarker'
+      pathname: '/'
     },
     markers: [
       {
@@ -354,12 +359,17 @@ test('it should select marker then unselect it when Panel has filter navigation'
 
   render(<Panel {...props} />);
   const allMarkers = screen.queryAllByTestId('marker');
-  const FilterLink = screen.getByText('Filter marker');
+  const FilterLink = screen.getByTestId('filter-btn');
   fireEvent.click(FilterLink);
-  fireEvent.click(allMarkers[0]);
-  expect(allMarkers[0]).toHaveStyleRule('background', '#999');
-  expect(allMarkers[0]).toHaveStyleRule('opacity', '0.7');
-  fireEvent.click(allMarkers[0]);
-  expect(allMarkers[1]).toHaveStyleRule('background', 'transparent');
-  expect(allMarkers[1]).toHaveStyleRule('opacity', '1');
+
+  const customMarkers = screen.queryByText('custom markers');
+  fireEvent.click(customMarkers);
+
+  fireEvent.click(allMarkers[10]);
+
+  expect(allMarkers[10]).toHaveStyleRule('background', '#999');
+  expect(allMarkers[10]).toHaveStyleRule('opacity', '0.7');
+  fireEvent.click(allMarkers[10]);
+  expect(allMarkers[10]).toHaveStyleRule('background', 'transparent');
+  expect(allMarkers[10]).toHaveStyleRule('opacity', '1');
 });

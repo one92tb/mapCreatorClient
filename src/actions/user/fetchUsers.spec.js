@@ -39,7 +39,7 @@ describe('fetch users actions', () => {
   });
 
   it('FETCHED_USERS_SUCCESS', () => {
-    mock.onGet('http://localhost:8080/users').reply(200, expectedResult);
+    mock.onGet('/api/users').reply(200, expectedResult);
     store.dispatch(actions.fetchUsers()).then(() => {
       expect(store.getActions()).toEqual([
         { type: actions.FETCHING_USERS },
@@ -49,7 +49,7 @@ describe('fetch users actions', () => {
   });
 
   it('FETCHED_USERS_ERROR', () => {
-    mock.onGet('http://localhost:8080/users').reply(404);
+    mock.onGet('/api/users').reply(404);
     store.dispatch(actions.fetchUsers()).then(() => {
       expect(store.getActions()[0].type).toEqual(actions.FETCHING_USERS);
       expect(store.getActions()[1].type).toEqual(actions.FETCHED_USERS_ERROR);
