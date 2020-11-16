@@ -74,40 +74,37 @@ export class Panel extends React.Component {
   }
 
   onSelect = (marker, id) => {
-    const { getSelectedMarker, disableMarkers, location } = this.props;
-    const { selectedId, filteredMarkers, isSelected } = this.state;
-
-    if (location.pathname === '/createMarker' && marker.isDefault) {
-      return false;
-    }
+    const {getSelectedMarker, disableMarkers} = this.props;
+    const {selectedId, filteredMarkers, isSelected} = this.state;
 
     if (marker.id !== selectedId && isSelected) {
-      this.setState({ selectedId: id });
+      this.setState({selectedId: id});
       getSelectedMarker({
         ...marker,
-        url: marker.isDefault
-          ? `defaultMarkers/${marker.icon}`
-          : `${baseUrl}/images/${marker.icon}`,
-        isDefault: !!marker.isDefault
+        url: `${baseUrl}/images/${marker.icon}`
       });
     } else if (marker.id === selectedId && isSelected) {
-      this.setState({ selectedId: '' });
-      getSelectedMarker({ id: undefined, name: '', url: 'img/IMG-default.png' });
-    } else if (filteredMarkers.find((el) => el.id === marker.id)) {
-      this.setState({
-        filteredMarkers: filteredMarkers.filter((el) => el.id !== marker.id)
-      }, () => {
-        disableMarkers(filteredMarkers);
-      });
+      this.setState({selectedId: ''});
+      getSelectedMarker({id: undefined, name: "", url: 'IMG-default.png'});
     } else {
-      this.setState({
-        filteredMarkers: [
-          ...filteredMarkers,
-          marker
-        ]
-      }, () => {
-        disableMarkers(filteredMarkers);
-      });
+      //remove Marker from filteredMarkers if exist
+      if (filteredMarkers.find(el => el.id === marker.id)) {
+        this.setState({
+          filteredMarkers: filteredMarkers.filter(el => el.id !== marker.id)
+        }, () => {
+          disableMarkers(this.state.filteredMarkers);
+        });
+        //add Marker to filteredMarkers if not exist
+      } else {
+        this.setState({
+          filteredMarkers: [
+            ...filteredMarkers,
+            marker
+          ]
+        }, () => {
+          disableMarkers(this.state.filteredMarkers);
+        });
+      }
     }
   }
 
