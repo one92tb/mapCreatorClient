@@ -5,6 +5,7 @@ import { isPanelSelect } from '../../actions/isPanelSelect';
 import { getSelectedMarker } from '../../actions/marker/getSelectedMarker';
 import { logout } from '../../actions/signIn/logout';
 import { redirect } from '../../actions/redirect/redirect';
+import { disableMarkers } from '../../actions/marker/disableMarkers';
 
 import {
   LogoutBtn,
@@ -83,11 +84,12 @@ export class NavBar extends Component {
   };
 
   handleNavLink = (path) => {
-    console.log(path);
-    const { isPanelSelect, getSelectedMarker } = this.props;
+    const { isPanelSelect, getSelectedMarker, disableMarkers } = this.props;
     this.setState({ checked: false });
 
     getSelectedMarker('');
+    disableMarkers([]);
+
     if (path === '/createMarker') {
       isPanelSelect(true);
     }
@@ -154,7 +156,8 @@ const mapDispatchToProps = {
   isPanelSelect,
   getSelectedMarker,
   logout,
-  redirect
+  redirect,
+  disableMarkers
 };
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(NavBar);
