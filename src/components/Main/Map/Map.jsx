@@ -113,7 +113,7 @@ const geocode = (indicator, postIndicator) => {
 };
 
 export const MapWithAMakredInfoWindow = compose(withProps({
-  googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyATU8XgrEKFnnm8qhGEz2WCM5simF3_yS8&v=3.exp&libraries=geometry,drawing,places`,
+  googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
   containerElement: (<div
     style={{
       height: '100%'

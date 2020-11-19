@@ -13,7 +13,6 @@ const Wrapper = styled.div`
     padding: ${(props) => (props.currentLocation.pathname === '/'
     ? '0'
     : '10px 5px 5px 5px')};
-
   }
 `;
 
@@ -233,8 +232,6 @@ text-transform: uppercase;
 
 const Markers = styled.div`
 margin-top: 5px;
-
-
 
   height: ${(props) => (props.displayId === props.markersId
     ? '100%'
