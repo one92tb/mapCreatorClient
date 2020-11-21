@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSelectedMarker } from '../../../actions/marker/getSelectedMarker';
@@ -60,221 +60,175 @@ MarkerIconBox.displayName = 'div';
 ButtonGroup.displayName = 'div';
 ErrorMessage.displayName = 'span';
 
-export class MarkerCreator extends Component {
-  constructor(props) {
-    super(props);
-    this.imageBox = React.createRef();
-    this.inputFile = React.createRef();
-    this.state = {
-      markerName: '',
-      markerImageFile: '',
-      displaySelectedImage: 'img/IMG-default.png',
+export const MarkerCreator = (props) => {
+    const [ inputValues, setInputValues] = useState({
+      markerName: '', 
       color: '#000',
-      uploadStatus: true,
-      markerNameError: '',
-      markerImageFileError: ''
-    };
-  }
+      markerImageFile: ''
+    });
 
-  componentDidMount() {
-    const { fetchMarkers } = this.props;
-    fetchMarkers();
-  }
+    const [displayImageUrl, setDisplayImageUrl] = useState('img/IMG-default.png');
+    const [uploadStatus, setUploadStatus ] = useState(true);
+    const [markerNameError, setMarkerNameError] = useState('');
+    const [markerImageFileError, setMarkerImageFileError] = useState(''); 
+    const [markerName, setMarkerName] = useState('');
 
-  componentDidUpdate(prevProps) {
-    const { selectedMarker } = this.props;
+    const imageBoxRef = useRef();
 
-    if (selectedMarker.id !== prevProps.selectedMarker.id) {
-      this.setState(
-        {
-          markerName: selectedMarker.name,
-          displaySelectedImage: selectedMarker.url,
-          markerImageFile: ''
-        },
-        () => {
-          this.setState({
-            markerNameError: '',
-            markerImageFileError: ''
-          });
-        }
-      );
-    }
-  }
+    useEffect(() => {
+      props.fetchMarkers();
+     }, []);
 
-  onChange = (event) => {
-    const { markerImageFile, markerName } = this.state;
+ 
+    useEffect(() => {
+      if(props.selectedMarker){
+        setInputValues({...inputValues, markerName: props.selectedMarker.name, markerImageFile: ''});
+        setDisplayImageUrl( props.selectedMarker.url);
+        setMarkerNameError('');
+        setMarkerImageFileError('');
+      }
+    }, [props.selectedMarker.id]);
+    
 
-    if (event.target.name === 'markerImage' && event.target.files[0]) {
-      this.setState(
-        {
-          markerImageFile: event.target.files[0],
-          displaySelectedImage: URL.createObjectURL(event.target.files[0])
-        },
-        () => {
-          /\.(png)$/i.test(markerImageFile.name)
-            && this.setState({ markerImageFileError: '' });
-        }
-      );
-    } else {
-      this.setState({ [event.target.name]: event.target.value }, () => {
-        markerName.length > 2
-          && this.setState({ markerNameError: '' });
-      });
-    }
-  };
+    useEffect(() => {
+      inputValues.markerName && (inputValues.markerName.length > 2) && setMarkerNameError('');
+    },[inputValues.markerName]);
 
-  sendRecord = (event) => {
-    event.preventDefault();
-    const {
-      postMarker,
-      editMarker,
-      selectedMarker,
-      markers
-    } = this.props;
-    const { markerImageFile, markerName, uploadStatus } = this.state;
-    const data = {
-      markerName,
-      markerImageFile,
-      selectedMarker,
-      markers,
-      uploadStatus
-    };
+    useEffect(() => {
+      /\.(png)$/i.test(inputValues.markerImageFile.name) && setMarkerImageFileError('');
+    },[inputValues.markerImageFile.name]);
 
-    const validationResult = validate(errors, markerValidationDetails, data);
-    const fd = new FormData();
-
-    fd.append('file', markerImageFile);
-    fd.append('markerName', markerName);
-
-    if (!validationResult.isError) {
-      if (selectedMarker.id && !selectedMarker.isDeleted) {
-        if (markerImageFile === '') {
-          editMarker(
-            {
-              name: markerName,
-              icon: selectedMarker.icon
-            },
-            selectedMarker.id
-          );
-        } else {
-          editMarker(fd, selectedMarker.id);
-        }
+   
+    const onChange = (event) => {
+      if (event.target.name === 'markerImage' && event.target.files[0]) {
+        setInputValues({...inputValues, markerImageFile: event.target.files[0]});
+        setDisplayImageUrl(URL.createObjectURL(event.target.files[0]));
       } else {
-        postMarker(fd);
-        this.setState({
-          markerName: '',
-          markerImageFile: '',
-          displaySelectedImage: 'img/IMG-default.png'
-        });
+        setInputValues({ ...inputValues, [event.target.name]: event.target.value });
       }
     }
 
-    this.setState({
-      ...validationResult.errors
-    });
-  };
+    const sendRecord = (event) => {
+      event.preventDefault();
 
-  downloadMarker = () => {
-    const { markerName, markerImageFile } = this.state;
-    const { selectedMarker, markers } = this.props;
-    const data = {
-      markerName,
-      markerImageFile,
-      selectedMarker,
-      markers
-    };
-    const validationResult = validate(errors, markerValidationDetails, data);
-    if (!validationResult.isError) {
-      const node = this.imageBox;
-      domtoimage.toPng(node.current).then((dataUrl) => {
-        const link = document.createElement('a');
-        link.download = `${markerName}.png`;
-        link.href = dataUrl;
-        link.click();
+      const data = {
+        markerName: inputValues.markerName,
+        markerImageFile: inputValues.markerImageFile,
+        selectedMarker: props.selectedMarker,
+        markers: props.markers,
+        uplaodStatus: uploadStatus
+      }
+
+      const validationResult = validate(errors, markerValidationDetails, data);
+
+      const fd = new FormData();
+      fd.append('file', inputValues.markerImageFile);
+      fd.append('markerName', inputValues.markerName);
+
+      if(!validationResult.isError) { 
+        //edit
+        if(props.selectedMarkerid && !props.selectedMarker.isDeleted) {
+          //edit without image file
+          if(inputValues.markerImageFile === ''){
+            props.editMarker(
+              {
+                name: inputValues.markerName,
+                icon: props.selectedMarker.icon
+              },
+              props.selectedMarker.id
+            );
+          } else {
+            props.editMarker(fd, props.selectedMarker.id);
+          }
+        } else { // post
+          props.postMarker(fd);
+          setInputValues({ ...inputValues, markerName: '', markerImageFile: ''});
+          setDisplayImageUrl('img/IMG-default.png');
+        }
+      }
+
+      setMarkerNameError(validationResult.errors.markerNameError);
+      setMarkerImageFileError(validationResult.errors.markerImageFileError);
+    }
+
+    const downloadRecord = () => {
+
+      const data = {
+        markerName: inputValues.markerName,
+        markerImageFile: inputValues.markerImageFile,
+        selectedMarker: props.selectedMarker,
+        markers: props.markers,
+        uplaodStatus: uploadStatus
+      }
+
+      const validationResult = validate(errors, markerValidationDetails, data);
+
+      if (!validationResult.isError) {
+        const node = imageBoxRef;
+        console.log(node);
+        domtoimage.toPng(node.current).then((dataUrl) => {
+          const link = document.createElement('a');
+          link.download = `${inputValues.markerName}.png`;
+          link.href = dataUrl;
+          link.click();
+        });
+      }
+
+      setMarkerNameError(validationResult.errors.markerNameError);
+      setMarkerImageFileError(validationResult.errors.markerImageFileError);
+    }
+
+    const removeRecord = () => {
+      setInputValues({ ...inputValues, markerName: '', markerImageFile: ''});
+      setDisplayImageUrl('img/IMG-default.png');
+
+      props.removeMarker(props.selectedMarker.id);
+      props.getSelectedMarker({
+        ...props.selectedMarker,
+        isDeleted: true
       });
     }
 
-    this.setState({
-      ...validationResult.errors
-    });
-  };
-
-  removeRecord = () => {
-    const { removeMarker, getSelectedMarker, selectedMarker } = this.props;
-
-    this.setState({
-      markerName: '',
-      markerImageFile: '',
-      displaySelectedImage: 'img/IMG-default.png'
-    });
-
-    removeMarker(selectedMarker.id);
-
-    getSelectedMarker({
-      ...selectedMarker,
-      isDeleted: true
-    });
-  };
-
-  switchUpload = (status) => {
-    this.setState({
-      uploadStatus: status,
-      markerNameError: '',
-      markerImageFileError: ''
-    });
-  };
-
-  render() {
-    const {
-      uploadStatus,
-      displaySelectedImage,
-      color,
-      markerName,
-      markerImageFile,
-      markerNameError,
-      markerImageFileError
-    } = this.state;
-    const { selectedMarker } = this.props;
     return (
       <Wrapper>
         <Inner>
           <ButtonGroup>
             <UploadButton
               status={uploadStatus}
-              onClick={() => this.switchUpload(true)}
+              onClick={() => setUploadStatus(true)}
             >
               upload
             </UploadButton>
             <CustomButton
               status={uploadStatus}
-              onClick={() => this.switchUpload(false)}
+              onClick={() => setUploadStatus(false)}
             >
               custom
             </CustomButton>
           </ButtonGroup>
           {uploadStatus ? (
             <ImageBox>
-              <ImageWithoutMarker alt='' src={displaySelectedImage} />
+              <ImageWithoutMarker alt='' src={displayImageUrl} />
             </ImageBox>
           ) : (
             <AdditionalWrapper>
-              <MarkerIconBox ref={this.imageBox}>
-                <MarkerIcon background={color}>
-                  <ImageInsideMarker src={displaySelectedImage} />
+              <MarkerIconBox ref={imageBoxRef}>
+                <MarkerIcon background={inputValues.color}>
+                  <ImageInsideMarker src={displayImageUrl} />
                 </MarkerIcon>
               </MarkerIconBox>
             </AdditionalWrapper>
           )}
 
-          <Form onSubmit={this.sendRecord}>
+          <Form onSubmit={sendRecord}>
             <FormGroup>
               <LabelName htmlFor='markerName'>Name</LabelName>
               <Input
                 type='text'
                 name='markerName'
-                value={markerName}
+                value={inputValues.markerName}
                 id='markerName'
-                onChange={this.onChange}
+                onChange={onChange}
               />
               {markerNameError && (
                 <ErrorMessage>{markerNameError}</ErrorMessage>
@@ -284,11 +238,11 @@ export class MarkerCreator extends Component {
               <FormGroup>
                 <LabelColor htmlFor='markerColor'>Color</LabelColor>
                 <Input
-                  onChange={this.onChange}
+                  onChange={onChange}
                   type='color'
                   name='color'
                   id='markerColor'
-                  value={color}
+                  value={inputValues.color}
                   placeholder='color placeholder'
                 />
               </FormGroup>
@@ -296,20 +250,19 @@ export class MarkerCreator extends Component {
             <FormGroup>
               <LabelFile htmlFor='file'>
                 <InputSpan>choose file</InputSpan>
-                {displaySelectedImage === 'img/IMG-default.png'
+                {displayImageUrl === 'img/IMG-default.png'
                   ? 'Not file detected'
-                  : markerImageFile === ''
-                    ? `${markerName}.png`
-                    : markerImageFile.name}
+                  : inputValues.markerImageFile === ''
+                    ? `${inputValues.markerName}.png`
+                    : inputValues.markerImageFile.name}
               </LabelFile>
               <FileInput
                 data-testid='inputFile'
                 type='file'
                 id='file'
                 name='markerImage'
-                onChange={this.onChange}
+                onChange={onChange}
                 value=''
-                ref={(ref) => (this.inputFile = ref)}
               />
               {markerImageFileError && (
                 <ErrorMessage>{markerImageFileError}</ErrorMessage>
@@ -318,12 +271,12 @@ export class MarkerCreator extends Component {
             {uploadStatus ? (
               <FormGroup>
                 <SubmitBtn>
-                  {selectedMarker.id && !selectedMarker.isDeleted
+                  {props.selectedMarker.id && !props.selectedMarker.isDeleted
                     ? 'edit'
                     : 'upload'}
                 </SubmitBtn>
-                {selectedMarker.id && !selectedMarker.isDeleted ? (
-                  <RemoveBtn onClick={this.removeRecord} type='button'>
+                {props.selectedMarker.id && !props.selectedMarker.isDeleted ? (
+                  <RemoveBtn onClick={removeRecord} type='button'>
                     remove
                   </RemoveBtn>
                 ) : (
@@ -332,7 +285,7 @@ export class MarkerCreator extends Component {
               </FormGroup>
             ) : (
               <FormGroup>
-                <DownloadBtn onClick={this.downloadMarker} type='button'>
+                <DownloadBtn onClick={downloadRecord} type='button'>
                   download
                 </DownloadBtn>
               </FormGroup>
@@ -341,7 +294,6 @@ export class MarkerCreator extends Component {
         </Inner>
       </Wrapper>
     );
-  }
 }
 
 const mapDispatchToProps = {
