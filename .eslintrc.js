@@ -1,11 +1,14 @@
 module.exports = {
   env: {
     browser: true,
+    node: true,
     es2021: true,
-    jest: true
+    jest: true,
   },
+  extends: [
+    'airbnb'
+  ],
   parser: 'babel-eslint',
-  extends: 'airbnb',
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -15,15 +18,15 @@ module.exports = {
   },
   plugins: [
     'react',
-    'testing-library'
+    'testing-library',
   ],
+  ignorePatterns: ['build/*'],
   rules: {
-    /* JSX */
     'comma-dangle': 0,
     'react/jsx-uses-vars': 1,
     'react/display-name': 1,
     'no-unused-vars': 'warn',
-    'no-console': 1,
+    'no-console': 0,
     'no-unexpected-multiline': 'warn',
     'linebreak-style': 0,
     'import/no-named-as-default': 0,
@@ -39,7 +42,7 @@ module.exports = {
     'react/default-props-match-prop-types': 0,
     'no-unused-expressions': 0,
     'react/no-did-update-set-state': 0,
-    'max-len': [2, 125, 4, { ignoreUrls: true }],
+    'max-len': [2, 130, 4, { ignoreUrls: true }],
     'react/jsx-fragments': 0,
     'react/no-access-state-in-setstate': 0,
     'no-underscore-dangle': 0,
@@ -47,5 +50,6 @@ module.exports = {
     'consistent-return': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'import/no-extraneous-dependencies': 0,
+    indent: ['error', 2, { SwitchCase: 1 }],
   }
 };

@@ -99,10 +99,12 @@ export class List extends Component {
             </Thead>
             <Tbody>
               {
-              indicators.filter((indicator) => ((markerName === 'All' && city === '') || (markerName === 'All' && indicator.city.toLowerCase().search(city.toLowerCase()) !== -1)
-                ? indicator
-                : markerName === indicator.name && indicator.city.toLowerCase()
-                  .search(city.toLowerCase()) !== -1 && indicator)).map((indicator, id) => (
+                indicators.filter((indicator) => ((markerName === 'All' && city === '')
+                || (markerName === 'All' && indicator.city.toLowerCase().search(city.toLowerCase()) !== -1)
+                  ? indicator
+                  : markerName === indicator.name && indicator.city.toLowerCase()
+                    .search(city.toLowerCase()) !== -1 && indicator))
+                  .map((indicator, id) => (
                     <Tr key={indicator.id} data-testid='indicator'>
                       <Td>{id + 1}</Td>
                       <Td>{indicator.name}</Td>
@@ -110,11 +112,15 @@ export class List extends Component {
                       <Td>{indicator.city}</Td>
                       <Td>{indicator.country}</Td>
                       <Td>
-                        <Image data-testid='findIndicator' src='img/map.png' onClick={() => this.findIndicatorOnTheMap(indicator)} />
+                        <Image
+                          data-testid='findIndicator'
+                          src='img/map.png'
+                          onClick={() => this.findIndicatorOnTheMap(indicator)}
+                        />
                       </Td>
                     </Tr>
-              ))
-                }
+                  ))
+              }
             </Tbody>
           </Table>
         </TableContainer>

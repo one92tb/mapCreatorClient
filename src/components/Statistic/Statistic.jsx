@@ -89,31 +89,31 @@ export class Statistic extends Component {
           />
         </Form>
         {
-         indicators.length === 0
-           ? (
-             <TextWrapper>
-               <TextBox> You have not any data to display on the charts </TextBox>
-             </TextWrapper>
-           ) : (
-             <React.Fragment>
-               <BarGraph displayMarkers={this.sumVisibleIndicators} />
-               <ContainerStyle fluid>
-                 <RowStyle>
-                   <ColStyle xl='6' lg='12'>
-                     <Inner>
-                       <PieGraph displayMarkers={this.sumAllIndiacators} />
-                     </Inner>
-                   </ColStyle>
-                   <ColStyle xl='6' lg='12'>
-                     <Inner>
-                       <PieGraph displayMarkers={this.sumVisibleIndicators} />
-                     </Inner>
-                   </ColStyle>
-                 </RowStyle>
-               </ContainerStyle>
-             </React.Fragment>
-           )
-         }
+          indicators.length === 0
+            ? (
+              <TextWrapper>
+                <TextBox> You have not any data to display on the charts </TextBox>
+              </TextWrapper>
+            ) : (
+              <React.Fragment>
+                <BarGraph displayMarkers={this.sumVisibleIndicators} />
+                <ContainerStyle fluid>
+                  <RowStyle>
+                    <ColStyle xl='6' lg='12'>
+                      <Inner>
+                        <PieGraph displayMarkers={this.sumAllIndiacators} />
+                      </Inner>
+                    </ColStyle>
+                    <ColStyle xl='6' lg='12'>
+                      <Inner>
+                        <PieGraph displayMarkers={this.sumVisibleIndicators} />
+                      </Inner>
+                    </ColStyle>
+                  </RowStyle>
+                </ContainerStyle>
+              </React.Fragment>
+            )
+        }
       </Wrapper>
     );
   }

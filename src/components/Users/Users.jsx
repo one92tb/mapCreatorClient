@@ -89,27 +89,27 @@ export class Users extends React.Component {
                     <Td>{user.login}</Td>
                     <Td>
                       {
-                      user.id === 1
-                        ? ('Admin')
-                        : (
-                          <Select data-testid='select' name='user' onChange={(e) => this.handleChangeStatus(e, user)}>
-                            <Option key={user.login}>
-                              {
-                              user.isAdmin
-                                ? 'Admin'
-                                : 'User'
-                            }
-                            </Option>
-                            <Option key={user.login + 1}>
-                              {
-                              user.isAdmin
-                                ? 'User'
-                                : 'Admin'
-                              }
-                            </Option>
-                          </Select>
-                        )
-                    }
+                        user.id === 1
+                          ? ('Admin')
+                          : (
+                            <Select data-testid='select' name='user' onChange={(e) => this.handleChangeStatus(e, user)}>
+                              <Option key={user.login}>
+                                {
+                                  user.isAdmin
+                                    ? 'Admin'
+                                    : 'User'
+                                }
+                              </Option>
+                              <Option key={user.login + 1}>
+                                {
+                                  user.isAdmin
+                                    ? 'User'
+                                    : 'Admin'
+                                }
+                              </Option>
+                            </Select>
+                          )
+                      }
                     </Td>
                     <Td>
                       {user.id !== 1 && (

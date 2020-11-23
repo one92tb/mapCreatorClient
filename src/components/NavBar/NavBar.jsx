@@ -129,20 +129,20 @@ export class NavBar extends Component {
           <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
           <Nav>
             {
-            routes.map((route) => (
-              <NavItem key={route.name}>
-                <NavLink
-                  onClick={() => this.handleNavLink(route.path)}
-                  to={route.path}
-                  exact={route.exact}
-                  activeClassName={activeClassName}
-                >
-                  <Icon src={route.icon} />
-                  {route.name}
-                </NavLink>
-              </NavItem>
-            ))
-          }
+              routes.map((route) => (
+                <NavItem key={route.name}>
+                  <NavLink
+                    onClick={() => this.handleNavLink(route.path)}
+                    to={route.path}
+                    exact={route.exact}
+                    activeClassName={activeClassName}
+                  >
+                    <Icon src={route.icon} />
+                    {route.name}
+                  </NavLink>
+                </NavItem>
+              ))
+            }
           </Nav>
         </ResponsiveNav>
       </Panel>

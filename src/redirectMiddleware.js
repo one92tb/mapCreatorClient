@@ -2,6 +2,7 @@ import history from './history';
 
 export const REDIRECT = 'REDIRECT';
 
+// eslint-disable-next-line no-unused-vars
 export const createMiddleware = (handlers) => (store) => (next) => (action) => {
   const actionHandler = handlers.find(
     (handler) => handler.type === action.type

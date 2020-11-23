@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const SearchBoxInput = styled.input `
+const SearchBoxInput = styled.input`
   box-sizing: border-box;
   border: 1px solid transparent;
   width: 200px;
@@ -35,7 +35,7 @@ const SearchBoxInput = styled.input `
   }
 `;
 
-const InfoBoxContainer = styled.div `
+const InfoBoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;

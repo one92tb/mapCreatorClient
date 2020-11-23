@@ -142,12 +142,12 @@ export class Login extends React.Component {
               <Input id='userLogin' type='text' name='login' onChange={this.onChange} value={login} autocomplete='login' />
               {!loginStatus && loginError && <ErrorMessage>{loginError}</ErrorMessage>}
               {
-              !loginStatus && registerError && (
-              <ErrorMessage>
-                {registerError.response.data.errorMessage}
-              </ErrorMessage>
-              )
-            }
+                !loginStatus && registerError && (
+                  <ErrorMessage>
+                    {registerError.response.data.errorMessage}
+                  </ErrorMessage>
+                )
+              }
             </FormGroup>
             <FormGroup>
               <Label htmlFor='userPassword'>Password</Label>
@@ -162,21 +162,21 @@ export class Login extends React.Component {
               />
               {passwordError && !loginStatus && <ErrorMessage>{passwordError}</ErrorMessage>}
               {
-                  authError && loginStatus
-                    ? (
-                      <ErrorMessage>
-                        {authError.response.data.errorMessage}
-                      </ErrorMessage>
-                    )
-                    : (<SuccessMessage>{registerSuccess}</SuccessMessage>)
-            }
+                authError && loginStatus
+                  ? (
+                    <ErrorMessage>
+                      {authError.response.data.errorMessage}
+                    </ErrorMessage>
+                  )
+                  : (<SuccessMessage>{registerSuccess}</SuccessMessage>)
+              }
             </FormGroup>
             <FormGroup>
               <SubmitBtn onClick={(e) => this.onSubmit(e)}>
                 {
-                loginStatus
-                  ? 'Authorization'
-                  : 'Create Account'
+                  loginStatus
+                    ? 'Authorization'
+                    : 'Create Account'
                 }
               </SubmitBtn>
             </FormGroup>

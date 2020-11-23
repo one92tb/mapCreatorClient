@@ -239,77 +239,77 @@ withStateHandlers(() => ({
             visible={!(props.zoom < 15)}
           >
             {
-            props.isOpen && props.id === indicator.id && (
-            <InfoBox
-              defaultPosition={{
-                lat: indicator.lat,
-                lng: indicator.lng
-              }}
-              ref={props.onInfoBox}
-              onCloseClick={props.onToggleOpen}
-              closeBoxURL=''
-              options={{
-                boxStyle: {
-                  border: 'none',
-                  fontSize: '12pt',
-                  overflow: 'hidden',
-                  height: '250px',
-                  width: '250px',
-                  display: props.zoom < 15
-                    ? 'none'
-                    : 'block'
-                },
-                closeBoxMargin: '5px 5px 2px 2px',
-                alignBottom: true,
-                isHidden: false,
-                pixelOffset: props.zoom < 17
-                  ? new google.maps.Size(-125, -20)
-                  : new google.maps.Size(-125, -45),
-                enableEventPropagation: true,
-                infoBoxClearance: new google.maps.Size(1, 1)
-              }}
-            >
-              <InfoBoxContainer>
-                {
-                  ['name', 'street', 'city', 'country']
-                    .map((content) => (props.isEdit && props.currentId === indicator.id
+              props.isOpen && props.id === indicator.id && (
+                <InfoBox
+                  defaultPosition={{
+                    lat: indicator.lat,
+                    lng: indicator.lng
+                  }}
+                  ref={props.onInfoBox}
+                  onCloseClick={props.onToggleOpen}
+                  closeBoxURL=''
+                  options={{
+                    boxStyle: {
+                      border: 'none',
+                      fontSize: '12pt',
+                      overflow: 'hidden',
+                      height: '250px',
+                      width: '250px',
+                      display: props.zoom < 15
+                        ? 'none'
+                        : 'block'
+                    },
+                    closeBoxMargin: '5px 5px 2px 2px',
+                    alignBottom: true,
+                    isHidden: false,
+                    pixelOffset: props.zoom < 17
+                      ? new google.maps.Size(-125, -20)
+                      : new google.maps.Size(-125, -45),
+                    enableEventPropagation: true,
+                    infoBoxClearance: new google.maps.Size(1, 1)
+                  }}
+                >
+                  <InfoBoxContainer>
+                    {
+                      ['name', 'street', 'city', 'country']
+                        .map((content) => (props.isEdit && props.currentId === indicator.id
                        && props.currentValue === indicator[content] && props.propertyName === content
-                      ? (
-                        <InfoContentInput
-                          type='text'
-                          ref={props.onInputMounted}
-                          name={content}
-                          onChange={(e) => props.onIndicatorChange(e)}
-                          value={props[content]}
-                          placeholder='insert new value'
-                          onKeyPress={(e) => {
-                            const key = e.keyCode || e.which;
-                            if (key === 13 && props[content] !== '') {
-                              props.edit(indicator.id, content, props[content]);
-                              props.closeInput();
-                            } else if (key === 13 && props[content] === '') {
-                              props.closeInput();
-                            } else if (e.keyCode === 27) {
-                              props.closeInput();
-                            }
-                          }}
-                        />
-                      )
-                      : (
-                        <InfoContent
-                          onDoubleClick={(event) => props.onEditInfoBox(event, indicator.id, indicator[content], content)}
-                        >
-                          {indicator[content]}
-                        </InfoContent>
-                      )))
-                }
-                <InfoBtn onClick={() => props.remove(indicator.id)} data-testid='removeBtn'>
-                  Remove Marker
-                </InfoBtn>
-              </InfoBoxContainer>
-            </InfoBox>
-            )
-          }
+                          ? (
+                            <InfoContentInput
+                              type='text'
+                              ref={props.onInputMounted}
+                              name={content}
+                              onChange={(e) => props.onIndicatorChange(e)}
+                              value={props[content]}
+                              placeholder='insert new value'
+                              onKeyPress={(e) => {
+                                const key = e.keyCode || e.which;
+                                if (key === 13 && props[content] !== '') {
+                                  props.edit(indicator.id, content, props[content]);
+                                  props.closeInput();
+                                } else if (key === 13 && props[content] === '') {
+                                  props.closeInput();
+                                } else if (e.keyCode === 27) {
+                                  props.closeInput();
+                                }
+                              }}
+                            />
+                          )
+                          : (
+                            <InfoContent
+                              onDoubleClick={(event) => props.onEditInfoBox(event, indicator.id, indicator[content], content)}
+                            >
+                              {indicator[content]}
+                            </InfoContent>
+                          )))
+                    }
+                    <InfoBtn onClick={() => props.remove(indicator.id)} data-testid='removeBtn'>
+                      Remove Marker
+                    </InfoBtn>
+                  </InfoBoxContainer>
+                </InfoBox>
+              )
+            }
           </Marker>
         ))
     }
