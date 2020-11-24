@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
   PieChart,
   Pie,
@@ -81,46 +81,30 @@ const renderActiveShape = (props) => {
   );
 };
 
-export class PieGraph extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeIndex: 0
-    };
-  }
+export const PieGraph = (props) => {
+  const { displayMarkers } = props;
 
-  onPieEnter = (data, index) => {
-    this.setState({
-      activeIndex: index
-    });
-  };
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  render() {
-    const { activeIndex } = this.state;
-    const { displayMarkers } = this.props;
-
-    return (
-      <ResponsiveContainer width='100%' height='100%'>
-        <PieChart>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            dataKey='value'
-            data={displayMarkers().map((el) => ({
-              name: el[0],
-              value: el[1]
-            }))}
-            cx={300}
-            cy={170}
-            innerRadius={60}
-            outerRadius={80}
-            fill='#8884d8'
-            onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
-
-export default PieGraph;
+  return (
+    <ResponsiveContainer width='100%' height='100%'>
+      <PieChart>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          dataKey='value'
+          data={displayMarkers().map((el) => ({
+            name: el[0],
+            value: el[1]
+          }))}
+          cx={300}
+          cy={170}
+          innerRadius={60}
+          outerRadius={80}
+          fill='#8884d8'
+          onMouseEnter={(data, index) => setActiveIndex(index)}
+        />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};

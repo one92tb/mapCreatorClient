@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { fetchIndicators } from '../../actions/mapIndicator/fetchIndicators';
 import { fetchMarkers } from '../../actions/marker/fetchMarkers';
-import BarGraph from './BarGraph/BarGraph';
-import PieGraph from './PieChart/PieGraph';
+import { BarGraph } from './BarGraph/BarGraph';
+import { PieGraph } from './PieChart/PieGraph';
 
 import {
   ContainerStyle,

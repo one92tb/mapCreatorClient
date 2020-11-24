@@ -36,5 +36,3 @@ export const BarGraph = ({ displayMarkers }) => (
     </BarChart>
   </ResponsiveContainer>
 );
-
-export default BarGraph;
