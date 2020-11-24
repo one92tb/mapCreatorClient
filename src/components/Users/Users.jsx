@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchUsers } from '../../actions/user/fetchUsers';
@@ -35,101 +35,88 @@ Td.displayName = 'td';
 RemoveIcon.displayName = 'img';
 Option.displayName = 'option';
 
-export class Users extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: ''
-    };
-  }
+export const Users = (props) => {
+  const {
+    fetchUsers,
+    changePermissions,
+    deleteAccount,
+    users
+  } = props;
 
-  componentDidMount() {
-    const { fetchUsers } = this.props;
+  const [login, setLogin] = useState('');
+
+  useEffect(() => {
     fetchUsers();
-  }
+  }, []);
 
-  handleChangeUser = (e) => {
-    this.setState({ login: e.target.value });
-  };
-
-  handleChangeStatus = (e, user) => {
-    const { changePermissions } = this.props;
+  const handleChangeStatus = (e, user) => {
     const status = e.target.value === 'Admin';
     changePermissions(status, user.id);
   };
 
-  removeUser = (id) => {
-    const { deleteAccount } = this.props;
-    deleteAccount(id);
-  };
-
-  render() {
-    const { login } = this.state;
-    const { users } = this.props;
-    return (
-      <Wrapper>
-        <Form>
-          <Input onChange={(e) => this.handleChangeUser(e)} type='text' name='user' placeholder='search user' />
-        </Form>
-        <TableContainer>
-          <Table>
-            <Thead>
-              <tr>
-                <Th>id</Th>
-                <Th>name</Th>
-                <Th>change status</Th>
-                <Th>remove</Th>
-              </tr>
-            </Thead>
-            <Tbody>
-              {
-                users.filter((user) => user.login.search(login) !== -1 && user).map((user, id) => (
-                  <Tr key={user.id} data-testid='user'>
-                    <Td>{id + 1}</Td>
-                    <Td>{user.login}</Td>
-                    <Td>
-                      {
-                        user.id === 1
-                          ? ('Admin')
-                          : (
-                            <Select data-testid='select' name='user' onChange={(e) => this.handleChangeStatus(e, user)}>
-                              <Option key={user.login}>
-                                {
-                                  user.isAdmin
-                                    ? 'Admin'
-                                    : 'User'
-                                }
-                              </Option>
-                              <Option key={user.login + 1}>
-                                {
-                                  user.isAdmin
-                                    ? 'User'
-                                    : 'Admin'
-                                }
-                              </Option>
-                            </Select>
-                          )
-                      }
-                    </Td>
-                    <Td>
-                      {user.id !== 1 && (
-                        <RemoveIcon
-                          data-testid='removeBtn'
-                          onClick={() => this.removeUser(user.id)}
-                          src='img/delete.png'
-                        />
-                      )}
-                    </Td>
-                  </Tr>
-                ))
-              }
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      <Form>
+        <Input onChange={(e) => setLogin(e.target.value)} type='text' name='user' placeholder='search user' />
+      </Form>
+      <TableContainer>
+        <Table>
+          <Thead>
+            <tr>
+              <Th>id</Th>
+              <Th>name</Th>
+              <Th>change status</Th>
+              <Th>remove</Th>
+            </tr>
+          </Thead>
+          <Tbody>
+            {
+              users.filter((user) => user.login.search(login) !== -1 && user).map((user, id) => (
+                <Tr key={user.id} data-testid='user'>
+                  <Td>{id + 1}</Td>
+                  <Td>{user.login}</Td>
+                  <Td>
+                    {
+                      user.id === 1
+                        ? ('Admin')
+                        : (
+                          <Select data-testid='select' name='user' onChange={(e) => handleChangeStatus(e, user)}>
+                            <Option key={user.login}>
+                              {
+                                user.isAdmin
+                                  ? 'Admin'
+                                  : 'User'
+                              }
+                            </Option>
+                            <Option key={user.login + 1}>
+                              {
+                                user.isAdmin
+                                  ? 'User'
+                                  : 'Admin'
+                              }
+                            </Option>
+                          </Select>
+                        )
+                    }
+                  </Td>
+                  <Td>
+                    {user.id !== 1 && (
+                      <RemoveIcon
+                        data-testid='removeBtn'
+                        onClick={() => deleteAccount(user.id)}
+                        src='img/delete.png'
+                      />
+                    )}
+                  </Td>
+                </Tr>
+              ))
+            }
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </Wrapper>
+  );
+};
 
 const mapDispatchToProps = {
   fetchUsers,
