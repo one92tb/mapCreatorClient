@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPanelSelect } from '../../actions/isPanelSelect';
@@ -68,35 +68,26 @@ const routes = [
   }
 ];
 
-export class NavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      checked: false
-    };
-  }
+export const NavBar = (props) => {
+  const {
+    userName,
+    isPanelSelect,
+    getSelectedMarker,
+    logout,
+    redirect,
+    disableMarkers
+  } = props;
 
-  handleCheckBox = () => {
-    const { checked } = this.state;
-    this.setState({
-      checked: !checked
-    });
-  };
+  const [checked, setChecked] = useState(false);
 
-  handleNavLink = (path) => {
-    const { isPanelSelect, getSelectedMarker, disableMarkers } = this.props;
-    this.setState({ checked: false });
-
+  const handleNavLink = (path) => {
+    setChecked(false);
     getSelectedMarker('');
     disableMarkers([]);
-
-    if (path === '/createMarker') {
-      isPanelSelect(true);
-    }
+    (path === '/createMarker') && isPanelSelect(true);
   };
 
-  handleLogOut = () => {
-    const { logout, redirect } = this.props;
+  const handleLogout = () => {
     logout({
       userId: '',
       userName: '',
@@ -107,48 +98,44 @@ export class NavBar extends Component {
     redirect('/login');
   };
 
-  render() {
-    const { userName } = this.props;
-    const { checked } = this.state;
-    return (
-      <Panel>
-        <ResponsiveMenu>
-          <Header>
-            <Title>mapCreator</Title>
-          </Header>
-          <Label htmlFor='toggle'>&#9776;</Label>
-          <Input type='checkbox' id='toggle' onChange={this.handleCheckBox} />
-        </ResponsiveMenu>
-        <ResponsiveNav isChecked={checked}>
-          <User>
-            <Logo src='img/logo4.png' />
-            <LoginName>
-              user: {userName}
-            </LoginName>
-          </User>
-          <LogoutBtn onClick={this.handleLogOut}>Sign out</LogoutBtn>
-          <Nav>
-            {
-              routes.map((route) => (
-                <NavItem key={route.name}>
-                  <NavLink
-                    onClick={() => this.handleNavLink(route.path)}
-                    to={route.path}
-                    exact={route.exact}
-                    activeClassName={activeClassName}
-                  >
-                    <Icon src={route.icon} />
-                    {route.name}
-                  </NavLink>
-                </NavItem>
-              ))
-            }
-          </Nav>
-        </ResponsiveNav>
-      </Panel>
-    );
-  }
-}
+  return (
+    <Panel>
+      <ResponsiveMenu>
+        <Header>
+          <Title>mapCreator</Title>
+        </Header>
+        <Label htmlFor='toggle'>&#9776;</Label>
+        <Input type='checkbox' id='toggle' onChange={(e) => setChecked(e.target.checked)} />
+      </ResponsiveMenu>
+      <ResponsiveNav isChecked={checked}>
+        <User>
+          <Logo src='img/logo4.png' />
+          <LoginName>
+            user: {userName}
+          </LoginName>
+        </User>
+        <LogoutBtn onClick={handleLogout}>Sign out</LogoutBtn>
+        <Nav>
+          {
+            routes.map((route) => (
+              <NavItem key={route.name}>
+                <NavLink
+                  onClick={() => handleNavLink(route.path)}
+                  to={route.path}
+                  exact={route.exact}
+                  activeClassName={activeClassName}
+                >
+                  <Icon src={route.icon} />
+                  {route.name}
+                </NavLink>
+              </NavItem>
+            ))
+          }
+        </Nav>
+      </ResponsiveNav>
+    </Panel>
+  );
+};
 
 const mapStateToProps = (state) => ({ userName: state.account.userName });
 

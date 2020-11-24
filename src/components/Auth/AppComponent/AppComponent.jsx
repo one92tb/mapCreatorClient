@@ -36,7 +36,7 @@ export const AppComponent = () => (
       </ColStyle>
       <ColStyle lg='12' xl='10'>
         <Switch>
-          <Route path='/' exact={true} component={Main} />
+          <Route path='/' exact component={Main} />
           <Route path='/createMarker' component={Main} />
           <Route path='/statistic' component={Statistic} />
           <Route path='/list' component={List} />

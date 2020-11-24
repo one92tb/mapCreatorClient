@@ -73,7 +73,7 @@ export const Panel = (props) => {
   }, [location.pathname]);
 
   const onSelect = (marker, id) => {
-    if (marker.isDefault) {
+    if (marker.isDefault && location.pathname === '/createMarker') {
       return false;
     }
 
@@ -104,7 +104,7 @@ export const Panel = (props) => {
       <Label htmlFor='panel' currentLocation={location}>
         <img src='img/drawMarker.png' alt='drawMarker' width={30} height={30} />
       </Label>
-      <Input type='checkbox' id='panel' onChange={(e) => { setChecked(e.target.checked); console.log(checked); }} />
+      <Input type='checkbox' id='panel' onChange={(e) => setChecked(e.target.checked)} />
       <Card isChecked={checked} currentLocation={location}>
         <CardHeader>
           <Nav>

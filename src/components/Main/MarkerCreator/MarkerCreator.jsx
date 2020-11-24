@@ -62,7 +62,13 @@ ErrorMessage.displayName = 'span';
 
 export const MarkerCreator = (props) => {
   const {
-    selectedMarker, fetchMarkers, postMarker, removeMarker, getSelectedMarker, editMarker, markers
+    selectedMarker,
+    fetchMarkers,
+    postMarker,
+    removeMarker,
+    getSelectedMarker,
+    editMarker,
+    markers
   } = props;
 
   const [inputValues, setInputValues] = useState({
