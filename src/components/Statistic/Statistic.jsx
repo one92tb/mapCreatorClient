@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
@@ -29,28 +29,16 @@ Inner.displayName = 'div';
 TextBox.displayName = 'div';
 TextWrapper.displayName = 'div';
 
-export class Statistic extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      city: ''
-    };
-  }
+export const Statistic = (props) => {
+  const { fetchIndicators, fetchMarkers, indicators } = props;
+  const [city, setCity] = useState('');
 
-  componentDidMount() {
-    const { fetchIndicators, fetchMarkers } = this.props;
-    fetchIndicators();
+  useEffect(() => {
     fetchMarkers();
-  }
+    fetchIndicators();
+  }, []);
 
-  sumVisibleIndicators = () => {
-    const {
-      indicators
-    } = this.props;
-    const {
-      city
-    } = this.state;
-
+  const sumVisibleIndicators = () => {
     const displayMarkers = Object.entries(indicators.filter((indicator) => ((city === '' || indicator.city.toLowerCase()
       .search(city.toLowerCase()) !== -1) && indicator)).reduce((obj, el) => {
       obj[el.name] = obj[el.name]
@@ -62,62 +50,52 @@ export class Statistic extends Component {
     return displayMarkers;
   };
 
-  sumAllIndiacators = () => {
-    const { indicators } = this.props;
+  const sumAllIndiacators = () => {
     const displaySumMarkers = [
       ['All markers', indicators.length]
     ];
     return displaySumMarkers;
   };
 
-  handleChange = (e) => {
-    this.setState({
-      city: e.target.value
-    });
-  };
-
-  render() {
-    const { indicators } = this.props;
-    return (
-      <Wrapper>
-        <Form>
-          <Input
-            onChange={this.handleChange}
-            type='text'
-            name='city'
-            placeholder='search your city'
-          />
-        </Form>
-        {
-          indicators.length === 0
-            ? (
-              <TextWrapper>
-                <TextBox> You have not any data to display on the charts </TextBox>
-              </TextWrapper>
-            ) : (
-              <React.Fragment>
-                <BarGraph displayMarkers={this.sumVisibleIndicators} />
-                <ContainerStyle fluid>
-                  <RowStyle>
-                    <ColStyle xl='6' lg='12'>
-                      <Inner>
-                        <PieGraph displayMarkers={this.sumAllIndiacators} />
-                      </Inner>
-                    </ColStyle>
-                    <ColStyle xl='6' lg='12'>
-                      <Inner>
-                        <PieGraph displayMarkers={this.sumVisibleIndicators} />
-                      </Inner>
-                    </ColStyle>
-                  </RowStyle>
-                </ContainerStyle>
-              </React.Fragment>
-            )
-        }
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      <Form>
+        <Input
+          onChange={(e) => setCity(e.target.value)}
+          type='text'
+          name='city'
+          placeholder='search your city'
+        />
+      </Form>
+      {
+        indicators.length === 0
+          ? (
+            <TextWrapper>
+              <TextBox> You have not any data to display on the charts </TextBox>
+            </TextWrapper>
+          ) : (
+            <React.Fragment>
+              <BarGraph displayMarkers={sumVisibleIndicators} />
+              <ContainerStyle fluid>
+                <RowStyle>
+                  <ColStyle xl='6' lg='12'>
+                    <Inner>
+                      <PieGraph displayMarkers={sumAllIndiacators} />
+                    </Inner>
+                  </ColStyle>
+                  <ColStyle xl='6' lg='12'>
+                    <Inner>
+                      <PieGraph displayMarkers={sumVisibleIndicators} />
+                    </Inner>
+                  </ColStyle>
+                </RowStyle>
+              </ContainerStyle>
+            </React.Fragment>
+          )
+      }
+    </Wrapper>
+  );
+};
 
 const mapStateToProps = (state) => ({
   indicators: state.mapIndicator.indicators,

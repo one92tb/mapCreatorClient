@@ -39,7 +39,7 @@ Td.displayName = 'td';
 Option.displayName = 'option';
 Image.displayName = 'img';
 
-const List = (props) => {
+export const List = (props) => {
   const {
     fetchIndicators, fetchMarkers, redirect, getSelectedIndicator, indicators, markers
   } = props;
