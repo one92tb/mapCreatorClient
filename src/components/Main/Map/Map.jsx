@@ -278,6 +278,7 @@ withStateHandlers(() => ({
                             <InfoContentInput
                               type='text'
                               ref={props.onInputMounted}
+                              key={indicator.id}
                               name={content}
                               onChange={(e) => props.onIndicatorChange(e)}
                               value={props[content]}
