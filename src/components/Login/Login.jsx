@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createUser } from '../../actions/user/createUser';
@@ -40,153 +40,144 @@ SubmitBtn.displayName = 'button';
 Logo.displayName = 'img';
 Title.displayName = 'h1';
 
-export class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: '',
-      loginError: '',
-      password: '',
-      passwordError: '',
-      loginStatus: true
-    };
-  }
+export const Login = (props) => {
+  const {
+    createUser,
+    loginRequest,
+    resetLoginError,
+    resetRegisterError,
+    resetRegisterSuccess,
+    registerError,
+    registerSuccess,
+    authError
+  } = props;
 
-  componentDidUpdate(prevProps) {
-    const { registerSuccess } = this.props;
-    if (registerSuccess !== prevProps.registerSuccess) {
-      this.setState({ loginStatus: true });
-    }
-  }
+  const [inputValues, setInputValues] = useState({
+    login: '',
+    password: ''
+  });
+  const [loginError, setLoginError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
+  useEffect(() => {
+    setIsLoginForm(true);
+  }, [registerSuccess]);
 
-  onSubmit = (e) => {
-    const { login, password, loginStatus } = this.state;
-    const {
-      createUser,
-      loginRequest,
-      resetRegisterError,
-      resetLoginError,
-      resetRegisterSuccess
-    } = this.props;
+  const onSubmit = (e) => {
+    e.preventDefault();
 
     const data = {
-      login,
-      password,
-      loginStatus
+      login: inputValues.login,
+      password: inputValues.password,
+      loginStatus: isLoginForm
     };
+
+    const user = {
+      login: inputValues.login,
+      password: inputValues.password
+    };
+
+    resetRegisterError();
+    resetLoginError();
+    resetRegisterSuccess();
 
     const validationResult = validate(errors, registerValidationDetails, data);
-    const user = {
-      login,
-      password
-    };
 
-    e.preventDefault();
-    resetRegisterError();
-    resetLoginError();
-    resetRegisterSuccess();
+    !validationResult.isError && !isLoginForm ? createUser(user) : loginRequest(user);
 
-    !validationResult.isError && !loginStatus ? createUser(user) : loginRequest(user);
-
-    this.setState({
-      ...validationResult.errors
-    });
+    setLoginError(validationResult.errors.loginError);
+    setPasswordError(validationResult.errors.passwordError);
   };
 
-  isLogin = (status) => {
-    const { resetRegisterError, resetLoginError, resetRegisterSuccess } = this.props;
-    this.setState({
-      loginStatus: status,
+  const switchForm = (bool) => {
+    setInputValues({
       login: '',
-      loginError: '',
-      password: '',
-      passwordError: ''
+      password: ''
     });
+
+    setIsLoginForm(bool);
+    setLoginError('');
+    setPasswordError('');
 
     resetRegisterError();
     resetLoginError();
     resetRegisterSuccess();
   };
 
-  render() {
-    const {
-      login,
-      password,
-      loginStatus,
-      loginError,
-      passwordError,
-    } = this.state;
-    const { registerError, registerSuccess, authError } = this.props;
-    return (
-      <Wrapper>
-        <Title className='logoName'>mapCreator</Title>
-        <Logo src='img/logo4.png' />
-        <Inner>
-          <ButtonWrapper>
-            <LoginBtn status={loginStatus} onClick={() => this.isLogin(true)}>
-              Login
-            </LoginBtn>
-            <RegisterBtn status={loginStatus} onClick={() => this.isLogin(false)}>
-              Register
-            </RegisterBtn>
-          </ButtonWrapper>
-          <Form>
-            <FormGroup>
-              <Label htmlFor='userLogin'>Login</Label>
-              <Input id='userLogin' type='text' name='login' onChange={this.onChange} value={login} autocomplete='login' />
-              {!loginStatus && loginError && <ErrorMessage>{loginError}</ErrorMessage>}
-              {
-                !loginStatus && registerError && (
+  const onChange = (event) => {
+    setInputValues({ ...inputValues, [event.target.name]: event.target.value });
+  };
+
+  return (
+    <Wrapper>
+      <Title className='logoName'>mapCreator</Title>
+      <Logo src='img/logo4.png' />
+      <Inner>
+        <ButtonWrapper>
+          <LoginBtn status={isLoginForm} onClick={() => switchForm(true)}>
+            Login
+          </LoginBtn>
+          <RegisterBtn status={isLoginForm} onClick={() => switchForm(false)}>
+            Register
+          </RegisterBtn>
+        </ButtonWrapper>
+        <Form>
+          <FormGroup>
+            <Label htmlFor='userLogin'>Login</Label>
+            <Input 
+              id='userLogin'
+              type='text'
+              name='login'
+              onChange={onChange}
+              value={inputValues.login}
+              autocomplete='login'
+            />
+            {!isLoginForm && loginError && <ErrorMessage>{loginError}</ErrorMessage>}
+            {
+              !isLoginForm && registerError && (
+                <ErrorMessage>
+                  {registerError.response.data.errorMessage}
+                </ErrorMessage>
+              )
+            }
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor='userPassword'>Password</Label>
+            <Input
+              type='password'
+              name='password'
+              id='userPassword'
+              onChange={onChange}
+              value={inputValues.password}
+              autocomplete={isLoginForm
+                ? 'current password' : 'new-password'}
+            />
+            {passwordError && !isLoginForm && <ErrorMessage>{passwordError}</ErrorMessage>}
+            {
+              authError && isLoginForm
+                ? (
                   <ErrorMessage>
-                    {registerError.response.data.errorMessage}
+                    {authError.response.data.errorMessage}
                   </ErrorMessage>
                 )
-              }
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor='userPassword'>Password</Label>
-              <Input
-                type='password'
-                name='password'
-                id='userPassword'
-                onChange={this.onChange}
-                value={password}
-                autocomplete={loginStatus
-                  ? 'current password' : 'new-password'}
-              />
-              {passwordError && !loginStatus && <ErrorMessage>{passwordError}</ErrorMessage>}
+                : (<SuccessMessage>{registerSuccess}</SuccessMessage>)
+            }
+          </FormGroup>
+          <FormGroup>
+            <SubmitBtn onClick={(e) => onSubmit(e)}>
               {
-                authError && loginStatus
-                  ? (
-                    <ErrorMessage>
-                      {authError.response.data.errorMessage}
-                    </ErrorMessage>
-                  )
-                  : (<SuccessMessage>{registerSuccess}</SuccessMessage>)
+                isLoginForm
+                  ? 'Authorization'
+                  : 'Create Account'
               }
-            </FormGroup>
-            <FormGroup>
-              <SubmitBtn onClick={(e) => this.onSubmit(e)}>
-                {
-                  loginStatus
-                    ? 'Authorization'
-                    : 'Create Account'
-                }
-              </SubmitBtn>
-            </FormGroup>
-          </Form>
-        </Inner>
-      </Wrapper>
-    );
-  }
-}
-
+            </SubmitBtn>
+          </FormGroup>
+        </Form>
+      </Inner>
+    </Wrapper>
+  );
+};
 const mapDispatchToProps = {
   createUser,
   loginRequest,
