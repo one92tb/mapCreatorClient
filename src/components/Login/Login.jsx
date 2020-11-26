@@ -88,6 +88,8 @@ export const Login = (props) => {
 
     setLoginError(validationResult.errors.loginError);
     setPasswordError(validationResult.errors.passwordError);
+
+    console.log(registerError);
   };
 
   const switchForm = (bool) => {
@@ -125,7 +127,7 @@ export const Login = (props) => {
         <Form>
           <FormGroup>
             <Label htmlFor='userLogin'>Login</Label>
-            <Input 
+            <Input
               id='userLogin'
               type='text'
               name='login'

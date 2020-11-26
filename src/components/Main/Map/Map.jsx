@@ -1,5 +1,5 @@
 /* global google  */
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { postIndicator } from '../../../actions/mapIndicator/postIndicator';
@@ -326,14 +326,24 @@ withStateHandlers(() => ({
   </GoogleMap>
 ));
 
-export class Map extends Component {
-  componentDidMount() {
-    const { fetchIndicators } = this.props;
-    fetchIndicators();
-  }
+const Map = (props) => {
+  const {
+    indicators,
+    isNavSelect,
+    selectedMarker,
+    disableMarkers,
+    selectedIndicator,
+    fetchIndicators,
+    postIndicator,
+    removeIndicator,
+    editIndicator
+  } = props;
 
-  addIndicator = (event, geocode) => {
-    const { selectedMarker, postIndicator, isNavSelect } = this.props;
+  useEffect(() => {
+    fetchIndicators();
+  }, []);
+
+  const addIndicator = (event, geocode) => {
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
       const indicator = {
         name: selectedMarker.name,
@@ -342,43 +352,33 @@ export class Map extends Component {
         lat: event.latLng.lat(),
         lng: event.latLng.lng()
       };
+
       geocode(indicator, postIndicator);
     }
   };
 
-  edit = (id, propertyName, value) => {
-    const { editIndicator } = this.props;
+  const edit = (id, propertyName, value) => {
     editIndicator(id, propertyName, value);
-  }
+  };
 
-  remove = (id) => {
-    const { removeIndicator } = this.props;
+  const remove = (id) => {
     removeIndicator(id);
   };
 
-  render() {
-    const {
-      indicators,
-      selectedMarker,
-      selectedIndicator,
-      disableMarkers
-    } = this.props;
-
-    return (
-      <Wrapper>
-        <MapWithAMakredInfoWindow
-          indicators={indicators}
-          selectedMarker={selectedMarker}
-          addIndicator={this.addIndicator}
-          remove={this.remove}
-          edit={this.edit}
-          disableMarkers={disableMarkers}
-          selectedIndicator={selectedIndicator}
-        />
-      </Wrapper>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      <MapWithAMakredInfoWindow
+        indicators={indicators}
+        selectedMarker={selectedMarker}
+        addIndicator={addIndicator}
+        remove={remove}
+        edit={edit}
+        disableMarkers={disableMarkers}
+        selectedIndicator={selectedIndicator}
+      />
+    </Wrapper>
+  );
+};
 
 const mapStateToProps = (state) => ({
   indicators: state.mapIndicator.indicators,
