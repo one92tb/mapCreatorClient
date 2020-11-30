@@ -180,6 +180,10 @@ const Marker = styled.li`
     : 'cursor')};
     }
 
+    
+  &:hover {
+    cursor: pointer;
+  }
 
   background: ${(props) => (props.isSelected
     ? '#00b8e6'
