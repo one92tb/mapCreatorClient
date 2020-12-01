@@ -1,8 +1,7 @@
-/* eslint-disable no-restricted-globals */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { isPanelSelect } from '../../../actions/isPanelSelect';
+import { isPanelSelect } from '../../../actions/mapIndicator/isPanelSelect';
 import { fetchMarkers } from '../../../actions/marker/fetchMarkers';
 import { disableMarkers } from '../../../actions/marker/disableMarkers';
 import { getSelectedMarker } from '../../../actions/marker/getSelectedMarker';

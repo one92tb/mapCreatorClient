@@ -119,7 +119,7 @@ export const MarkerCreator = (props) => {
     const data = {
       markerName: inputValues.markerName,
       markerImageFile: inputValues.markerImageFile,
-      uplaodStatus: uploadStatus,
+      uploadStatus: uploadStatus,
       selectedMarker,
       markers
     };
@@ -169,7 +169,6 @@ export const MarkerCreator = (props) => {
 
     if (!validationResult.isError) {
       const node = imageBoxRef;
-      console.log(node);
       domtoimage.toPng(node.current).then((dataUrl) => {
         const link = document.createElement('a');
         link.download = `${inputValues.markerName}.png`;

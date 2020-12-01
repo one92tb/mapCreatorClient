@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isPanelSelect } from '../../actions/isPanelSelect';
+import { isPanelSelect } from '../../actions/mapIndicator/isPanelSelect';
 import { getSelectedMarker } from '../../actions/marker/getSelectedMarker';
 import { logout } from '../../actions/signIn/logout';
 import { redirect } from '../../actions/redirect/redirect';
