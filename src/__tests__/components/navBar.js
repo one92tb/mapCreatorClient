@@ -2,8 +2,8 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-
-import { NavBar } from '../NavBar';
+import { NavBar } from '../../components/NavBar/NavBar';
+import { disableMarkers } from '../../actions/marker/disableMarkers';
 
 test('it should render NavBar component', () => {
   const props = {
@@ -50,7 +50,8 @@ test('it should start redirect to List component', () => {
     isPanelSelect: jest.fn(),
     getSelectedMarker: jest.fn(),
     logout: jest.fn(),
-    redirect: jest.fn()
+    redirect: jest.fn(),
+    disableMarkers: jest.fn()
   };
 
   render(
@@ -60,7 +61,6 @@ test('it should start redirect to List component', () => {
   );
 
   const navList = screen.getByText('List');
-  screen.debug(navList);
   fireEvent.click(navList);
   expect(props.getSelectedMarker).toHaveBeenCalledTimes(1);
 });

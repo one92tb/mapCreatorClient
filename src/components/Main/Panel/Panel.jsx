@@ -27,27 +27,9 @@ import {
   Markers
 } from './style';
 
-Wrapper.displayName = 'div';
-Card.displayName = 'div';
-CardHeader.displayName = 'div';
-CardBody.displayName = 'div';
-NavItem.displayName = 'li';
-Nav.displayName = 'ul';
-Label.displayName = 'label';
-Input.displayName = 'input';
-List.displayName = 'div';
-Marker.displayName = 'li';
-MarkerIcon.displayName = 'div';
-MarkerName.displayName = 'span';
-MarkerImg.displayName = 'img';
-SelectButton.displayName = 'button';
-FilterButton.displayName = 'button';
-DisplayMarkersBtn.displayName = 'button';
-Markers.displayName = 'div';
-
 export const Panel = (props) => {
   const {
-    isPanelSelect, fetchMarkers, getSelectedMarker, disableMarkers, markers
+    isPanelSelect, fetchMarkers, getSelectedMarker, disableMarkers, markers, location
   } = props;
 
   const [isSelect, setIsSelect] = useState(true); // set panel status select/filter

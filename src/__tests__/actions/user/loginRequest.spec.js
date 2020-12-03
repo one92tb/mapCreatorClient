@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as actions from '../../../actions/signIn/loginRequest';
+import * as actions from '../../../actions/user/loginRequest';
 import * as redirectAction from '../../../actions/redirect/redirect';
-import LocalStorageMock from '../../../../mocks/localStorageMock';
+import LocalStorageMock from '../../../mocks/localStorageMock';
 
 const MockAdapter = require('axios-mock-adapter');
 const axios = require('axios');

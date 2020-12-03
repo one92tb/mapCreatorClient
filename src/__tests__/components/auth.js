@@ -5,7 +5,7 @@ import {
   fireEvent,
   screen
 } from '@testing-library/react';
-import { Login } from '../Login';
+import { Auth } from '../../components/Auth/Auth';
 import 'jest-styled-components';
 
 test('it should render login component', () => {
@@ -21,7 +21,7 @@ test('it should render login component', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 });
 
 test('it should switch from Login to Register part of Login component', () => {
@@ -37,7 +37,7 @@ test('it should switch from Login to Register part of Login component', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 
   const loginBtn = screen.getAllByText('Login')[0];
   const registerBtn = screen.getByText('Register');
@@ -59,7 +59,7 @@ test('it should create successfully new account', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 
   const registerBtn = screen.getByText('Register');
 
@@ -100,7 +100,7 @@ test('it should throw error that login is too short', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 
   const registerBtn = screen.getByText('Register');
 
@@ -125,101 +125,7 @@ test('it should throw error that login is too short', () => {
   fireEvent.click(createAccBtn);
   expect(screen.getByText('The login must be minimum 4 characters or longer')).toBeTruthy();
 });
-/*
-test('it should throw error that password has not uppercase alphabetical character', () => {
-  const props = {
-    createUser: jest.fn(),
-    loginRequest: jest.fn(),
-    resetLoginError: jest.fn(),
-    resetRegisterError: jest.fn(),
-    resetRegisterSuccess: jest.fn(),
-    isAuthorized: false,
-    registerError: '',
-    registerSuccess: '',
-    authError: '',
-  };
-  render(<Login {...props} />);
-  const registerBtn = screen.getByText('Register');
-  fireEvent.click(registerBtn);
-  const loginInput = screen.getByLabelText('Login');
-  const passwordInput = screen.getByLabelText('Password');
-  const createAccBtn = screen.getByText('Create Account');
-  fireEvent.change(loginInput, {
-    target: {
-      value: 'user'
-    }
-  });
-  fireEvent.change(passwordInput, {
-    target: {
-      value: 'password19!'
-    }
-  });
-  fireEvent.click(createAccBtn);
-  expect(screen.getByText('The password must contain at least 1 uppercase alphabetical character')).toBeTruthy();
-});
-test('it should throw error that password has not at least 1 numeric character', () => {
-  const props = {
-    createUser: jest.fn(),
-    loginRequest: jest.fn(),
-    resetLoginError: jest.fn(),
-    resetRegisterError: jest.fn(),
-    resetRegisterSuccess: jest.fn(),
-    isAuthorized: false,
-    registerError: '',
-    registerSuccess: '',
-    authError: '',
-  };
-  render(<Login {...props} />);
-  const registerBtn = screen.getByText('Register');
-  fireEvent.click(registerBtn);
-  const loginInput = screen.getByLabelText('Login');
-  const passwordInput = screen.getByLabelText('Password');
-  const createAccBtn = screen.getByText('Create Account');
-  fireEvent.change(loginInput, {
-    target: {
-      value: 'user'
-    }
-  });
-  fireEvent.change(passwordInput, {
-    target: {
-      value: 'Password!'
-    }
-  });
-  fireEvent.click(createAccBtn);
-  expect(screen.getByText('The password must contain at least 1 numeric character')).toBeTruthy();
-});
-test('it should throw error that password has not at least 1 lowercase alphabetical character', () => {
-  const props = {
-    createUser: jest.fn(),
-    loginRequest: jest.fn(),
-    resetLoginError: jest.fn(),
-    resetRegisterError: jest.fn(),
-    resetRegisterSuccess: jest.fn(),
-    isAuthorized: false,
-    registerError: '',
-    registerSuccess: '',
-    authError: '',
-  };
-  render(<Login {...props} />);
-  const registerBtn = screen.getByText('Register');
-  fireEvent.click(registerBtn);
-  const loginInput = screen.getByLabelText('Login');
-  const passwordInput = screen.getByLabelText('Password');
-  const createAccBtn = screen.getByText('Create Account');
-  fireEvent.change(loginInput, {
-    target: {
-      value: 'user'
-    }
-  });
-  fireEvent.change(passwordInput, {
-    target: {
-      value: 'PASSWORD19!'
-    }
-  });
-  fireEvent.click(createAccBtn);
-  expect(screen.getByText('The password must contain at least 1 lowercase alphabetical character')).toBeTruthy();
-});
-*/
+
 test('it should throw error that password is too short', () => {
   const props = {
     createUser: jest.fn(),
@@ -233,7 +139,7 @@ test('it should throw error that password is too short', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 
   const registerBtn = screen.getByText('Register');
 
@@ -272,7 +178,7 @@ test('it should successfully request for login', () => {
     authError: '',
   };
 
-  render(<Login {...props} />);
+  render(<Auth {...props} />);
 
   const loginInput = screen.getByLabelText('Login');
   const passwordInput = screen.getByLabelText('Password');
@@ -294,3 +200,99 @@ test('it should successfully request for login', () => {
   expect(props.loginRequest).toHaveBeenCalledTimes(1);
   expect(props.loginRequest).toHaveBeenCalledWith({ login: 'user19', password: 'Password19!' });
 });
+
+/*
+test('it should throw error that password has not uppercase alphabetical character', () => {
+  const props = {
+    createUser: jest.fn(),
+    loginRequest: jest.fn(),
+    resetLoginError: jest.fn(),
+    resetRegisterError: jest.fn(),
+    resetRegisterSuccess: jest.fn(),
+    isAuthorized: false,
+    registerError: '',
+    registerSuccess: '',
+    authError: '',
+  };
+  render(<Auth {...props} />);
+  const registerBtn = screen.getByText('Register');
+  fireEvent.click(registerBtn);
+  const loginInput = screen.getByLabelText('Login');
+  const passwordInput = screen.getByLabelText('Password');
+  const createAccBtn = screen.getByText('Create Account');
+  fireEvent.change(loginInput, {
+    target: {
+      value: 'user'
+    }
+  });
+  fireEvent.change(passwordInput, {
+    target: {
+      value: 'password19!'
+    }
+  });
+  fireEvent.click(createAccBtn);
+  expect(screen.getByText('The password must contain at least 1 uppercase alphabetical character')).toBeTruthy();
+});
+test('it should throw error that password has not at least 1 numeric character', () => {
+  const props = {
+    createUser: jest.fn(),
+    loginRequest: jest.fn(),
+    resetLoginError: jest.fn(),
+    resetRegisterError: jest.fn(),
+    resetRegisterSuccess: jest.fn(),
+    isAuthorized: false,
+    registerError: '',
+    registerSuccess: '',
+    authError: '',
+  };
+  render(<Auth {...props} />);
+  const registerBtn = screen.getByText('Register');
+  fireEvent.click(registerBtn);
+  const loginInput = screen.getByLabelText('Login');
+  const passwordInput = screen.getByLabelText('Password');
+  const createAccBtn = screen.getByText('Create Account');
+  fireEvent.change(loginInput, {
+    target: {
+      value: 'user'
+    }
+  });
+  fireEvent.change(passwordInput, {
+    target: {
+      value: 'Password!'
+    }
+  });
+  fireEvent.click(createAccBtn);
+  expect(screen.getByText('The password must contain at least 1 numeric character')).toBeTruthy();
+});
+test('it should throw error that password has not at least 1 lowercase alphabetical character', () => {
+  const props = {
+    createUser: jest.fn(),
+    loginRequest: jest.fn(),
+    resetLoginError: jest.fn(),
+    resetRegisterError: jest.fn(),
+    resetRegisterSuccess: jest.fn(),
+    isAuthorized: false,
+    registerError: '',
+    registerSuccess: '',
+    authError: '',
+  };
+  render(<Auth {...props} />);
+  const registerBtn = screen.getByText('Register');
+  fireEvent.click(registerBtn);
+  const loginInput = screen.getByLabelText('Login');
+  const passwordInput = screen.getByLabelText('Password');
+  const createAccBtn = screen.getByText('Create Account');
+  fireEvent.change(loginInput, {
+    target: {
+      value: 'user'
+    }
+  });
+  fireEvent.change(passwordInput, {
+    target: {
+      value: 'PASSWORD19!'
+    }
+  });
+  fireEvent.click(createAccBtn);
+  expect(screen.getByText('The password must contain at least 1 lowercase alphabetical character')).toBeTruthy();
+});
+*/

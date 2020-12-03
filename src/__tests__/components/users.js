@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { Users } from '../Users';
+import { Users } from '../../components/Users/Users';
 
 test('it should render Users component', () => {
   const props = {

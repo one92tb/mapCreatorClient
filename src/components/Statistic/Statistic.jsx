@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
 import { fetchIndicators } from '../../actions/mapIndicator/fetchIndicators';
 import { fetchMarkers } from '../../actions/marker/fetchMarkers';
 import { BarGraph } from './BarGraph/BarGraph';
@@ -18,16 +17,6 @@ import {
   TextBox,
   TextWrapper
 } from './style';
-
-Container.displayName = 'div';
-Row.displayName = 'div';
-Col.displayName = 'div';
-Wrapper.displayName = 'div';
-Form.displayName = 'form';
-Input.displayName = 'input';
-Inner.displayName = 'div';
-TextBox.displayName = 'div';
-TextWrapper.displayName = 'div';
 
 export const Statistic = (props) => {
   const { fetchIndicators, fetchMarkers, indicators } = props;

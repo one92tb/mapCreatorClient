@@ -247,6 +247,22 @@ const ResponsiveNav = styled.div`
   }
 `;
 
+LogoutBtn.displayName = 'button';
+Header.displayName = 'div';
+Logo.displayName = 'img';
+Title.displayName = 'h1';
+User.displayName = 'div';
+LoginName.displayName = 'span';
+Input.displayName = 'input';
+Nav.displayName = 'ul';
+NavItem.displayName = 'li';
+NavLink.displayName = 'a';
+Icon.displayName = 'img';
+Label.displayName = 'label';
+Panel.displayName = 'div';
+ResponsiveMenu.displayName = 'div';
+ResponsiveNav.displayName = 'div';
+
 export {
   Label,
   LogoutBtn,

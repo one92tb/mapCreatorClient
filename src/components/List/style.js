@@ -176,6 +176,21 @@ const Image = styled.img`
   }
 `;
 
+Wrapper.displayName = 'div';
+Label.displayName = 'label';
+Select.displayName = 'select';
+Input.displayName = 'input';
+Form.displayName = 'form';
+TableContainer.displayName = 'div';
+Table.displayName = 'table';
+Thead.displayName = 'thead';
+Tbody.displayName = 'tbody';
+Tr.displayName = 'tr';
+Th.displayName = 'th';
+Td.displayName = 'td';
+Option.displayName = 'option';
+Image.displayName = 'img';
+
 export {
   Wrapper,
   Label,

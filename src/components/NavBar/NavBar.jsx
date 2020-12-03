@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPanelSelect } from '../../actions/mapIndicator/isPanelSelect';
 import { getSelectedMarker } from '../../actions/marker/getSelectedMarker';
-import { logout } from '../../actions/signIn/logout';
+import { logout } from '../../actions/user/logout';
 import { redirect } from '../../actions/redirect/redirect';
 import { disableMarkers } from '../../actions/marker/disableMarkers';
 
@@ -24,22 +24,6 @@ import {
   ResponsiveMenu,
   ResponsiveNav
 } from './style';
-
-LogoutBtn.displayName = 'button';
-Header.displayName = 'div';
-Logo.displayName = 'img';
-Title.displayName = 'h1';
-User.displayName = 'div';
-LoginName.displayName = 'span';
-Input.displayName = 'input';
-Nav.displayName = 'ul';
-NavItem.displayName = 'li';
-NavLink.displayName = 'a';
-Icon.displayName = 'img';
-Label.displayName = 'label';
-Panel.displayName = 'div';
-ResponsiveMenu.displayName = 'div';
-ResponsiveNav.displayName = 'div';
 
 const activeClassName = 'nav-item-active';
 
@@ -137,7 +121,7 @@ export const NavBar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({ userName: state.account.userName });
+const mapStateToProps = (state) => ({ userName: state.user.userName });
 
 const mapDispatchToProps = {
   isPanelSelect,

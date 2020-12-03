@@ -73,14 +73,14 @@ test('it should successfully change Panel From Select to Filter', () => {
 
   render(<Panel {...props} />);
 
-  const SelectLink = screen.getByTestId('select-btn');
-  const FilterLink = screen.getByTestId('filter-btn');
-  fireEvent.click(FilterLink);
-  expect(SelectLink).not.toHaveStyleRule('background', '#00b8e6');
-  expect(FilterLink).toHaveStyleRule('background', '#00b8e6');
+  const SelectButton = screen.getByTestId('select-btn');
+  const FilterButton = screen.getByTestId('filter-btn');
+  fireEvent.click(FilterButton);
+  expect(SelectButton).not.toHaveStyleRule('background', '#00b8e6');
+  expect(FilterButton).toHaveStyleRule('background', '#00b8e6');
 });
 
-test('it should always set in the Panel Select when create marker option is selected', () => {
+test('it should doesnt allow change Panel status when user will open CreateMarker component', () => {
   const props = {
     isPanelSelect: jest.fn(),
     fetchMarkers: jest.fn(),
@@ -112,12 +112,13 @@ test('it should always set in the Panel Select when create marker option is sele
 
   render(<Panel {...props} />);
 
-  const SelectLink = screen.getByText('select');
-  const FilterLink = screen.getByText('filter');
+  const SelectButton = screen.getByText('select');
+  const FilterButton = screen.getByText('filter');
 
-  fireEvent.click(FilterLink);
-  expect(SelectLink).toHaveStyleRule('background', '#00b8e6');
-  expect(FilterLink).not.toHaveStyleRule('background', '#00b8e6');
+  fireEvent.click(FilterButton);
+
+  expect(SelectButton).toHaveStyleRule('background', '#00b8e6');
+  expect(FilterButton).not.toHaveStyleRule('background', '#00b8e6');
 });
 
 test('it should select marker when Panel has select navigation', () => {

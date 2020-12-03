@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as actions from '../../../actions/marker/fetchMarkers';
-import LocalStorageMock from '../../../../mocks/localStorageMock';
+import LocalStorageMock from '../../../mocks/localStorageMock';
 
 const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');

@@ -26,4 +26,7 @@ const TextBox = styled.div`
   }
 `;
 
+Wrapper.displayName = 'div';
+TextBox.displayName = 'div';
+
 export { Wrapper, TextBox };

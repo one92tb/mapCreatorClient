@@ -17,8 +17,6 @@ const ColStyle = styled(Col)`
   padding: 0px;
   height: 100%;
 
-
-
     @media (max-width: 1199px) {
       &:not(:first-child) {
         height: calc(100% - 60px);

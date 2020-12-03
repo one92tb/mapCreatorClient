@@ -1,9 +1,10 @@
 const initialState = {
   users: [],
+  userId: '',
+  userName: '',
   error: null,
   success: '',
   isAdmin: false,
-  userName: '',
   fetching: false,
   fetched: false,
   posting: false,
@@ -12,7 +13,8 @@ const initialState = {
   delete: false,
   isLoggingIn: false,
   changingPermissions: false,
-  changedPermissions: false
+  changedPermissions: false,
+  isAuthorized: false
 };
 
 const user = (state = initialState, action) => {
@@ -108,6 +110,44 @@ const user = (state = initialState, action) => {
         deleting: false,
         deleted: false,
         error: action.error
+      };
+
+    case 'LOGIN_REQUEST':
+      return {
+        ...state,
+        isLoggingIn: true,
+        isAuthorized: false
+      };
+    case 'LOGIN_SUCCESS':
+      return {
+        ...state,
+        isLoggingIn: false,
+        isAuthorized: action.userData.isAuthorized,
+        userName: action.userData.userName,
+        userId: action.userData.userId,
+        error: null
+      };
+    case 'LOGIN_ERROR':
+      return {
+        ...state,
+        error: action.error
+      };
+    case 'LOGOUT':
+      return {
+        ...state,
+        isAuthorized: action.userData.isAuthorized,
+        userName: action.userData.userName,
+        userId: action.userData.userId,
+        error: action.userData.error
+      };
+    case 'RESET_LOGIN_ERROR':
+      return {
+        ...state,
+        error: null
+      };
+    case 'CHANGE_LOCATION':
+      return {
+        ...state
       };
     default:
       return state;

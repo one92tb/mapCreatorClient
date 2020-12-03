@@ -36,30 +36,6 @@ import {
 
 const domtoimage = require('dom-to-image');
 
-Wrapper.displayName = 'div';
-Inner.displayName = 'div';
-ImageInsideMarker.displayName = 'img';
-ImageWithoutMarker.displayName = 'img';
-Form.displayName = 'form';
-FormGroup.displayName = 'div';
-LabelColor.displayName = 'label';
-LabelFile.displayName = 'label';
-LabelName.displayName = 'label';
-FileInput.displayName = 'input';
-Input.displayName = 'input';
-InputSpan.displayName = 'span';
-SubmitBtn.displayName = 'button';
-RemoveBtn.displayName = 'button';
-DownloadBtn.displayName = 'button';
-MarkerIcon.displayName = 'div';
-UploadButton.displayName = 'button';
-CustomButton.displayName = 'button';
-ImageBox.displayName = 'div';
-AdditionalWrapper.displayName = 'div';
-MarkerIconBox.displayName = 'div';
-ButtonGroup.displayName = 'div';
-ErrorMessage.displayName = 'span';
-
 export const MarkerCreator = (props) => {
   const {
     selectedMarker,
@@ -119,7 +95,7 @@ export const MarkerCreator = (props) => {
     const data = {
       markerName: inputValues.markerName,
       markerImageFile: inputValues.markerImageFile,
-      uploadStatus: uploadStatus,
+      uploadStatus,
       selectedMarker,
       markers
     };

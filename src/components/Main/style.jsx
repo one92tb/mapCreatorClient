@@ -19,4 +19,7 @@ const ColStyle = styled(Col)`
   }
 `;
 
+RowStyle.displayName = 'div';
+ColStyle.displayName = 'div';
+
 export { RowStyle, ColStyle };

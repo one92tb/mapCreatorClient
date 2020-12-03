@@ -24,21 +24,6 @@ import {
   Image
 } from './style';
 
-Wrapper.displayName = 'div';
-Label.displayName = 'label';
-Select.displayName = 'select';
-Input.displayName = 'input';
-Form.displayName = 'form';
-TableContainer.displayName = 'div';
-Table.displayName = 'table';
-Thead.displayName = 'thead';
-Tbody.displayName = 'tbody';
-Tr.displayName = 'tr';
-Th.displayName = 'th';
-Td.displayName = 'td';
-Option.displayName = 'option';
-Image.displayName = 'img';
-
 export const List = (props) => {
   const {
     fetchIndicators, fetchMarkers, redirect, getSelectedIndicator, indicators, markers
@@ -61,6 +46,16 @@ export const List = (props) => {
 
   const handleChange = (event) => {
     setInputValues({ ...inputValues, [event.target.name]: event.target.value });
+  };
+
+  const filterIndicators = (indicators) => {
+    const allIndicators = inputValues.markerName === 'All' && inputValues.city === '';
+    const filterByName = (indicator) => inputValues.markerName === indicator.name
+      && indicator.city.toLowerCase().search(inputValues.city.toLowerCase()) !== -1 && indicator;
+    const filterByCity = (indicator) => inputValues.markerName === 'All'
+      && indicator.city.toLowerCase().search(inputValues.city.toLowerCase()) !== -1;
+
+    return indicators.filter((indicator) => (allIndicators || filterByCity(indicator) ? indicator : filterByName(indicator)));
   };
 
   return (
@@ -91,27 +86,22 @@ export const List = (props) => {
           </Thead>
           <Tbody>
             {
-              indicators.filter((indicator) => ((inputValues.markerName === 'All' && inputValues.city === '')
-            || (inputValues.markerName === 'All' && indicator.city.toLowerCase().search(inputValues.city.toLowerCase()) !== -1)
-                ? indicator
-                : inputValues.markerName === indicator.name && indicator.city.toLowerCase()
-                  .search(inputValues.city.toLowerCase()) !== -1 && indicator))
-                .map((indicator, id) => (
-                  <Tr key={indicator.id} data-testid='indicator'>
-                    <Td>{id + 1}</Td>
-                    <Td>{indicator.name}</Td>
-                    <Td>{indicator.street}</Td>
-                    <Td>{indicator.city}</Td>
-                    <Td>{indicator.country}</Td>
-                    <Td>
-                      <Image
-                        data-testid='findIndicator'
-                        src='img/map.png'
-                        onClick={() => findIndicatorOnTheMap(indicator)}
-                      />
-                    </Td>
-                  </Tr>
-                ))
+              filterIndicators(indicators).map((indicator, id) => (
+                <Tr key={indicator.id} data-testid='indicator'>
+                  <Td>{id + 1}</Td>
+                  <Td>{indicator.name}</Td>
+                  <Td>{indicator.street}</Td>
+                  <Td>{indicator.city}</Td>
+                  <Td>{indicator.country}</Td>
+                  <Td>
+                    <Image
+                      data-testid='findIndicator'
+                      src='img/map.png'
+                      onClick={() => findIndicatorOnTheMap(indicator)}
+                    />
+                  </Td>
+                </Tr>
+              ))
             }
           </Tbody>
         </Table>

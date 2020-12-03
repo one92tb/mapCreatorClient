@@ -2,16 +2,14 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import {
   render,
-  fireEvent,
-  screen,
-  waitForDomChange
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { Main } from '../Main';
-import LocalStorageMock from '../../../../mocks/localStorageMock';
+import LocalStorageMock from '../../mocks/localStorageMock';
+// eslint-disable-next-line import/named
+import { Main } from '../../components/Main/Main';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -56,11 +54,9 @@ test('it should render main component with panel and markerCreator child compone
       </MemoryRouter>
     </Provider>
   );
-
-  screen.debug();
 });
 
-test('it should add new marker to the panel component', async () => {
+/* test('it should add new marker to the panel component', async () => {
   render(
     <Provider store={store}>
       <MemoryRouter initialEntries={['/createMarker']}>
@@ -74,7 +70,7 @@ test('it should add new marker to the panel component', async () => {
 
   const inputName = screen.getByLabelText('Name');
   const inputFile = screen.getByTestId('inputFile');
-  const submitBtn = screen.getByText('Upload new marker');
+
   global.URL.createObjectURL = jest.fn(() => 'details');
 
   fireEvent.change(inputName, {
@@ -89,8 +85,11 @@ test('it should add new marker to the panel component', async () => {
     }
   });
 
-  fireEvent.click(submitBtn);
-
-  await waitForDomChange();
-  screen.debug();
+  await waitForDomChange(Main).then(() => {
+    const submitBtn = screen.queryAllByText('upload')[1];
+    fireEvent.click(submitBtn);
+  });
+  const markersInPanel = screen.queryAllByTestId('marker');
+  expect(markersInPanel).toHaveLength(13);
 });
+*/

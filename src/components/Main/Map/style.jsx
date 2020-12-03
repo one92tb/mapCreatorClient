@@ -120,6 +120,13 @@ border-bottom: 2px solid #00b8e6;
 text-transform: uppercase;
 `;
 
+Wrapper.displayName = 'div';
+SearchBoxInput.displayName = 'input';
+InfoBoxContainer.displayName = 'div';
+InfoBtn.displayName = 'button';
+InfoContent.displayName = 'span';
+InfoContentInput.displayName = 'input';
+
 export {
   Wrapper,
   SearchBoxInput,

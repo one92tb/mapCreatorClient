@@ -118,6 +118,16 @@ const Input = styled.input`
   }
 `;
 
+Container.displayName = 'div';
+Row.displayName = 'div';
+Col.displayName = 'div';
+Wrapper.displayName = 'div';
+Form.displayName = 'form';
+Input.displayName = 'input';
+Inner.displayName = 'div';
+TextBox.displayName = 'div';
+TextWrapper.displayName = 'div';
+
 export {
   ContainerStyle,
   RowStyle,

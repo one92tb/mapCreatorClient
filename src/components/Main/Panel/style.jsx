@@ -83,7 +83,6 @@ width: 100%;
 height: 100%;
 border: 1px solid #4ddbff;
 color: #000;
-background-color: #B2CFE7;
 border: 1px solid #00b8e6;
 transition: background-color 1s ease;
 text-transform: uppercase;
@@ -94,14 +93,14 @@ const SelectButton = styled.button`
 ${Btn}
 border-top-left-radius: 0.25rem;
 border-bottom-left-radius: 0.25rem;
-  background: ${(props) => props.isSelected && '#00b8e6'}
+  background: ${(props) => (props.isSelected ? '#00b8e6' : '#b2cfe7')}
 `;
 
 const FilterButton = styled.button`
 ${Btn}
 border-top-right-radius: 0.25rem;
 border-bottom-right-radius: 0.25rem;
-background: ${(props) => !props.isSelected && '#00b8e6'};
+background: ${(props) => (!props.isSelected ? '#00b8e6' : '#b2cfe7')};
 
 &:hover {
  cursor: ${(props) => (props.location === '/createMarker'
@@ -247,6 +246,24 @@ margin-top: 5px;
 
   transition: all 1s ease;
 `;
+
+Wrapper.displayName = 'div';
+Card.displayName = 'div';
+CardHeader.displayName = 'div';
+CardBody.displayName = 'div';
+NavItem.displayName = 'li';
+Nav.displayName = 'ul';
+Label.displayName = 'label';
+Input.displayName = 'input';
+List.displayName = 'div';
+Marker.displayName = 'li';
+MarkerIcon.displayName = 'div';
+MarkerName.displayName = 'span';
+MarkerImg.displayName = 'img';
+SelectButton.displayName = 'button';
+FilterButton.displayName = 'button';
+DisplayMarkersBtn.displayName = 'button';
+Markers.displayName = 'div';
 
 export {
   Wrapper,

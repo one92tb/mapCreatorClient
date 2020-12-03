@@ -16,13 +16,6 @@ import {
   InfoContentInput
 } from './style';
 
-Wrapper.displayName = 'div';
-SearchBoxInput.displayName = 'input';
-InfoBoxContainer.displayName = 'div';
-InfoBtn.displayName = 'button';
-InfoContent.displayName = 'span';
-InfoContentInput.displayName = 'input';
-
 const { InfoBox } = require('react-google-maps/lib/components/addons/InfoBox');
 const {
   compose,
@@ -330,7 +323,7 @@ withStateHandlers(() => ({
   );
 });
 
-const Map = (props) => {
+export const Map = (props) => {
   const {
     indicators,
     isNavSelect,

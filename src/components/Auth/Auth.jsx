@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { createUser } from '../../actions/user/createUser';
 import { resetRegisterError } from '../../actions/user/resetRegisterError';
 import { resetRegisterSuccess } from '../../actions/user/resetRegisterSuccess';
-import { loginRequest } from '../../actions/signIn/loginRequest';
-import { resetLoginError } from '../../actions/signIn/resetLoginError';
+import { loginRequest } from '../../actions/user/loginRequest';
+import { resetLoginError } from '../../actions/user/resetLoginError';
 import { errors, registerValidationDetails } from '../../schema/registerSchema';
 import validate from '../../validate';
 import {
@@ -25,22 +25,7 @@ import {
   Title
 } from './style';
 
-Wrapper.displayName = 'div';
-Inner.displayName = 'div';
-ButtonWrapper.displayName = 'div';
-RegisterBtn.displayName = 'button';
-LoginBtn.displayName = 'button';
-Form.displayName = 'form';
-FormGroup.displayName = 'div';
-Label.displayName = 'label';
-Input.displayName = 'input';
-ErrorMessage.displayName = 'span';
-SuccessMessage.displayName = 'span';
-SubmitBtn.displayName = 'button';
-Logo.displayName = 'img';
-Title.displayName = 'h1';
-
-export const Login = (props) => {
+export const Auth = (props) => {
   const {
     createUser,
     loginRequest,
@@ -88,8 +73,6 @@ export const Login = (props) => {
 
     setLoginError(validationResult.errors.loginError);
     setPasswordError(validationResult.errors.passwordError);
-
-    console.log(registerError);
   };
 
   const switchForm = (bool) => {
@@ -191,12 +174,12 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   registerError: state.user.error,
   registerSuccess: state.user.success,
-  authError: state.account.error
+  authError: state.user.error
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);
 
-Login.propTypes = {
+Auth.propTypes = {
   createUser: PropTypes.func.isRequired,
   loginRequest: PropTypes.func.isRequired,
   resetLoginError: PropTypes.func.isRequired,
@@ -204,7 +187,7 @@ Login.propTypes = {
   resetRegisterSuccess: PropTypes.func.isRequired
 };
 
-Login.defaultProps = {
+Auth.defaultProps = {
   registerError: {},
   registerSuccess: {},
   authError: {}

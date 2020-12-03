@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Map } from '../Map';
+import { Map } from '../../components/Main/Map/Map';
 import 'jest-styled-components';
 
-test('it should render map component', async () => {
+test('it should render map component', () => {
   const props = {
     fetchIndicators: jest.fn(),
     postIndicator: jest.fn(),
@@ -38,5 +38,5 @@ test('it should render map component', async () => {
     selectedIndicator: ''
   };
 
-  await render(<Map {...props} />);
+  render(<Map {...props} />);
 });

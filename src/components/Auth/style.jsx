@@ -185,6 +185,21 @@ const Title = styled.h1`
   }
 `;
 
+Wrapper.displayName = 'div';
+Inner.displayName = 'div';
+ButtonWrapper.displayName = 'div';
+RegisterBtn.displayName = 'button';
+LoginBtn.displayName = 'button';
+Form.displayName = 'form';
+FormGroup.displayName = 'div';
+Label.displayName = 'label';
+Input.displayName = 'input';
+ErrorMessage.displayName = 'span';
+SuccessMessage.displayName = 'span';
+SubmitBtn.displayName = 'button';
+Logo.displayName = 'img';
+Title.displayName = 'h1';
+
 export {
   Wrapper,
   Inner,

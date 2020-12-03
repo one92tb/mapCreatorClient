@@ -4,9 +4,6 @@ import { RowStyle, ColStyle } from './style';
 import Panel from './Panel/Panel';
 import MarkerCreator from './MarkerCreator/MarkerCreator';
 
-RowStyle.displayName = 'div';
-ColStyle.displayName = 'div';
-
 const Map = lazy(() => import('./Map/Map'));
 
 export const routes = [

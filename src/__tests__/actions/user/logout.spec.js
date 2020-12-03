@@ -1,4 +1,4 @@
-import * as actions from '../../../actions/signIn/logout';
+import * as actions from '../../../actions/user/logout';
 
 const userData = {
   userId: '',

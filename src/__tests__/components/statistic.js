@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Statistic } from '../Statistic';
+import { Statistic } from '../../components/Statistic/Statistic';
 
 test('it should render Statistic component with indicators', () => {
   const props = {

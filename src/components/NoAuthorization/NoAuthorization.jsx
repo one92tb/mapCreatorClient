@@ -1,9 +1,6 @@
 import React from 'react';
 import { Wrapper, TextBox } from './style';
 
-Wrapper.displayName = 'div';
-TextBox.displayName = 'div';
-
 export const NoAuthorization = () => (
   <Wrapper>
     <TextBox>
