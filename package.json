@@ -1,6 +1,10 @@
 {
   "name": "map-creator",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.x",
+    "npm": "6.x"
+  },
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^1.13.0",

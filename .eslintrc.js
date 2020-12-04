@@ -1,13 +1,20 @@
 module.exports = {
   env: {
     browser: true,
+    es2021: true,
     jest: true
   },
-  extends: 'airbnb',
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'airbnb'
+  ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
+    ecmaVersion: 12,
+    sourceType: 'module'
   },
   plugins: [
     'react',
@@ -17,6 +24,7 @@ module.exports = {
     'react-hooks',
     'flowtype'
   ],
+  ignorePatterns: ['build/*'],
   rules: {
     /* JSX */
     'comma-dangle': 0,
@@ -39,7 +47,7 @@ module.exports = {
     'react/default-props-match-prop-types': 0,
     'no-unused-expressions': 0,
     'react/no-did-update-set-state': 0,
-    'max-len': [2, 125, 4, { ignoreUrls: true }],
+    'max-len': [2, 130, 4, { ignoreUrls: true }],
     'react/jsx-fragments': 0,
     'react/no-access-state-in-setstate': 0,
     'no-underscore-dangle': 0,
