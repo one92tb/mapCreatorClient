@@ -107,6 +107,10 @@ const InfoContent = styled.span`
   text-transform: uppercase;
   border-bottom: 2px solid #00b8e6;
   font-weight: bold;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const InfoContentInput = styled.input`

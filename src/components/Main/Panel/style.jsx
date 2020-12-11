@@ -176,13 +176,11 @@ const Marker = styled.li`
     : '#4ddbff')};
       cursor: ${(props) => (props.isDefault && props.location === '/createMarker'
     ? 'not-allowed'
-    : 'cursor')};
-    }
+    : 'grab')};
 
-    
-  &:hover {
-    cursor: pointer;
-  }
+      transform: scale(1.02);
+      box-shadow: -2px 2px 9px -2px #000;
+    }
 
   background: ${(props) => (props.isSelected
     ? '#00b8e6'
@@ -192,6 +190,14 @@ const Marker = styled.li`
   opacity: ${(props) => props.isFiltered && '0.7'};
   transition: all 1s ease;
 
+  &:active {
+    background: #00b8e6;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: -o-grabbing;
+    cursor: -ms-grabbing;
+    cursor: grabbing;
+  }
 `;
 
 const MarkerIcon = styled.div`
@@ -216,6 +222,8 @@ const MarkerName = styled.span`
 const MarkerImg = styled.img`
   height: 32px;
   width: 32px;
+  text-align: cetnter;
+  margin-right: 5px;
 
   @media only screen and (max-width: 575.98px) {
     height: 24px;

@@ -1,7 +1,14 @@
 /* global google  */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoBox,
+  StandaloneSearchBox
+} from '@react-google-maps/api';
 import { postIndicator } from '../../../actions/mapIndicator/postIndicator';
 import { fetchIndicators } from '../../../actions/mapIndicator/fetchIndicators';
 import { removeIndicator } from '../../../actions/mapIndicator/removeIndicator';
@@ -15,67 +22,6 @@ import {
   InfoContent,
   InfoContentInput
 } from './style';
-
-const { InfoBox } = require('react-google-maps/lib/components/addons/InfoBox');
-const {
-  compose,
-  withProps,
-  withStateHandlers,
-  lifecycle
-} = require('recompose');
-const _ = require('lodash');
-const {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker
-} = require('react-google-maps');
-const { SearchBox } = require('react-google-maps/lib/components/places/SearchBox');
-
-const onToggleOpen = ({
-  isOpen,
-}) => (id) => {
-  if (id && !isOpen) {
-    return {
-      isOpen: !isOpen,
-      id
-    };
-  }
-  return {
-    id,
-    street: '',
-    city: '',
-    country: '',
-    currentValue: ''
-  };
-};
-
-const onEditInfoBox = ({ isEdit }) => (event, currentId, currentValue, propertyName) => {
-  event.stopPropagation();
-  if (currentId && !isEdit) {
-    return {
-      isEdit: !isEdit,
-      currentValue,
-      currentId,
-      propertyName
-    };
-  }
-  return { currentId, currentValue, propertyName };
-};
-
-const onIndicatorChange = () => (e) => ({
-  [e.target.name]: e.target.value
-});
-
-const closeInput = ({ id }) => () => ({
-  isEdit: false,
-  id,
-  street: '',
-  city: '',
-  country: '',
-  currentValue: '',
-  propertyName: ''
-});
 
 const geocode = (indicator, postIndicator) => {
   const geocoder = new window.google.maps.Geocoder();
@@ -105,225 +51,26 @@ const geocode = (indicator, postIndicator) => {
   });
 };
 
-export const MapWithAMakredInfoWindow = compose(withProps({
-  googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_API_KEY}&v=3.exp&libraries=geometry,drawing,places`,
-  containerElement: (<div
-    style={{
-      height: '100%'
-    }}
-  />),
-  loadingElement: (<div style={{
-    height: '100%',
-  }}
-  />),
-  mapElement: (<div style={{
-    height: '100%',
-  }}
-  />)
-}),
-withStateHandlers(() => ({
-  isOpen: false,
-  id: null,
-  isEdit: false,
-  currentId: null,
-  editValuie: '',
-  editingValue: '',
-  street: '',
-  city: '',
-  country: '',
-  propertyName: '',
-  currentInfoBoxClicked: false,
-  input: null,
-  bounds: null,
-  center: {
-    lat: 50.89973,
-    lng: 15.72899
-  },
-  zoom: 15
-}), {
-  onToggleOpen,
-  geocode,
-  onEditInfoBox,
-  onIndicatorChange,
-  closeInput
-}), withScriptjs, withGoogleMap, lifecycle({
-  componentDidMount() {
-    const refs = {};
+const mapContainerStyle = {
+  height: '100%',
+  width: '100%'
+};
 
-    this.setState({
-      onMapMounted: (ref) => {
-        refs.map = ref;
-      },
-      onInputMounted: (ref) => {
-        refs.input = ref;
-      },
-      onBoundsChanged: () => {
-        this.setState({ bounds: refs.map.getBounds(), center: refs.map.getCenter() });
-      },
-      onSearchBoxMounted: (ref) => {
-        refs.searchBox = ref;
-      },
-      onMouseOver: () => {},
-      onPlacesChanged: () => {
-        const places = refs.searchBox.getPlaces();
-        const bounds = new google.maps.LatLngBounds();
-        places.forEach(
-          (place) => (place.geometry.viewport
-            ? bounds.union(place.geometry.viewport)
-            : bounds.extend(place.geometry.location))
-        );
+const options = {
+  disableDefaultUI: true,
+  zoomControl: true,
+  disableDoubleClickZoom: true,
+  cursor: 'pointer'
+};
 
-        const nextCenter = _.get(this.state.center);
+const libraries = ['places'];
 
-        this.setState({ center: nextCenter });
+const Map = (props) => {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
+    libraries
+  });
 
-        refs.map.fitBounds(bounds);
-      },
-      onZoomChanged: () => {
-        this.setState({ zoom: refs.map.context.__SECRET_MAP_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.zoom });
-      }
-    });
-  }
-}))((props) => {
-  console.log(props);
-  return (
-    <GoogleMap
-      ref={props.onMapMounted}
-      onBoundsChanged={props.onBoundsChanged}
-      onMouseOver={props.onMouseOver}
-      defaultZoom={props.zoom}
-      options={{
-        disableDoubleClickZoom: true,
-        cursor: 'pointer'
-      }}
-      onZoomChanged={props.onZoomChanged}
-      onClick={(e) => props.addIndicator(e, geocode)}
-      defaultCenter={props.selectedIndicator
-        ? {
-          lat: props.selectedIndicator.lat,
-          lng: props.selectedIndicator.lng
-        }
-        : props.center}
-      defaultCursor={props.cursor}
-      onChangeCenter={props.newLocation}
-    >
-      {
-        props.indicators.filter((indicator) => !props.disableMarkers
-          .find((disableItem) => disableItem.name === indicator.name))
-          .map((indicator) => (
-            <Marker
-              data-testid='marker'
-              onClick={() => props.onToggleOpen(indicator.id)}
-              key={indicator.id}
-              position={{
-                lat: indicator.lat,
-                lng: indicator.lng
-              }}
-              icon={{
-                url: indicator.isDefault
-                  ? `defaultMarkers/${indicator.icon}`
-                  : `${baseUrl}/images/${indicator.icon}`,
-                scaledSize: {
-                  width: props.zoom < 17
-                    ? 24
-                    : 32,
-                  height: props.zoom < 17
-                    ? 24
-                    : 32
-                }
-              }}
-              visible={!(props.zoom < 15)}
-            >
-              {
-                props.isOpen && props.id === indicator.id && (
-                  <InfoBox
-                    defaultPosition={{
-                      lat: indicator.lat,
-                      lng: indicator.lng
-                    }}
-                    ref={props.onInfoBox}
-                    onCloseClick={props.onToggleOpen}
-                    closeBoxURL=''
-                    options={{
-                      boxStyle: {
-                        border: 'none',
-                        fontSize: '12pt',
-                        overflow: 'hidden',
-                        height: '250px',
-                        width: '250px',
-                        display: props.zoom < 15
-                          ? 'none'
-                          : 'block'
-                      },
-                      closeBoxMargin: '5px 5px 2px 2px',
-                      alignBottom: true,
-                      isHidden: false,
-                      pixelOffset: props.zoom < 17
-                        ? new google.maps.Size(-125, -20)
-                        : new google.maps.Size(-125, -45),
-                      enableEventPropagation: true,
-                      infoBoxClearance: new google.maps.Size(1, 1)
-                    }}
-                  >
-                    <InfoBoxContainer>
-                      {
-                        ['name', 'street', 'city', 'country']
-                          .map((content) => (props.isEdit && props.currentId === indicator.id
-                       && props.currentValue === indicator[content] && props.propertyName === content
-                            ? (
-                              <InfoContentInput
-                                type='text'
-                                ref={props.onInputMounted}
-                                key={indicator.id}
-                                name={content}
-                                onChange={(e) => props.onIndicatorChange(e)}
-                                value={props[content]}
-                                placeholder='insert new value'
-                                onKeyPress={(e) => {
-                                  const key = e.keyCode || e.which;
-                                  if (key === 13 && props[content] !== '') {
-                                    props.edit(indicator.id, content, props[content]);
-                                    props.closeInput();
-                                  } else if (key === 13 && props[content] === '') {
-                                    props.closeInput();
-                                  } else if (e.keyCode === 27) {
-                                    props.closeInput();
-                                  }
-                                }}
-                              />
-                            )
-                            : (
-                              <InfoContent
-                                onDoubleClick={(event) => props.onEditInfoBox(event, indicator.id, indicator[content], content)}
-                              >
-                                {indicator[content]}
-                              </InfoContent>
-                            )))
-                      }
-                      <InfoBtn onClick={() => props.remove(indicator.id)} data-testid='removeBtn'>
-                        Remove Marker
-                      </InfoBtn>
-                    </InfoBoxContainer>
-                  </InfoBox>
-                )
-              }
-            </Marker>
-          ))
-      }
-
-      <SearchBox
-        ref={props.onSearchBoxMounted}
-        bounds={props.bounds}
-        controlPosition={google.maps.ControlPosition.TOP_LEFT}
-        onPlacesChanged={props.onPlacesChanged}
-      >
-        <SearchBoxInput type='text' placeholder='Search city' />
-      </SearchBox>
-    </GoogleMap>
-  );
-});
-
-export const Map = (props) => {
   const {
     indicators,
     isNavSelect,
@@ -336,11 +83,62 @@ export const Map = (props) => {
     editIndicator
   } = props;
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndicatorId, setCurrentIndicatorId] = useState('');
+  const [currentValue, setCurrentValue] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
+  const [propertyName, setPropertyName] = useState('');
+  const [zoom, setZoom] = useState(14);
+  const [center, setCenter] = useState({
+    lat: 50.89973,
+    lng: 15.72899
+  });
+
+  const [inputValues, setInputValues] = useState({
+    name: '',
+    street: '',
+    city: '',
+    country: ''
+  });
+
   useEffect(() => {
     fetchIndicators();
   }, []);
 
-  const addIndicator = (event, geocode) => {
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
+
+  const searchBoxRef = React.useRef();
+  const onSearchBoxLoad = React.useCallback((SearchBox) => {
+    searchBoxRef.current = SearchBox;
+  });
+
+  const onPlacesChanged = () => {
+    const places = searchBoxRef.current.getPlaces();
+    const bounds = new google.maps.LatLngBounds();
+    places.forEach(
+      (place) => (place.geometry.viewport
+        ? bounds.union(place.geometry.viewport)
+        : bounds.extend(place.geometry.location))
+    );
+    const nextCenter = mapRef.current.getCenter().toJSON();
+    setCenter(nextCenter);
+    mapRef.current.fitBounds(bounds);
+  };
+
+  const onZoomChanged = () => {
+    if (!mapRef.current) {
+      return false;
+    }
+    const zoomLevel = mapRef.current.getZoom();
+    if (zoomLevel !== zoom) {
+      setZoom(zoomLevel);
+    }
+  };
+
+  const addIndicator = (event) => {
     if (selectedMarker.id && !selectedMarker.isDeleted && isNavSelect) {
       const indicator = {
         name: selectedMarker.name,
@@ -354,25 +152,198 @@ export const Map = (props) => {
     }
   };
 
+  const onToggleOpen = (id) => {
+    if (id && !isOpen) {
+      setCurrentIndicatorId(id);
+      setIsOpen(!isOpen);
+    }
+    setCurrentIndicatorId(id);
+  };
+
+  const openIndicatorInput = (event, currentIndicatorId, currentValue, propertyName) => {
+    event.stopPropagation();
+    if (currentIndicatorId && !isEdit) {
+      setIsEdit(true);
+      setCurrentValue(currentValue);
+      setCurrentIndicatorId(currentIndicatorId);
+      setPropertyName(propertyName);
+    } else {
+      setCurrentIndicatorId(currentIndicatorId);
+      setCurrentValue(currentValue);
+      setPropertyName(propertyName);
+    }
+  };
+
+  const onIndicatorChange = (e) => {
+    setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+  };
+
   const edit = (id, propertyName, value) => {
     editIndicator(id, propertyName, value);
   };
 
-  const remove = (id) => {
-    removeIndicator(id);
+  const closeInput = () => {
+    setIsEdit(false);
+    setInputValues({
+      street: '',
+      city: '',
+      country: ''
+    });
+    setCurrentValue('');
+    setPropertyName('');
   };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  if (loadError) return 'Error';
+  if (!isLoaded) return 'Loading...';
 
   return (
     <Wrapper>
-      <MapWithAMakredInfoWindow
-        indicators={indicators}
-        selectedMarker={selectedMarker}
-        addIndicator={addIndicator}
-        remove={remove}
-        edit={edit}
-        disableMarkers={disableMarkers}
-        selectedIndicator={selectedIndicator}
-      />
+      <GoogleMap
+        id='map'
+        mapContainerStyle={mapContainerStyle}
+        zoom={zoom}
+        center={selectedIndicator
+          ? {
+            lat: selectedIndicator.lat,
+            lng: selectedIndicator.lng
+          }
+          : center}
+        options={options}
+        onClick={addIndicator}
+        onLoad={onMapLoad}
+        onPlacesChanged={onPlacesChanged}
+        onZoomChanged={onZoomChanged}
+        draggable='true'
+      >
+        {
+        indicators.filter((indicator) => !disableMarkers
+          .find((disableItem) => disableItem.name === indicator.name))
+          .map((indicator) => (
+            <Marker
+              data-testid='marker'
+              onClick={() => onToggleOpen(indicator.id)}
+              key={`marker ${indicator.id}`}
+              position={{
+                lat: indicator.lat,
+                lng: indicator.lng
+              }}
+              icon={{
+                url: indicator.isDefault
+                  ? `defaultMarkers/${indicator.icon}`
+                  : `${baseUrl}/images/${indicator.icon}`,
+                scaledSize: {
+                  width: zoom < 17
+                    ? 24
+                    : 32,
+                  height: zoom < 17
+                    ? 24
+                    : 32
+                }
+              }}
+              visible={zoom > 13}
+            >
+              {
+                isOpen && currentIndicatorId === indicator.id && (
+                  <InfoBox
+                    defaultPosition={{
+                      lat: indicator.lat,
+                      lng: indicator.lng
+                    }}
+                    onCloseClick={() => onToggleOpen(indicator.id)}
+                    closeBoxURL=''
+                    options={{
+                      boxStyle: {
+                        border: 'none',
+                        fontSize: '12pt',
+                        overflow: 'hidden',
+                        height: '250px',
+                        width: '250px',
+                        display: zoom > 13
+                          ? 'block'
+                          : 'none'
+                      },
+                      closeBoxMargin: '5px 5px 2px 2px',
+                      alignBottom: true,
+                      isHidden: false,
+                      pixelOffset: zoom < 17
+                        ? new google.maps.Size(-125, -20)
+                        : new google.maps.Size(-125, -45),
+                      enableEventPropagation: true,
+                      infoBoxClearance: new google.maps.Size(1, 1)
+                    }}
+                  >
+                    <InfoBoxContainer>
+                      {
+                        ['name', 'street', 'city', 'country']
+                          .map((content) => ((isEdit && currentIndicatorId === indicator.id
+                            && currentValue === indicator[content] && propertyName === content)
+                            ? (
+                              <InfoContentInput
+                                type='text'
+                                key={indicator.id}
+                                name={content}
+                                onChange={(e) => onIndicatorChange(e)}
+                                value={inputValues[content]}
+                                placeholder='insert new value'
+                                onKeyPress={(e) => {
+                                  const key = e.keyCode || e.which;
+                                  if (key === 13 && inputValues[content] !== '') {
+                                    edit(indicator.id, content, inputValues[content]);
+                                    closeInput();
+                                  }
+                                }}
+                                onKeyUp={(e) => {
+                                  (e.keyCode === 27) && closeInput();
+                                }}
+                              />
+                            ) : (
+                              <InfoContent
+                                key={`infoContent ${indicator[content]} ${indicator.id}`}
+                                onDoubleClick={(event) => openIndicatorInput(event, indicator.id, indicator[content], content)}
+                              >
+                                {indicator[content]}
+                              </InfoContent>
+                            )))
+                      }
+                      <InfoBtn onClick={() => removeIndicator(indicator.id)} data-testid='removeBtn'>
+                        Remove Marker
+                      </InfoBtn>
+                    </InfoBoxContainer>
+                  </InfoBox>
+                )
+              }
+            </Marker>
+          ))
+          }
+        <StandaloneSearchBox
+          onLoad={onSearchBoxLoad}
+          onPlacesChanged={onPlacesChanged}
+        >
+          <SearchBoxInput
+            type='text'
+            placeholder='Search city'
+            style={{
+              boxSizing: 'border-box',
+              border: '1px solid transparent',
+              width: '240px',
+              height: '32px',
+              padding: '0 12px',
+              borderRadius: '3px',
+              boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+              fontSize: '14px',
+              outline: 'none',
+              textOverflow: 'ellipses',
+              position: 'absolute',
+              left: '80%',
+              marginLeft: '-120px'
+            }}
+          />
+        </StandaloneSearchBox>
+      </GoogleMap>
     </Wrapper>
   );
 };
