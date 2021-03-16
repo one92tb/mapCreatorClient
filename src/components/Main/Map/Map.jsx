@@ -60,12 +60,12 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
   disableDoubleClickZoom: true,
-  cursor: 'pointer'
 };
 
 const libraries = ['places'];
 
 const Map = (props) => {
+  console.log(props);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
     libraries
@@ -214,6 +214,7 @@ const Map = (props) => {
         onPlacesChanged={onPlacesChanged}
         onZoomChanged={onZoomChanged}
         draggable='true'
+        cursor='pointer'
       >
         {
         indicators.filter((indicator) => !disableMarkers

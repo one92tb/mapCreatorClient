@@ -176,10 +176,7 @@ const Marker = styled.li`
     : '#4ddbff')};
       cursor: ${(props) => (props.isDefault && props.location === '/createMarker'
     ? 'not-allowed'
-    : 'grab')};
-
-      transform: scale(1.02);
-      box-shadow: -2px 2px 9px -2px #000;
+    : 'pointer')};
     }
 
   background: ${(props) => (props.isSelected
@@ -188,7 +185,6 @@ const Marker = styled.li`
       ? '#999'
       : 'transparent')};
   opacity: ${(props) => props.isFiltered && '0.7'};
-  transition: all 1s ease;
 
   &:active {
     background: #00b8e6;
