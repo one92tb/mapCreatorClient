@@ -65,7 +65,6 @@ const options = {
 const libraries = ['places'];
 
 const Map = (props) => {
-  console.log(props);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
     libraries
@@ -107,6 +106,7 @@ const Map = (props) => {
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
+    console.log(map);
     mapRef.current = map;
   }, []);
 
@@ -157,6 +157,7 @@ const Map = (props) => {
       setCurrentIndicatorId(id);
       setIsOpen(!isOpen);
     }
+
     setCurrentIndicatorId(id);
   };
 
@@ -213,8 +214,6 @@ const Map = (props) => {
         onLoad={onMapLoad}
         onPlacesChanged={onPlacesChanged}
         onZoomChanged={onZoomChanged}
-        draggable='true'
-        cursor='pointer'
       >
         {
         indicators.filter((indicator) => !disableMarkers
