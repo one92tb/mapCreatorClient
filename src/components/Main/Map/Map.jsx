@@ -193,10 +193,6 @@ const Map = (props) => {
     setPropertyName('');
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
   if (loadError) return 'Error';
   if (!isLoaded) return 'Loading...';
 
