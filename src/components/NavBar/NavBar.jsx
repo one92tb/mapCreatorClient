@@ -54,7 +54,6 @@ const routes = [
 
 export const NavBar = (props) => {
   const {
-    userName,
     isPanelSelect,
     getSelectedMarker,
     logout,
@@ -79,6 +78,7 @@ export const NavBar = (props) => {
       isAuthorized: false
     });
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     redirect('/login');
   };
 
@@ -95,7 +95,7 @@ export const NavBar = (props) => {
         <User>
           <Logo src='img/logo4.png' />
           <LoginName>
-            user: {userName}
+            user: {localStorage.getItem('userName')}
           </LoginName>
         </User>
         <LogoutBtn onClick={handleLogout}>Sign out</LogoutBtn>
@@ -121,8 +121,6 @@ export const NavBar = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({ userName: state.user.userName });
-
 const mapDispatchToProps = {
   isPanelSelect,
   getSelectedMarker,
@@ -131,7 +129,7 @@ const mapDispatchToProps = {
   disableMarkers
 };
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { pure: false })(NavBar);
+export default connect(null, mapDispatchToProps, null, { pure: false })(NavBar);
 
 NavBar.propTypes = {
   isPanelSelect: PropTypes.func.isRequired,

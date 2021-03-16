@@ -60,7 +60,6 @@ const options = {
   disableDefaultUI: true,
   zoomControl: true,
   disableDoubleClickZoom: true,
-  cursor: 'pointer'
 };
 
 const libraries = ['places'];
@@ -107,6 +106,7 @@ const Map = (props) => {
 
   const mapRef = React.useRef();
   const onMapLoad = React.useCallback((map) => {
+    console.log(map);
     mapRef.current = map;
   }, []);
 
@@ -157,6 +157,7 @@ const Map = (props) => {
       setCurrentIndicatorId(id);
       setIsOpen(!isOpen);
     }
+
     setCurrentIndicatorId(id);
   };
 
@@ -193,10 +194,6 @@ const Map = (props) => {
     setPropertyName('');
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
   if (loadError) return 'Error';
   if (!isLoaded) return 'Loading...';
 
@@ -217,10 +214,6 @@ const Map = (props) => {
         onLoad={onMapLoad}
         onPlacesChanged={onPlacesChanged}
         onZoomChanged={onZoomChanged}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-        draggable='true'
       >
         {
         indicators.filter((indicator) => !disableMarkers

@@ -124,7 +124,7 @@ export const Panel = (props) => {
                   {
                     markers.map((marker) => (
                       <Marker
-                        draggable='true'
+                        draggable='false'
                         data-testid='marker'
                         key={marker.id}
                         location={props.location.pathname}

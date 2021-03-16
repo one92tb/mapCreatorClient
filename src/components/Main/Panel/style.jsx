@@ -29,7 +29,6 @@ const ResponsivePanel = css`
     width: 300px;
     background: #f2f2f2;
   }
-
   @media only screen and (max-width: 575.98px) {
     top: 110px;
     width: 200px;
@@ -54,7 +53,6 @@ const CardHeader = styled.div`
   border-bottom: 1px solid #00b8e6;
   padding: 0.5rem;
   height: 50px;
-
   display: block;
   @media only screen and (max-width: 575.98px) {
     padding: 0.25rem;
@@ -101,7 +99,6 @@ ${Btn}
 border-top-right-radius: 0.25rem;
 border-bottom-right-radius: 0.25rem;
 background: ${(props) => (!props.isSelected ? '#00b8e6' : '#b2cfe7')};
-
 &:hover {
  cursor: ${(props) => (props.location === '/createMarker'
     ? 'not-allowed'
@@ -157,7 +154,6 @@ const Input = styled.input`
 const List = styled.div`
   list-style: none;
   padding: 0;
-
 `;
 
 const Marker = styled.li`
@@ -176,20 +172,14 @@ const Marker = styled.li`
     : '#4ddbff')};
       cursor: ${(props) => (props.isDefault && props.location === '/createMarker'
     ? 'not-allowed'
-    : 'grab')};
-
-      transform: scale(1.02);
-      box-shadow: -2px 2px 9px -2px #000;
+    : 'pointer')};
     }
-
   background: ${(props) => (props.isSelected
     ? '#00b8e6'
     : props.isFiltered
       ? '#999'
       : 'transparent')};
   opacity: ${(props) => props.isFiltered && '0.7'};
-  transition: all 1s ease;
-
   &:active {
     background: #00b8e6;
     cursor: -webkit-grabbing;
@@ -213,7 +203,6 @@ const MarkerName = styled.span`
   float: left;
   display: flex;
   align-items: center;
-
   @media only screen and (max-width: 575.98px) {
     font-size: 12px;
   }
@@ -224,7 +213,6 @@ const MarkerImg = styled.img`
   width: 32px;
   text-align: cetnter;
   margin-right: 5px;
-
   @media only screen and (max-width: 575.98px) {
     height: 24px;
     width: 24px;
@@ -243,7 +231,6 @@ text-transform: uppercase;
 
 const Markers = styled.div`
 margin-top: 5px;
-
   height: ${(props) => (props.displayId === props.markersId
     ? '100%'
     : '0')};
@@ -251,7 +238,6 @@ margin-top: 5px;
     ? '100'
     : '0')};
   overflow:  ${(props) => props.displayId !== props.markersId && 'hidden'};
-
   transition: all 1s ease;
 `;
 
