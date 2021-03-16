@@ -29,6 +29,7 @@ export const loginRequest = (userData) => (dispatch) => {
   })
     .post('/api/users/login', userData).then((res) => {
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('userName', res.data.userName);
       dispatch(loginSuccess(res.data));
       dispatch(redirect('/'));
     })
