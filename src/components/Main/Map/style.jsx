@@ -90,6 +90,11 @@ const InfoBtn = styled.button`
   border: 2px solid #00b8e6;
   font-weight: bold;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   &:hover {
     cursor: pointer;
     color: #fff;

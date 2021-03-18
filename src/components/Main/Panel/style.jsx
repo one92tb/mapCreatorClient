@@ -87,6 +87,11 @@ border: 1px solid #00b8e6;
 transition: background-color 1s ease;
 text-transform: uppercase;
 color: #fff;
+
+&:focus {
+  border: none;
+  outline: none;
+}
 `;
 
 const SelectButton = styled.button`
@@ -235,6 +240,11 @@ color: #fff;
 border-radius: 3px;
 border: 1px solid #4ddbff;
 text-transform: uppercase;
+
+&:focus {
+  border: none;
+  outline: none;
+}
 `;
 
 const Markers = styled.div`

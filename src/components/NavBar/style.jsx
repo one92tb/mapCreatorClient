@@ -198,6 +198,11 @@ const LogoutBtn = styled.button`
   line-height: 1.5;
   border-radius: 0.25rem;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   @media (max-width: 1199px) {
     margin: 15px 0;
     margin-left: auto;

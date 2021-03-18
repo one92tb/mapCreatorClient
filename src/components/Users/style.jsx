@@ -50,6 +50,11 @@ const Input = styled.input`
   border: 1px solid transparent;
   margin-right: 50px;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   @media only screen and (max-width: 767.98px) {
     height: 30px;
     width: 150px;

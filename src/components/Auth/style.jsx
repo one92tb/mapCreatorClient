@@ -95,6 +95,11 @@ const Button = css`
     width: 120px;
     line-height: normal;
   }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 const RegisterBtn = styled.button`

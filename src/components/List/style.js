@@ -40,6 +40,11 @@ const Select = styled.select`
   text-align: center;
   text-align-last: center;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   @media only screen and (max-width: 767.98px) {
     width: 150px;
     height: 25px;
@@ -61,6 +66,11 @@ const Input = styled.input`
   text-align: center;
   border-radius: 5px;
   border: 1px solid transparent;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 
   @media only screen and (max-width: 767.98px) {
     width: 150px;
