@@ -98,6 +98,11 @@ const Input = styled.input`
   border-radius: 5px;
   border: 1px solid #bfbfbf;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   @media only screen and (max-width: 767.98px) {
     height: auto;
     margin: 0;

@@ -95,6 +95,11 @@ const Button = css`
     width: 120px;
     line-height: normal;
   }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 const RegisterBtn = styled.button`
@@ -147,6 +152,11 @@ const Input = styled.input`
   padding: 0.375rem 0.75rem;
   display: block;
   border: 1px solid #ced4da;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 
   @media only screen and (max-width: 575.98px) {
     font-size: 14px;

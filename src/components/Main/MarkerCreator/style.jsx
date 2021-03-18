@@ -95,6 +95,11 @@ const Button = css`
   @media only screen and (max-width: 575.98px) {
     width: 150px;
   }
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 `;
 
 const CrudButton = css`
