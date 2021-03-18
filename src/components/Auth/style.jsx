@@ -153,6 +153,11 @@ const Input = styled.input`
   display: block;
   border: 1px solid #ced4da;
 
+  &:focus {
+    border: none;
+    outline: none;
+  }
+
   @media only screen and (max-width: 575.98px) {
     font-size: 14px;
     height: 30px;
