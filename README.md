@@ -12,7 +12,7 @@
 
 ## General info 
 
-This is application that uses react-google-map package, written in React library. It allows us to create markers on the user panel. After that marker can be putted on the map as an Indicator. Indicators are editable and removable. User can also check data from indicator using a indicator table or indicator charts. Application has additional feature for administarots. They can change user status from user to admin or and vice versa.
+This is application that uses react-google-map package, written in React library. It allows us to create markers on the user panel. After that marker can be putted on the map as an indicator. Indicators are editable and removable. User can also check data from indicator using a indicator table or indicator charts. Application has additional feature for administrators. They can change user status from user to admin or and vice versa.
 
 ## Setup
 
