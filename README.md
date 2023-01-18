@@ -7,7 +7,7 @@
 * [Technologies](#technologies)
 * [Features](#features)
 * [Status](#status)
-* [Hostring](#hostring)
+* [Hosting](#hosting)
 * [Licence](#licence)
 
 ## General info 
@@ -33,7 +33,7 @@ $ npm start
 ![indicator](./public/img/indicatorInfo.jpg)
 - Edit or update indicators
 ![edit indicator](./public/img/editIndicator.jpg)
-- See indicators on the charts
+- See indicators on the chart
 ![charts](./public/img/charts.jpg)
 - Check indicators on the table and redirect to the map
 ![table](./public/img/table.jpg)
